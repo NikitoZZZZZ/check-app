@@ -2,7 +2,7 @@
 **/bin/
 **/settings.gradle
 **/.gradle/
-**/.classpath
+.classpath
 **/.metadata/
 **/.recommenders/
 **/.settings/
@@ -10,7 +10,7 @@
 **/.project
 **/target/
 **/.idea/
-**/*.iml
-**/*.iws
-**/*.ipr
-**/.mvn/
+*.iml
+*.iws
+*.ipr
+.mvn/
