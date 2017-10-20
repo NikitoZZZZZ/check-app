@@ -3,14 +3,11 @@ package com.netcracker.checkapp.server.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
 import java.util.List;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Document(collection = "checks")
 @JsonSerialize
