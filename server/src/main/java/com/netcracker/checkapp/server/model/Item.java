@@ -1,32 +1,32 @@
 package com.netcracker.checkapp.server.model;
 
 public class Item {
-    private Integer price;
-    private Integer ndsSum;
-    private Integer quantity;
+    private String price;
+    private String ndsSum;
+    private String quantity;
     private String name;
 
-    public Integer getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
-    public Integer getNdsSum() {
+    public String getNdsSum() {
         return ndsSum;
     }
 
-    public void setNdsSum(Integer ndsSum) {
+    public void setNdsSum(String ndsSum) {
         this.ndsSum = ndsSum;
     }
 
-    public Integer getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
