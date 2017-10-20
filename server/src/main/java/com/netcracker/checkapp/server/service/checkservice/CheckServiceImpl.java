@@ -66,7 +66,12 @@ public class CheckServiceImpl implements CheckService {
         check.setNds10(check.getNds10().replaceAll(regexPrice, resultPrice));
         check.setNds18(check.getNds18().replaceAll(regexPrice, resultPrice));
         check.setTotalSum(check.getTotalSum().replaceAll(regexPrice, resultPrice));
-        check.setDateTime(check.getDateTime().replaceAll(regexDate, resultDate));
+
+        /*
+        CHECK THAT METHOD AGAIN CAUSE WE NEED TO DECIDE: user String or LocalDateTime Object?
+         */
+//        check.setDateTime(check.getDateTime().replaceAll(regexDate, resultDate));
+        
         check.getItems().forEach(item -> {
             item.setPrice(item.getPrice().replaceAll(regexPrice, resultPrice));
             item.setNdsSum(item.getNdsSum().replaceAll(regexPrice, resultPrice));

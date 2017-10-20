@@ -16,6 +16,7 @@ public class Check implements Serializable {
 
     @Id
     private String id;
+
     private String fiscalDocumentNumber;
     private String fiscalDriveNumber;
     private String fiscalSign;
@@ -97,6 +98,7 @@ public class Check implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
 
     @Override
     public String toString() {
