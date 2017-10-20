@@ -2,16 +2,23 @@ package com.netcracker.checkapp.server.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.io.Serializable;
+import java.util.List;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Document(collection = "checks")
-public class Check {
+@JsonSerialize
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Check implements Serializable {
 
     @Id
     private String id;
-
     private String fiscalDocumentNumber;
     private String fiscalDriveNumber;
     private String fiscalSign;
@@ -19,7 +26,7 @@ public class Check {
     private String nds18;
     private String totalSum;
     private LocalDateTime dateTime;
-    private List<Item> item;
+    private List<Item> items;
     private User user;
 
     public String getFiscalDocumentNumber() {
@@ -78,12 +85,12 @@ public class Check {
         this.dateTime = dateTime;
     }
 
-    public List<Item> getItem() {
-        return item;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setItem(List<Item> item) {
-        this.item = item;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     public User getUser() {
@@ -104,7 +111,7 @@ public class Check {
                 ", nds18=" + nds18 +
                 ", totalSum=" + totalSum +
                 ", dateTime=" + dateTime +
-                ", item=" + item +
+                ", items=" + items +
                 ", user=" + user +
                 '}';
     }
@@ -124,7 +131,7 @@ public class Check {
         if (!totalSum.equals(check.totalSum)) return false;
         if (!dateTime.equals(check.dateTime)) return false;
         if (!user.equals(check.user)) return false;
-        return item.equals(check.item);
+        return items.equals(check.items);
     }
 
     @Override
@@ -136,7 +143,7 @@ public class Check {
         result = 31 * result + nds18.hashCode();
         result = 31 * result + totalSum.hashCode();
         result = 31 * result + dateTime.hashCode();
-        result = 31 * result + item.hashCode();
+        result = 31 * result + items.hashCode();
         result = 31 * result + user.hashCode();
         return result;
     }

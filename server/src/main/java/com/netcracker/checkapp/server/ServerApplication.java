@@ -6,6 +6,7 @@ import com.netcracker.checkapp.server.model.User;
 import com.netcracker.checkapp.server.persistance.CheckRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 
@@ -13,8 +14,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @SpringBootApplication
-public class ServerApplication {
+public class ServerApplication extends WebMvcConfigurerAdapter {
 	public static void main(String[] args) {
 		SpringApplication.run(ServerApplication.class, args);
 	}
@@ -33,13 +35,19 @@ public class ServerApplication {
             /*
             here you can use one of addCheckX methods
              */
+            addCheck1(checkRepository);
+            addCheck2(checkRepository);
+            addCheck3(checkRepository);
 
             int count = checkRepository.findAll().size();
             System.out.println("Checks found:  " + count);
 
+            System.out.println("-------");
+            System.out.println("Checks found for user 'rogeenok'");
             List<Check> checkList = checkRepository.findByLoginAndPwd("rogeenok","123456");
             for (Check checkvar: checkList)
                 System.out.println(checkvar);
+            System.out.println("-------");
 
         };
     }
@@ -77,7 +85,7 @@ public class ServerApplication {
             items.add(item_1);
             items.add(item_2);
 
-            check.setItem(items);
+            check.setItems(items);
 
             checkRepository.save(check);
     }
@@ -103,7 +111,7 @@ public class ServerApplication {
 
         List<Item> items = new ArrayList<Item>();
         items.add(item);
-        check.setItem(items);
+        check.setItems(items);
 
         check.setUser(user);
 

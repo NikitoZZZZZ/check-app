@@ -5,5 +5,5 @@ import com.netcracker.checkapp.server.service.Service;
 
 public interface CheckService extends Service {
     public Check getCheck(String fiscalDocumentNumber, String fiscalDriveNumber, String fiscalSign);
-    public Check parseCheck();
+    public Check parseCheck(Check check);
 }

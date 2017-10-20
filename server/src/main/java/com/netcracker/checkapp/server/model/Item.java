@@ -1,5 +1,10 @@
 package com.netcracker.checkapp.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+@JsonSerialize
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Item {
     private String price;
     private String ndsSum;
