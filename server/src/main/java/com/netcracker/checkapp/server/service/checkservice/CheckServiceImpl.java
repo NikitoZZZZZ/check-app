@@ -34,7 +34,7 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public Check getCheck(String fiscalDocumentNumber, String fiscalDriveNumber, String fiscalSign) {
         Map<String, String> headers = new HashMap<>();
-        Check check = null;
+        Check check = new Check();
         ObjectMapper objectMapper = new ObjectMapper();
 
         headers.put(AUTHORIZATION, AUTHORIZATION_VALUE);
@@ -58,6 +58,20 @@ public class CheckServiceImpl implements CheckService {
 
     @Override
     public Check parseCheck(Check check) {
+        String regexPrice = "(\\d+)(\\d{2})";
+        String regexDate = "(\\d{4}-\\d{2}-\\d{2})T(.+)";
+        String resultPrice = "$1.$2";
+        String resultDate = "$1 $2";
+
+        check.setNds10(check.getNds10().replaceAll(regexPrice, resultPrice));
+        check.setNds18(check.getNds18().replaceAll(regexPrice, resultPrice));
+        check.setTotalSum(check.getTotalSum().replaceAll(regexPrice, resultPrice));
+        check.setDateTime(check.getDateTime().replaceAll(regexDate, resultDate));
+        check.getItems().forEach(item -> {
+            item.setPrice(item.getPrice().replaceAll(regexPrice, resultPrice));
+            item.setNdsSum(item.getNdsSum().replaceAll(regexPrice, resultPrice));
+        });
+
         return check;
     }
 
