@@ -1,80 +1,87 @@
 package com.netcracker.checkapp.server.model;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Check {
-    private Integer fiscalDocumentNumber;
-    private Integer fiscalDriveNumber;
-    private Integer fiscalSign;
-    private Integer nds10;
-    private Integer nds18;
-    private Integer totalSum;
-    private LocalDateTime dateTime;
-    private List<Item> item;
+@JsonSerialize
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Check implements Serializable {
+    private String fiscalDocumentNumber;
+    private String fiscalDriveNumber;
+    private String fiscalSign;
+    private String nds10;
+    private String nds18;
+    private String totalSum;
+    private String dateTime;
+    private List<Item> items;
 
-    public Integer getFiscalDocumentNumber() {
+    public String getFiscalDocumentNumber() {
         return fiscalDocumentNumber;
     }
 
-    public void setFiscalDocumentNumber(Integer fiscalDocumentNumber) {
+    public void setFiscalDocumentNumber(String fiscalDocumentNumber) {
         this.fiscalDocumentNumber = fiscalDocumentNumber;
     }
 
-    public Integer getFiscalDriveNumber() {
+    public String getFiscalDriveNumber() {
         return fiscalDriveNumber;
     }
 
-    public void setFiscalDriveNumber(Integer fiscalDriveNumber) {
+    public void setFiscalDriveNumber(String fiscalDriveNumber) {
         this.fiscalDriveNumber = fiscalDriveNumber;
     }
 
-    public Integer getFiscalSign() {
+    public String getFiscalSign() {
         return fiscalSign;
     }
 
-    public void setFiscalSign(Integer fiscalSign) {
+    public void setFiscalSign(String fiscalSign) {
         this.fiscalSign = fiscalSign;
     }
 
-    public Integer getNds10() {
+    public String getNds10() {
         return nds10;
     }
 
-    public void setNds10(Integer nds10) {
+    public void setNds10(String nds10) {
         this.nds10 = nds10;
     }
 
-    public Integer getNds18() {
+    public String getNds18() {
         return nds18;
     }
 
-    public void setNds18(Integer nds18) {
+    public void setNds18(String nds18) {
         this.nds18 = nds18;
     }
 
-    public Integer getTotalSum() {
+    public String getTotalSum() {
         return totalSum;
     }
 
-    public void setTotalSum(Integer totalSum) {
+    public void setTotalSum(String totalSum) {
         this.totalSum = totalSum;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
-    public List<Item> getItem() {
-        return item;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setItem(List<Item> item) {
-        this.item = item;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     @Override
@@ -87,7 +94,7 @@ public class Check {
                 ", nds18=" + nds18 +
                 ", totalSum=" + totalSum +
                 ", dateTime=" + dateTime +
-                ", item=" + item +
+                ", items=" + items +
                 '}';
     }
 
@@ -105,7 +112,7 @@ public class Check {
         if (!nds18.equals(check.nds18)) return false;
         if (!totalSum.equals(check.totalSum)) return false;
         if (!dateTime.equals(check.dateTime)) return false;
-        return item.equals(check.item);
+        return items.equals(check.items);
     }
 
     @Override
@@ -117,7 +124,7 @@ public class Check {
         result = 31 * result + nds18.hashCode();
         result = 31 * result + totalSum.hashCode();
         result = 31 * result + dateTime.hashCode();
-        result = 31 * result + item.hashCode();
+        result = 31 * result + items.hashCode();
         return result;
     }
 }
