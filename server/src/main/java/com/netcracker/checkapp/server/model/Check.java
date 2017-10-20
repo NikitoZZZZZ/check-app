@@ -1,63 +1,72 @@
 package com.netcracker.checkapp.server.model;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Document(collection = "checks")
 public class Check {
-    private Integer fiscalDocumentNumber;
-    private Integer fiscalDriveNumber;
-    private Integer fiscalSign;
-    private Integer nds10;
-    private Integer nds18;
-    private Integer totalSum;
+
+    @Id
+    private String id;
+
+    private String fiscalDocumentNumber;
+    private String fiscalDriveNumber;
+    private String fiscalSign;
+    private String nds10;
+    private String nds18;
+    private String totalSum;
     private LocalDateTime dateTime;
     private List<Item> item;
+    private User user;
 
-    public Integer getFiscalDocumentNumber() {
+    public String getFiscalDocumentNumber() {
         return fiscalDocumentNumber;
     }
 
-    public void setFiscalDocumentNumber(Integer fiscalDocumentNumber) {
+    public void setFiscalDocumentNumber(String fiscalDocumentNumber) {
         this.fiscalDocumentNumber = fiscalDocumentNumber;
     }
 
-    public Integer getFiscalDriveNumber() {
+    public String getFiscalDriveNumber() {
         return fiscalDriveNumber;
     }
 
-    public void setFiscalDriveNumber(Integer fiscalDriveNumber) {
+    public void setFiscalDriveNumber(String fiscalDriveNumber) {
         this.fiscalDriveNumber = fiscalDriveNumber;
     }
 
-    public Integer getFiscalSign() {
+    public String getFiscalSign() {
         return fiscalSign;
     }
 
-    public void setFiscalSign(Integer fiscalSign) {
+    public void setFiscalSign(String fiscalSign) {
         this.fiscalSign = fiscalSign;
     }
 
-    public Integer getNds10() {
+    public String getNds10() {
         return nds10;
     }
 
-    public void setNds10(Integer nds10) {
+    public void setNds10(String nds10) {
         this.nds10 = nds10;
     }
 
-    public Integer getNds18() {
+    public String getNds18() {
         return nds18;
     }
 
-    public void setNds18(Integer nds18) {
+    public void setNds18(String nds18) {
         this.nds18 = nds18;
     }
 
-    public Integer getTotalSum() {
+    public String getTotalSum() {
         return totalSum;
     }
 
-    public void setTotalSum(Integer totalSum) {
+    public void setTotalSum(String totalSum) {
         this.totalSum = totalSum;
     }
 
@@ -77,10 +86,18 @@ public class Check {
         this.item = item;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return "Check{" +
-                "fiscalDocumentNumber=" + fiscalDocumentNumber +
+        return "Check{" + "id=" + id +
+                ", fiscalDocumentNumber=" + fiscalDocumentNumber +
                 ", fiscalDriveNumber=" + fiscalDriveNumber +
                 ", fiscalSign=" + fiscalSign +
                 ", nds10=" + nds10 +
@@ -88,6 +105,7 @@ public class Check {
                 ", totalSum=" + totalSum +
                 ", dateTime=" + dateTime +
                 ", item=" + item +
+                ", user=" + user +
                 '}';
     }
 
@@ -105,6 +123,7 @@ public class Check {
         if (!nds18.equals(check.nds18)) return false;
         if (!totalSum.equals(check.totalSum)) return false;
         if (!dateTime.equals(check.dateTime)) return false;
+        if (!user.equals(check.user)) return false;
         return item.equals(check.item);
     }
 
@@ -118,6 +137,8 @@ public class Check {
         result = 31 * result + totalSum.hashCode();
         result = 31 * result + dateTime.hashCode();
         result = 31 * result + item.hashCode();
+        result = 31 * result + user.hashCode();
         return result;
     }
+
 }
