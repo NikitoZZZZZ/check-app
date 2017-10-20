@@ -4,6 +4,8 @@ package com.netcracker.checkapp.server.controller;
 import com.netcracker.checkapp.server.model.Check;
 import com.netcracker.checkapp.server.service.checkservice.CheckService;
 import com.netcracker.checkapp.server.service.checkservice.CheckServiceImpl;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,6 @@ public class CheckController {
     @RequestMapping(value = "/load", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Check> load(@RequestParam Map<String, String> params) {
-        //call CheckServiceImpl
         CheckService checkService = new CheckServiceImpl();
 
 //        if (/*success or not*/true) {
