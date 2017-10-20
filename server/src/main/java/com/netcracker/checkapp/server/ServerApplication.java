@@ -2,6 +2,7 @@ package com.netcracker.checkapp.server;
 
 import com.netcracker.checkapp.server.model.Check;
 import com.netcracker.checkapp.server.model.Item;
+import com.netcracker.checkapp.server.model.User;
 import com.netcracker.checkapp.server.persistance.CheckRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,20 +30,37 @@ public class ServerApplication {
             System.out.println(check);
             System.out.println("-------");
 
-//            that code works correctly, saving in DB _id, classtype and not null fields!
-/*            Check check2 = new Check();
-            check2.setFiscalSign("19320");
-            check2.setFiscalDocumentNumber("3832291243");
-            check2.setFiscalDriveNumber("8710000100555238");
-            Check check3 = checkRepository.save(check2);*/
+            /*
+            here you can use one of addCheckX methods
+             */
 
-//          that code block add check with all parameters, include items (2 items here)
-/*            Check check3 = new Check();
-            check3.setFiscalSign("19321");
-            check3.setFiscalDocumentNumber("3832871245");
-            check3.setFiscalDriveNumber("8710000100387129");
-            check3.setTotalSum("298.00");
-            check3.setDateTime(LocalDateTime.of(2017, 10, 12, 10, 34));
+            int count = checkRepository.findAll().size();
+            System.out.println("Checks found:  " + count);
+
+            List<Check> checkList = checkRepository.findByLoginAndPwd("rogeenok","123456");
+            for (Check checkvar: checkList)
+                System.out.println(checkvar);
+
+        };
+    }
+
+//  that method works correctly, saving in DB _id, classtype and not null fields!
+    private static void addCheck1(CheckRepository checkRepository) {
+            Check check = new Check();
+            check.setFiscalSign("19320");
+            check.setFiscalDocumentNumber("3832291243");
+            check.setFiscalDriveNumber("8710000100555238");
+            Check checkreturned = checkRepository.save(check);
+    }
+    
+//  that code block add check with all parameters, include items (2 items here)    
+    private static void addCheck2(CheckRepository checkRepository) {
+            Check check = new Check();
+            check.setFiscalSign("19321");
+            check.setFiscalDocumentNumber("3832871245");
+            check.setFiscalDriveNumber("8710000100387129");
+            check.setTotalSum("298.00");
+            check.setDateTime(LocalDateTime.of(2017, 10, 12, 10, 34));
 
             Item item_1 = new Item();
             item_1.setName("Sandwich 15 sm");
@@ -59,14 +77,36 @@ public class ServerApplication {
             items.add(item_1);
             items.add(item_2);
 
-            check3.setItem(items);
+            check.setItem(items);
 
-            checkRepository.save(check3);*/
+            checkRepository.save(check);
+    }
 
+//	that code block adds check with user params
+    private static void addCheck3(CheckRepository checkRepository) {
+        Check check = new Check();
+        check.setFiscalSign("143676");
+        check.setFiscalDocumentNumber("2404980075");
+        check.setFiscalDriveNumber("8710000100373468");
+        check.setTotalSum("102.00");
+        check.setDateTime(LocalDateTime.of(2017, 10, 12, 10, 27));
 
-            int count = checkRepository.findAll().size();
-            System.out.println("Checks found:  " + count);
+        Item item = new Item();
+        item.setPrice("102.00");
+        item.setQuantity("1");
+        item.setNdsSum("0");
+        item.setName("Льготный 2605 <=> У");
 
-        };
+        User user = new User();
+        user.setLogin("rogeenok");
+        user.setPwd("123456");
+
+        List<Item> items = new ArrayList<Item>();
+        items.add(item);
+        check.setItem(items);
+
+        check.setUser(user);
+
+        checkRepository.save(check);
     }
 }

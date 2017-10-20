@@ -4,6 +4,8 @@ import com.netcracker.checkapp.server.model.Check;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import java.util.List;
+
 public interface CheckRepository extends MongoRepository<Check, String> {
 
     // method name should contain correct parameters names!!
@@ -14,6 +16,10 @@ public interface CheckRepository extends MongoRepository<Check, String> {
 
     Check save(Check check);
 
+    @Query("{user : {login : '?0', pwd : '?1'} }")
+    List<Check> findByLoginAndPwd(String login, String pwd);
+
+    // that's an example how to use @Query JSON request to find by one of fields
     @Query("{fiscalSign: '?0'}")
     Check findCustomByFiscalSign(String fiscalSign);
 

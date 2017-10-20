@@ -20,6 +20,7 @@ public class Check {
     private String totalSum;
     private LocalDateTime dateTime;
     private List<Item> item;
+    private User user;
 
     public String getFiscalDocumentNumber() {
         return fiscalDocumentNumber;
@@ -85,6 +86,14 @@ public class Check {
         this.item = item;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
         return "Check{" + "id=" + id +
@@ -96,6 +105,7 @@ public class Check {
                 ", totalSum=" + totalSum +
                 ", dateTime=" + dateTime +
                 ", item=" + item +
+                ", user=" + user +
                 '}';
     }
 
@@ -113,6 +123,7 @@ public class Check {
         if (!nds18.equals(check.nds18)) return false;
         if (!totalSum.equals(check.totalSum)) return false;
         if (!dateTime.equals(check.dateTime)) return false;
+        if (!user.equals(check.user)) return false;
         return item.equals(check.item);
     }
 
@@ -126,6 +137,8 @@ public class Check {
         result = 31 * result + totalSum.hashCode();
         result = 31 * result + dateTime.hashCode();
         result = 31 * result + item.hashCode();
+        result = 31 * result + user.hashCode();
         return result;
     }
+
 }
