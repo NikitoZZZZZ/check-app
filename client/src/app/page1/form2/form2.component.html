@@ -1,0 +1,10 @@
+<p><input type="submit" value="Получить данные" (click)="getCheck()"></p>
+<ul>
+  <li *ngFor="let data of getCheckData">
+    <p>FN: {{data?.fiscalDocumentNumber}}</p>
+    <p>FDN: {{data?.fiscalDriveNumber}}</p>
+    <p>FS: {{data?.fiscalSign}}</p>
+  </li>
+</ul>
+
+
