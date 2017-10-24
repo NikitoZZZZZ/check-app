@@ -27,6 +27,8 @@ public class Check implements Serializable {
     private List<Item> items;
     private User user;
 
+    public String getId() {return id;}
+
     public String getFiscalDocumentNumber() {
         return fiscalDocumentNumber;
     }

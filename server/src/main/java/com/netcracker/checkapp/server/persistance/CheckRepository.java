@@ -16,6 +16,8 @@ public interface CheckRepository extends MongoRepository<Check, String> {
 
     Check save(Check check);
 
+    Check findById(String id);
+
     @Query("{user : {login : '?0', pwd : '?1'} }")
     List<Check> findByLoginAndPwd(String login, String pwd);
 

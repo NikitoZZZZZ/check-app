@@ -35,9 +35,14 @@ public class ServerApplication extends WebMvcConfigurerAdapter {
             /*
             here you can use one of addCheckX methods
              */
-            addCheck1(checkRepository);
-            addCheck2(checkRepository);
-            addCheck3(checkRepository);
+            //addCheck1(checkRepository);
+            //addCheck2(checkRepository);
+            //addCheck3(checkRepository);
+
+            System.out.println("-------");
+            System.out.println("Check found for first id");
+            System.out.println(checkRepository.findById(checkRepository.findByLoginAndPwd("rogeenok","123456").get(0).getId()));
+            System.out.println("-------");
 
             int count = checkRepository.findAll().size();
             System.out.println("Checks found:  " + count);
