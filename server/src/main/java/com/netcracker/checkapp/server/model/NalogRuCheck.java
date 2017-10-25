@@ -1,21 +1,30 @@
 package com.netcracker.checkapp.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @JsonSerialize
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NalogRuCheck {
+    private static final String DEFAULT_NDS18 = "0";
+
     private String fiscalDocumentNumber;
     private String fiscalDriveNumber;
     private String fiscalSign;
     private String nds10;
+    @JsonProperty(required = false)
     private String nds18;
     private String totalSum;
     private String dateTime;
     private List<Item> items;
+
+    public NalogRuCheck() {
+        this.nds18 = "0";
+    }
 
     public String getFiscalDocumentNumber() {
         return fiscalDocumentNumber;
@@ -49,9 +58,7 @@ public class NalogRuCheck {
         this.nds10 = nds10;
     }
 
-    public String getNds18() {
-        return nds18;
-    }
+    public String getNds18() { return nds18; }
 
     public void setNds18(String nds18) {
         this.nds18 = nds18;

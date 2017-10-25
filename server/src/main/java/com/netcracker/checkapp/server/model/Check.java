@@ -10,6 +10,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,14 +18,15 @@ import java.util.List;
 @JsonSerialize
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Check implements Serializable {
+
     @Id
     private String id;
     private String fiscalDocumentNumber;
     private String fiscalDriveNumber;
     private String fiscalSign;
-    private String nds10;
-    private String nds18;
-    private String totalSum;
+    private BigDecimal nds10;
+    private BigDecimal nds18;
+    private BigDecimal totalSum;
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING)
@@ -33,6 +35,10 @@ public class Check implements Serializable {
     private User user;
 
     public String getId() {return id;}
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getFiscalDocumentNumber() {
         return fiscalDocumentNumber;
@@ -58,27 +64,27 @@ public class Check implements Serializable {
         this.fiscalSign = fiscalSign;
     }
 
-    public String getNds10() {
+    public BigDecimal getNds10() {
         return nds10;
     }
 
-    public void setNds10(String nds10) {
+    public void setNds10(BigDecimal nds10) {
         this.nds10 = nds10;
     }
 
-    public String getNds18() {
+    public BigDecimal getNds18() {
         return nds18;
     }
 
-    public void setNds18(String nds18) {
+    public void setNds18(BigDecimal nds18) {
         this.nds18 = nds18;
     }
 
-    public String getTotalSum() {
+    public BigDecimal getTotalSum() {
         return totalSum;
     }
 
-    public void setTotalSum(String totalSum) {
+    public void setTotalSum(BigDecimal totalSum) {
         this.totalSum = totalSum;
     }
 

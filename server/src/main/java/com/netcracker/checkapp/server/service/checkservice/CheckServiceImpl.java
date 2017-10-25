@@ -3,6 +3,8 @@ package com.netcracker.checkapp.server.service.checkservice;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netcracker.checkapp.server.model.Check;
+import com.netcracker.checkapp.server.model.Converter;
+import com.netcracker.checkapp.server.model.NalogRuCheck;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -36,7 +38,7 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public Check getCheck(String fiscalDocumentNumber, String fiscalDriveNumber, String fiscalSign) {
         Map<String, String> headers = new HashMap<>();
-        Check check = new Check();
+        NalogRuCheck nalogRuCheck = new NalogRuCheck();
         ObjectMapper objectMapper = new ObjectMapper();
 
         headers.put(AUTHORIZATION, AUTHORIZATION_VALUE);
@@ -51,33 +53,11 @@ public class CheckServiceImpl implements CheckService {
         try {
             JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU, fiscalDocumentNumber,
                     fiscalDriveNumber, fiscalSign), HttpMethod.GET, httpEntity, String.class).getBody());
-            check = objectMapper.treeToValue(node.at(ROOT), Check.class);
+            nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return parseCheck(check);
-    }
-
-    @Override
-    public Check parseCheck(Check check) {
-        String regexPrice = "(\\d+)(\\d{2})";
-        String resultPrice = "$1.$2";
-
-        check.setNds10(check.getNds10().replaceAll(regexPrice, resultPrice));
-        check.setNds18(check.getNds18().replaceAll(regexPrice, resultPrice));
-        check.setTotalSum(check.getTotalSum().replaceAll(regexPrice, resultPrice));
-
-        /*
-        CHECK THAT METHOD AGAIN CAUSE WE NEED TO DECIDE: user String or LocalDateTime Object?
-         */
-//        check.setDateTime(check.getDateTime().replaceAll(regexDate, resultDate));
-
-        check.getItems().forEach(item -> {
-            item.setPrice(item.getPrice().replaceAll(regexPrice, resultPrice));
-            item.setNdsSum(item.getNdsSum().replaceAll(regexPrice, resultPrice));
-        });
-
-        return check;
+        return Converter.fromNalogRuCheckToCheck(nalogRuCheck);
     }
 
     @Override

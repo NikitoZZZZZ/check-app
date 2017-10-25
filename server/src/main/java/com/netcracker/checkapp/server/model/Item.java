@@ -1,37 +1,56 @@
 package com.netcracker.checkapp.server.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import java.math.BigDecimal;
 
 @JsonSerialize
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Item {
-    private String price;
-    private String ndsSum;
-    private String quantity;
+    private BigDecimal price;
+    @JsonProperty(required = false)
+    private BigDecimal ndsSum;
+    @JsonProperty(required = false)
+    private BigDecimal nds10;
+    private Integer quantity;
     private String name;
 
-    public String getPrice() {
+    public Item() {
+        this.ndsSum = new BigDecimal(0);
+        this.nds10 = new BigDecimal(0);
+    }
+
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public String getNdsSum() {
+    public BigDecimal getNdsSum() {
         return ndsSum;
     }
 
-    public void setNdsSum(String ndsSum) {
+    public void setNdsSum(BigDecimal ndsSum) {
         this.ndsSum = ndsSum;
     }
 
-    public String getQuantity() {
+    public BigDecimal getNds10() {
+        return nds10;
+    }
+
+    public void setNds10(BigDecimal nds10) {
+        this.nds10 = nds10;
+    }
+
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -48,6 +67,7 @@ public class Item {
         return "Item{" +
                 "price=" + price +
                 ", ndsSum=" + ndsSum +
+                ", nds10=" + nds10 +
                 ", quantity=" + quantity +
                 ", name='" + name + '\'' +
                 '}';
@@ -57,6 +77,7 @@ public class Item {
     public int hashCode() {
         int result = price.hashCode();
         result = 31 * result + ndsSum.hashCode();
+        result = 31 * result + nds10.hashCode();
         result = 31 * result + quantity.hashCode();
         result = 31 * result + name.hashCode();
         return result;
@@ -71,6 +92,7 @@ public class Item {
 
         if (!price.equals(item.price)) return false;
         if (!ndsSum.equals(item.ndsSum)) return false;
+        if (!nds10.equals(item.nds10)) return false;
         if (!quantity.equals(item.quantity)) return false;
         return name.equals(item.name);
     }
