@@ -6,12 +6,14 @@ import com.netcracker.checkapp.server.model.Check;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class CheckServiceImpl implements CheckService {
     private String NALOG_RU = "http://proverkacheka.nalog.ru:8888/v1/inns/*/kkts/*/" +
             "fss/%s/tickets/%s?fiscalSign=%s&sendToEmail=no";
@@ -59,9 +61,7 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public Check parseCheck(Check check) {
         String regexPrice = "(\\d+)(\\d{2})";
-        String regexDate = "(\\d{4}-\\d{2}-\\d{2})T(.+)";
         String resultPrice = "$1.$2";
-        String resultDate = "$1 $2";
 
         check.setNds10(check.getNds10().replaceAll(regexPrice, resultPrice));
         check.setNds18(check.getNds18().replaceAll(regexPrice, resultPrice));
