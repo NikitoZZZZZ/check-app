@@ -14,13 +14,17 @@ import java.util.Map;
 
 @RestController
 public class CheckController {
-    @Autowired
+    CheckService checkService;
     CheckRepository checkRepository;
+
+    CheckController(CheckService checkService, CheckRepository checkRepository) {
+        this.checkService = checkService;
+        this.checkRepository = checkRepository;
+    }
 
     @RequestMapping(value = "/load", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Check> load(@RequestParam Map<String, String> params) {
-        CheckService checkService = new CheckServiceImpl();
         ResponseEntity<Check> responseEntity;
 
         responseEntity = new ResponseEntity<Check>(checkService.getCheck(params.get("fdocumentn"), params.get("fdriven"),

@@ -1,18 +1,8 @@
 package com.netcracker.checkapp.server;
 
-import com.netcracker.checkapp.server.model.Check;
-import com.netcracker.checkapp.server.model.Item;
-import com.netcracker.checkapp.server.model.User;
-import com.netcracker.checkapp.server.persistance.CheckRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @SpringBootApplication
