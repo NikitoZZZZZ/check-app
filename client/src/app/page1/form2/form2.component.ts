@@ -13,20 +13,16 @@ export class Form2Component implements OnInit {
 
   getCheckData: GetCheckData[];
   done = false;
-  /*url = '/assets/data.json';*/
-  url = 'http://localhost:8090/load';
+  showCheck: boolean;
+  url = '/assets/data.json';
+  /*url = 'http://localhost:8090/load';*/
   constructor(private httpService: HttpService) {
 
   }
-
-  getCheck() {
-    this.httpService.getData(this.url)
-      .map(resp => resp.json().data as GetCheckData[])
-      .subscribe((data) => {
-        console.log(data);
-        /*this.getCheckData=data;*/
-      });
+  onToggle(check: GetCheckData) {
+    check.selected = ! check.selected;
   }
+
 
   /*
  getCheckById(id: string) {
@@ -38,8 +34,17 @@ export class Form2Component implements OnInit {
 }
 */
 
+  init() {
+    this.httpService.getData(this.url)
+      .map(resp => resp.json().data as GetCheckData[])
+      .subscribe((data) => {
+        console.log(data);
+        this.getCheckData = data;
+      });
+  }
 
   ngOnInit() {
+    this.init();
   }
 
 }

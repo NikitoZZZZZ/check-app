@@ -5,6 +5,7 @@ import { Form2Component} from './form2/form2.component';
 import { Page1Component} from './page1.component';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
+import {ShowCheckComponent} from './form2/show-check/show-check.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,7 @@ import {FormsModule} from '@angular/forms';
     RouterModule,
     FormsModule
   ],
-  declarations: [Form1Component, Form2Component, Page1Component],
+  declarations: [Form1Component, Form2Component, Page1Component, ShowCheckComponent],
   exports: [Form1Component, Form2Component, Page1Component],
   bootstrap: [Page1Component]
 })

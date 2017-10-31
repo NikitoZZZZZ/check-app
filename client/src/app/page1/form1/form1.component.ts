@@ -20,7 +20,11 @@ export class Form1Component implements OnInit {
   }
 
   submit(checkData) {
-    this.httpService.postData(checkData, this.url)
+    const params = new URLSearchParams();
+    params.set('fdocumentn', checkData.fn);
+    params.set('fdriven', checkData.fdn);
+    params.set('fs', checkData.fs);
+    this.httpService.postData(params.toString(), this.url)
       .subscribe((data) => {
           this.done = true;
         },

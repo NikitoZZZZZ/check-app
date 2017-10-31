@@ -11,4 +11,5 @@ export interface GetCheckData {
   dateTime: string;
   items: CheckItems[];
   user: User;
+  selected: boolean;
 }

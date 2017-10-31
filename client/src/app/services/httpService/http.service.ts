@@ -13,15 +13,11 @@ export class HttpService {
 
   constructor(private http: Http) { }
 
-  postData(checkData: PostCheckData, url: string) {
-    const headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-    const params = new URLSearchParams();
-    params.set('fdocumentn', checkData.fn);
-    params.set('fdriven', checkData.fdn);
-    params.set('fs', checkData.fs);
-    return this.http.post( url , params.toString(), { headers: headers })
+  postData(params: string, url: string) {
+    const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+    return this.http.post(url, params, {headers: headers})
       .map(res => res.json())
-      .catch((error: any ) => Observable.throw(error));
+      .catch((error: any) => Observable.throw(error));
   }
 
   getData(url: string) {
