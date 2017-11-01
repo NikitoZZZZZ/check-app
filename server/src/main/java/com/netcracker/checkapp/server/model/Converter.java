@@ -11,7 +11,7 @@ public class Converter {
         List<Item> items = nalogRuCheck.getItems();
 
         check.setFiscalDocumentNumber(nalogRuCheck.getFiscalDocumentNumber());
-        check.setFiscalDriveNumber(nalogRuCheck.getFiscalDocumentNumber());
+        check.setFiscalDriveNumber(nalogRuCheck.getFiscalDriveNumber());
         check.setFiscalSign(nalogRuCheck.getFiscalSign());
         check.setNds10(new BigDecimal(nalogRuCheck.getNds10()).divide(new BigDecimal(100)));
         check.setNds18(new BigDecimal(nalogRuCheck.getNds18()).divide(new BigDecimal(100)));
