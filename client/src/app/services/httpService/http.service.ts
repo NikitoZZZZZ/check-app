@@ -20,7 +20,7 @@ export class HttpService {
       .catch((error: any) => Observable.throw(error));
   }
 
-  getData(url: string) {
+  getData(url: string): Observable<any> {
     return this.http.get(url);
   }
 

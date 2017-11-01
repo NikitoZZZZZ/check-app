@@ -3,11 +3,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>NetcrackerPractice-client</groupId>
-  <artifactId>NetcrackerPractice-client</artifactId>
-  <packaging>pom</packaging>
+  <groupId>com.netcracker.client</groupId>
+  <artifactId>client</artifactId>
   <version>1.1</version>
 
+  <parent>
+    <groupId>NetcrackerPractice</groupId>
+    <artifactId>app</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
 
   <profiles>
     <profile>
@@ -82,6 +86,12 @@
         </executions>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>target/client</directory>
+        <targetPath>static</targetPath>
+      </resource>
+    </resources>
   </build>
 </project>
 

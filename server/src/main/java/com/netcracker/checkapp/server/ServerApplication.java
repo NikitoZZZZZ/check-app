@@ -26,33 +26,33 @@ public class ServerApplication extends WebMvcConfigurerAdapter {
 
         return args -> {
 
-            Check check = checkRepository.findCustomByFiscalSign("19321");
-            System.out.println("-------");
-            System.out.println("Getting check by fiscalSign:");
-            System.out.println(check);
-            System.out.println("-------");
-
-            /*
-            here you can use one of addCheckX methods
-             */
-            //addCheck1(checkRepository);
-            //addCheck2(checkRepository);
-            //addCheck3(checkRepository);
-
-            System.out.println("-------");
-            System.out.println("Check found for first id");
-            System.out.println(checkRepository.findById(checkRepository.findByLoginAndPwd("rogeenok","123456").get(0).getId()));
-            System.out.println("-------");
-
-            int count = checkRepository.findAll().size();
-            System.out.println("Checks found:  " + count);
-
-            System.out.println("-------");
-            System.out.println("Checks found for user 'rogeenok'");
-            List<Check> checkList = checkRepository.findByLoginAndPwd("rogeenok","123456");
-            for (Check checkvar: checkList)
-                System.out.println(checkvar);
-            System.out.println("-------");
+            //Check check = checkRepository.findCustomByFiscalSign("19321");
+//            System.out.println("-------");
+//            System.out.println("Getting check by fiscalSign:");
+//            System.out.println(check);
+//            System.out.println("-------");
+//
+//            /*
+//            here you can use one of addCheckX methods
+//             */
+//            //addCheck1(checkRepository);
+//            //addCheck2(checkRepository);
+//            //addCheck3(checkRepository);
+//
+//            System.out.println("-------");
+//            System.out.println("Check found for first id");
+//            System.out.println(checkRepository.findById(checkRepository.findByLoginAndPwd("rogeenok","123456").get(0).getId()));
+//            System.out.println("-------");
+//
+//            int count = checkRepository.findAll().size();
+//            System.out.println("Checks found:  " + count);
+//
+//            System.out.println("-------");
+//            System.out.println("Checks found for user 'rogeenok'");
+//            List<Check> checkList = checkRepository.findByLoginAndPwd("rogeenok","123456");
+//            for (Check checkvar: checkList)
+//                System.out.println(checkvar);
+//            System.out.println("-------");
 
         };
     }
