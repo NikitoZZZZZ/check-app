@@ -1,43 +1,29 @@
 package com.netcracker.checkapp.server.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
-@Document(collection = "checks")
 @JsonSerialize
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Check implements Serializable {
+public class NalogRuCheck {
+    private static final String DEFAULT_NDS18 = "0";
 
-    @Id
-    private String id;
     private String fiscalDocumentNumber;
     private String fiscalDriveNumber;
     private String fiscalSign;
-    private BigDecimal nds10;
-    private BigDecimal nds18;
-    private BigDecimal totalSum;
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
-    private LocalDateTime dateTime;
+    private String nds10;
+    @JsonProperty(required = false)
+    private String nds18;
+    private String totalSum;
+    private String dateTime;
     private List<Item> items;
-    private User user;
 
-    public String getId() {return id;}
-
-    public void setId(String id) {
-        this.id = id;
+    public NalogRuCheck() {
+        this.nds18 = "0";
     }
 
     public String getFiscalDocumentNumber() {
@@ -64,35 +50,33 @@ public class Check implements Serializable {
         this.fiscalSign = fiscalSign;
     }
 
-    public BigDecimal getNds10() {
+    public String getNds10() {
         return nds10;
     }
 
-    public void setNds10(BigDecimal nds10) {
+    public void setNds10(String nds10) {
         this.nds10 = nds10;
     }
 
-    public BigDecimal getNds18() {
-        return nds18;
-    }
+    public String getNds18() { return nds18; }
 
-    public void setNds18(BigDecimal nds18) {
+    public void setNds18(String nds18) {
         this.nds18 = nds18;
     }
 
-    public BigDecimal getTotalSum() {
+    public String getTotalSum() {
         return totalSum;
     }
 
-    public void setTotalSum(BigDecimal totalSum) {
+    public void setTotalSum(String totalSum) {
         this.totalSum = totalSum;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -104,19 +88,10 @@ public class Check implements Serializable {
         this.items = items;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
 
     @Override
     public String toString() {
-        return "Check{" + "id=" + id +
-                ", fiscalDocumentNumber=" + fiscalDocumentNumber +
+        return "Check{fiscalDocumentNumber=" + fiscalDocumentNumber +
                 ", fiscalDriveNumber=" + fiscalDriveNumber +
                 ", fiscalSign=" + fiscalSign +
                 ", nds10=" + nds10 +
@@ -124,16 +99,15 @@ public class Check implements Serializable {
                 ", totalSum=" + totalSum +
                 ", dateTime=" + dateTime +
                 ", items=" + items +
-                ", user=" + user +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Check)) return false;
+        if (!(o instanceof NalogRuCheck)) return false;
 
-        Check check = (Check) o;
+        NalogRuCheck check = (NalogRuCheck) o;
 
         if (!fiscalDocumentNumber.equals(check.fiscalDocumentNumber)) return false;
         if (!fiscalDriveNumber.equals(check.fiscalDriveNumber)) return false;
@@ -142,7 +116,6 @@ public class Check implements Serializable {
         if (!nds18.equals(check.nds18)) return false;
         if (!totalSum.equals(check.totalSum)) return false;
         if (!dateTime.equals(check.dateTime)) return false;
-        if (!user.equals(check.user)) return false;
         return items.equals(check.items);
     }
 
@@ -156,8 +129,8 @@ public class Check implements Serializable {
         result = 31 * result + totalSum.hashCode();
         result = 31 * result + dateTime.hashCode();
         result = 31 * result + items.hashCode();
-        result = 31 * result + user.hashCode();
         return result;
     }
 
 }
+

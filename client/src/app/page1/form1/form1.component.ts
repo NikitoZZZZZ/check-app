@@ -21,8 +21,8 @@ export class Form1Component implements OnInit {
 
   submit(checkData) {
     const params = new URLSearchParams();
-    params.set('fdocumentn', checkData.fn);
-    params.set('fdriven', checkData.fdn);
+    params.set('fdocumentn', checkData.fdn);
+    params.set('fdriven', checkData.fn);
     params.set('fs', checkData.fs);
     this.httpService.postData(params.toString(), this.url)
       .subscribe((data) => {

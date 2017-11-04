@@ -42,12 +42,11 @@
             <version>1.5.7.RELEASE</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-
+        
         <dependency>
             <groupId>com.netcracker.client</groupId>
             <artifactId>client</artifactId>
@@ -55,7 +54,11 @@
             <scope>runtime</scope>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.9.2</version>
+        </dependency>
     </dependencies>
 
     <repositories>
@@ -69,11 +72,19 @@
         </repository>
     </repositories>
 
-    <build>
-        <plugins>
+	<build>
+		<plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.5.8.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -83,8 +94,9 @@
                     <testFailureIgnore>true</testFailureIgnore>
                 </configuration>
             </plugin>
-        </plugins>
-    </build>
+		</plugins>
+	</build>
+
 
 
 </project>

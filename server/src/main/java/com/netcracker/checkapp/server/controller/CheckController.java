@@ -2,29 +2,57 @@ package com.netcracker.checkapp.server.controller;
 
 
 import com.netcracker.checkapp.server.model.Check;
+import com.netcracker.checkapp.server.persistance.CheckRepository;
 import com.netcracker.checkapp.server.service.checkservice.CheckService;
 import com.netcracker.checkapp.server.service.checkservice.CheckServiceImpl;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 public class CheckController {
+    CheckService checkService;
+    CheckRepository checkRepository;
+
+    CheckController(CheckService checkService, CheckRepository checkRepository) {
+        this.checkService = checkService;
+        this.checkRepository = checkRepository;
+    }
+
     @RequestMapping(value = "/load", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Check> load(@RequestParam Map<String, String> params) {
-        CheckService checkService = new CheckServiceImpl();
+        ResponseEntity<Check> responseEntity;
 
-//        if (/*success or not*/true) {
-//            return new ResponseEntity<>("Check's not been added to DB" + System.lineSeparator(),
-//                    HttpStatus.BAD_REQUEST);
-//        }
-        return new ResponseEntity<Check>(checkService.getCheck(params.get("fdocumentn"), params.get("fdriven"),
+        responseEntity = new ResponseEntity<Check>(checkService.getCheck(params.get("fdocumentn"), params.get("fdriven"),
                 params.get("fs")), HttpStatus.OK);
+        checkRepository.save(responseEntity.getBody());
+
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<List<Check>> getAll() {
+        ResponseEntity<List<Check>> responseEntity;
+
+        responseEntity = new ResponseEntity<List<Check>>(checkRepository.findAll(), HttpStatus.OK);
+
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<Check> getById(@PathVariable String id) {
+        ResponseEntity<Check> responseEntity;
+
+        responseEntity = new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
+
+        return responseEntity;
     }
 }
