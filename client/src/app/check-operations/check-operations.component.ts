@@ -3,8 +3,8 @@ import {HttpService} from '../services/httpService/http.service';
 
 @Component({
   selector: 'app-page1',
-  templateUrl: './page1.component.html',
-  styleUrls: ['./page1.component.css'],
+  templateUrl: './check-operations.component.html',
+  styleUrls: ['./check-operations.component.css'],
   providers: [HttpService]
 })
 

@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { Page1Module, routes} from './page1/index';
-import { Page2Module} from './page2/index';
+import { Page1Module, routes} from './check-operations/index';
+import { Page2Module} from './statistics/index';
 import {HttpModule} from '@angular/http';
 
 @NgModule({

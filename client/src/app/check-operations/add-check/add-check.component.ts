@@ -6,8 +6,8 @@ import {PostCheckData} from '../../checkData/post-check-data';
 @Component({
   selector: 'app-form1',
   providers: [HttpService],
-  templateUrl: './form1.component.html',
-  styleUrls: ['./form1.component.css']
+  templateUrl: './add-check.component.html',
+  styleUrls: ['./add-check.component.css']
 })
 
 

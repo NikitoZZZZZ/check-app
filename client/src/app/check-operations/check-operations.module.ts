@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Form1Component} from './form1/form1.component';
-import { Form2Component} from './form2/form2.component';
-import { Page1Component} from './page1.component';
+import { Form1Component} from './add-check/add-check.component';
+import { Form2Component} from './show-check/form2.component';
+import { Page1Component} from './check-operations.component';
 import {RouterModule} from '@angular/router';
 import {FormsModule} from '@angular/forms';
-import {ShowCheckComponent} from './form2/show-check/show-check.component';
+import {ShowCheckComponent} from './show-check/show-check/show-check.component';
 
 @NgModule({
   imports: [

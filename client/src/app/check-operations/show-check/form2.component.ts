@@ -14,8 +14,8 @@ export class Form2Component implements OnInit {
   getCheckData: GetCheckData[];
   done = false;
   showCheck: boolean;
-  url = '/assets/data.json';
-  /*url = 'http://localhost:8090/load';*/
+  /*url = '/assets/data.json';*/
+  url = 'http://localhost:8090/getAll';
   constructor(private httpService: HttpService) {
 
   }
