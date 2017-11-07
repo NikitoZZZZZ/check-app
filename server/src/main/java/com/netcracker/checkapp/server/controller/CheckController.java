@@ -24,7 +24,7 @@ public class CheckController {
         this.checkRepository = checkRepository;
     }
 
-    @RequestMapping(value = "/load", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/receipt", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<Check> load(@RequestParam Map<String, String> params) {
         ResponseEntity<Check> responseEntity;
@@ -36,7 +36,7 @@ public class CheckController {
         return responseEntity;
     }
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/receipt", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<Check>> getAll() {
         ResponseEntity<List<Check>> responseEntity;
@@ -46,7 +46,7 @@ public class CheckController {
         return responseEntity;
     }
 
-    @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/receipt/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<Check> getById(@PathVariable String id) {
         ResponseEntity<Check> responseEntity;
