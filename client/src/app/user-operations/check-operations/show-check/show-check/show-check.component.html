@@ -1,0 +1,15 @@
+<ul>
+  <p>FDN: {{check.fiscalDriveNumber}}</p>
+  <p>FN: {{check.fiscalDocumentNumber}}</p>
+  <p>FS: {{check.fiscalSign}}</p>
+  <p>Nds10: {{check.nds10}}</p>
+  <p>Nds18: {{check.nds18}}</p>
+  <ul>
+    <li *ngFor="let item of check.items">
+      <p>Название: {{item.name}}</p>
+      <p>Количество: {{item.quantity}}</p>
+      <p>Цена: {{item.price}}</p>
+      <p>NdsSum: {{item.ndsSum}}</p>
+    </li>
+  </ul>
+</ul>

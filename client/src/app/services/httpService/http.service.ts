@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Response, Headers, URLSearchParams} from '@angular/http';
-import {PostCheckData} from '../../checkData/post-check-data';
+import {PostCheckData} from '../../user-operations/checkData/post-check-data';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -20,7 +20,7 @@ export class HttpService {
       .catch((error: any) => Observable.throw(error));
   }
 
-  getData(url: string): Observable<any> {
+  getData(url: string) {
     return this.http.get(url);
   }
 

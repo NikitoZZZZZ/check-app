@@ -10,6 +10,7 @@ public class ServerApplication extends WebMvcConfigurerAdapter {
 		SpringApplication.run(ServerApplication.class, args);
 	}
 
+
 //    @Bean
 //	CommandLineRunner init(CheckRepository checkRepository) {
 //
