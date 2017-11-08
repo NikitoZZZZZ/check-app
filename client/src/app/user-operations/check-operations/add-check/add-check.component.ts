@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpService} from '../../services/httpService/http.service';
+import {HttpService} from '../../../services/httpService/http.service';
 import {PostCheckData} from '../../checkData/post-check-data';
 
 
@@ -11,10 +11,10 @@ import {PostCheckData} from '../../checkData/post-check-data';
 })
 
 
-export class Form1Component implements OnInit {
+export class AddCheckComponent implements OnInit {
   postCheckData: PostCheckData = new PostCheckData();
   done = false;
-  url = 'http://localhost:8090/load';
+  url = '/api/receipt';
 
   constructor(private httpService: HttpService) {
   }

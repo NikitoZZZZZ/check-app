@@ -1,9 +1,28 @@
-<div style="text-align:center">
-  <nav>
-    <a routerLink="/check-operations" routerLinkActive="active">Просмотр и добавление чеков</a>
-    <a routerLink="/statistics" routerLinkActive="active">Просмотр статистики</a>
-  </nav>
-</div>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<header class="clearfix">
+  <div class="container">
+    <div class="header-left">
+      <h1>Title</h1>
+    </div>
+    <div class="header-right">
+      <label for="open">
+        <span class="hidden-desktop"></span>
+      </label>
+      <input type="checkbox" name="" id="open">
+      <nav>
+        <a routerLink="user-operations" routerLinkActive="active">Главная</a>
+        <a routerLink="login" routerLinkActive="active">{{title}}</a>
+      </nav>
+    </div>
+  </div>
+</header>
+<!--<section class="clearfix">-->
+  <!--<div class="container">-->
+    <!--<div class="section-left">-->
+    <!--</div>-->
+  <!--</div>-->
+<!--</section>-->
+
 <div>
-  <router-outlet></router-outlet>
+  <router-outlet id="router"></router-outlet>
 </div>
