@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>NetcrackerPractice</groupId>
-    <artifactId>app</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>check-app</artifactId>
+    <version>0.1-hot</version>
     <packaging>pom</packaging>
 
-    <name>app</name>
+    <name>nc-check-app</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>

@@ -5,12 +5,12 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.netcracker.client</groupId>
   <artifactId>client</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
 
   <parent>
     <groupId>NetcrackerPractice</groupId>
-    <artifactId>app</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>check-app</artifactId>
+    <version>0.1-hot</version>
   </parent>
 
   <profiles>
