@@ -1,0 +1,25 @@
+<div class="panel-group big-panel scrollbar-cyan bordered-cyan card example-1 square" id="accordion">
+  <ul class="show-check" *ngFor="let data of getCheckData">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <div class="row">
+            <p data-toggle="collapse" data-parent="#accordion" href="#collapseOne" (click)="onToggle(data)">
+              Дата: {{data?.dateTime}}
+              Сумма: {{data?.totalSum}}
+            </p>
+          </div>
+        </h4>
+      </div>
+      <div id="collapseOne" [style.display]="data.selected===true?'block':'none'">
+        <app-show-check [check]="data"></app-show-check>
+      </div>
+    </div>
+
+  </ul>
+</div>
+
+
+
+
+

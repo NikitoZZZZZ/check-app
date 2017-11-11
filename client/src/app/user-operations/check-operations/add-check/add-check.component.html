@@ -1,0 +1,53 @@
+<div class="container center_div add_div table-bordered">
+  <b >fdriven:</b><br>
+  <div class="form-group">
+    <input class="form-control add-check" maxlength="10" pattern="^[ 0-9]+$" name="fn" [(ngModel)]="postCheckData.fn"
+           size="40"
+           #fn="ngModel" required>
+    <div *ngIf="fn.invalid && (fn.dirty || fn.touched)"
+         class="alert alert-danger add-check">
+      <div *ngIf="fn.errors.pattern">
+        FN состоит из цифр
+      </div>
+      <div *ngIf="fn.errors.required">
+        Данное поле обязательно
+      </div>
+    </div>
+  </div>
+  <b class="add-check">fdocumentn:</b><br>
+  <div class="form-group">
+    <input class="form-control add-check" minlength="16" maxlength="16" pattern="^[ 0-9]+$" name="fdn"
+           [(ngModel)]="postCheckData.fdn" size="40" #fdn="ngModel" required>
+    <div *ngIf="fdn.invalid && (fdn.dirty || fdn.touched)"
+         class="alert alert-danger add-check">
+      <div *ngIf="fdn.errors.pattern">
+        FN состоит из цифр
+      </div>
+      <div *ngIf="fdn.errors.required">
+        Данное поле обязательно
+      </div>
+      <div *ngIf="fdn.errors.minlength">
+        FDN состоит из 16 символов
+      </div>
+    </div>
+  </div>
+  <b class="add-check">fs:</b><br>
+  <div class="form-group">
+    <input class="form-control add-check" maxlength="10" pattern="^[ 0-9]+$" name="fs" [(ngModel)]="postCheckData.fs"
+           size="40"
+           #fs="ngModel" required>
+    <div *ngIf="fs.invalid && (fs.dirty || fs.touched)"
+         class="alert alert-danger add-check">
+      <div *ngIf="fs.errors.pattern">
+        FN состоит из цифр
+      </div>
+      <div *ngIf="fs.errors.required">
+        Данное поле обязательно
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <input type="submit" [disabled]="fn.invalid || fdn.invalid || fs.invalid"
+           class="btn btn-default add-check" value="Ввод" (click)="submit(postCheckData)">
+  </div>
+</div>
