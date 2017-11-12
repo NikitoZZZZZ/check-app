@@ -10,17 +10,18 @@
       </label>
       <input type="checkbox" name="" id="open">
       <nav>
-        <a class="dropdown main-menu-item link" routerLink="user-operations" routerLinkActive="active">
-          Операции пользователя
+        <li class="dropdown main-menu-item">
+          <a class="link" routerLink="user-operations" routerLinkActive="active">
+            Операции пользователя</a>
           <ul class="dropdown-menu">
             <li><a routerLink="user-operations/check-operations/add-check" routerLinkActive="active">Добавление чека</a>
             </li>
             <li><a routerLink="user-operations/check-operations/show-check" routerLinkActive="active">Просмотр чека</a>
             </li>
           </ul>
-        </a>
-        <a class="link" routerLink="user-operations/statistics" routerLinkActive="active">Статистика</a>
-        <a class="link" routerLink="login" routerLinkActive="active">{{title}}</a>
+        </li>
+        <a routerLink="user-operations/statistics" routerLinkActive="active">Статистика</a>
+        <a routerLink="login" routerLinkActive="active">{{title}}</a>
       </nav>
     </div>
   </div>
