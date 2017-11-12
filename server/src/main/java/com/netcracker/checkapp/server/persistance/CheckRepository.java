@@ -1,11 +1,9 @@
 package com.netcracker.checkapp.server.persistance;
 
 import com.netcracker.checkapp.server.model.Check;
-import com.netcracker.checkapp.server.model.User;
+import com.netcracker.checkapp.server.model.UserInfo;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -18,10 +16,8 @@ public interface CheckRepository extends MongoRepository<Check, String> {
 
     // it may be more reliable to find check by custom method, using expanding interface CheckRepositoryCustom
 
-    Check save(Check check);
-
     Check findById(String id);
 
-    Check findByUser(User user);
+    List<Check> findByUserInfoLogin(String login);
 
 }
