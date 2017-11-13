@@ -21,8 +21,9 @@ public class Converter {
         items.forEach(item -> {
             item.setPrice(item.getPrice().divide(new BigDecimal(100)));
             item.setNds10(item.getNds10().divide(new BigDecimal(100)));
-            item.setNdsSum(item.getNdsSum().equals(new BigDecimal(0))
-                    ? item.getNds10() : item.getNdsSum().divide(new BigDecimal(100)));
+            item.setNds18(item.getNds18().divide(new BigDecimal(100)));
+            item.setNdsSum(item.getNds10().equals(new BigDecimal(0))
+                    ? item.getNds18() : item.getNds10());
         });
         check.setItems(items);
         check.setUser(new User() /*temporary*/);
