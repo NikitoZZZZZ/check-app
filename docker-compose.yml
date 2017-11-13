@@ -2,10 +2,11 @@ version: '3'
 services:
   web:
     build: .
+    image: "ncpractice172nti/ncpractice_web-app"
     links:
      - database
     ports:
-     - "8090:8090"
+     - "80:8090"
   database:
     image: "mongo:latest"
     ports:
