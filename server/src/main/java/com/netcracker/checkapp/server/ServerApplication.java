@@ -21,7 +21,7 @@ public class ServerApplication extends WebMvcConfigurerAdapter {
 //          List<Check> checkList = checkRepository.findByLoginAndPwd("rogeenok","123456");
 //			for (Check checkvar: checkList)
 //				System.out.println(checkvar);
-//			User user = new User();
+//			UserInfo user = new UserInfo();
 //			user.setLogin("rogeenok");
 //			user.setPwd("123456");
 //			Check check = checkRepository.findByUser(user);

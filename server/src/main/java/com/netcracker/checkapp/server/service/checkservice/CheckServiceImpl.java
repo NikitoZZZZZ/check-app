@@ -31,7 +31,7 @@ public class CheckServiceImpl implements CheckService {
     private final static String CLIENT_VERSION_ID = "1.4.2";
     private final static String HOST = "Host";
     private final static String HOST_ID = "proverkacheka.nalog.ru:8888";
-    private final static String USER_AGENT = "User-Agent";
+    private final static String USER_AGENT = "UserInfo-Agent";
     private final static String USER_AGENT_ID = "okhttp/3.0.1";
     private final static String ROOT = "/document/receipt";
 

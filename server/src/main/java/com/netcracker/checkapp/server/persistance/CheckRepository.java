@@ -3,6 +3,7 @@ package com.netcracker.checkapp.server.persistance;
 import com.netcracker.checkapp.server.model.Check;
 import com.netcracker.checkapp.server.model.UserInfo;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,8 +17,10 @@ public interface CheckRepository extends MongoRepository<Check, String> {
 
     // it may be more reliable to find check by custom method, using expanding interface CheckRepositoryCustom
 
+//    @Secured({"ADMIN", "USER"})
     Check findById(String id);
 
+//    @Secured({"ADMIN", "USER"})
     List<Check> findByUserInfoLogin(String login);
 
 }

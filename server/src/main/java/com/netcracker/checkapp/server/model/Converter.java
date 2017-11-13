@@ -25,7 +25,7 @@ public class Converter {
                     ? item.getNds10() : item.getNdsSum().divide(new BigDecimal(100)));
         });
         check.setItems(items);
-        check.setUser(new User() /*temporary*/);
+        check.setUserInfo(new UserInfo() /*temporary*/);
         return check;
     }
 }
