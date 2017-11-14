@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../../../services/httpService/http.service';
 import {GetCheckData} from '../../checkData/get-check-data';
 
-
 @Component({
   selector: 'app-form2',
   templateUrl: './show-check-item.component.html',

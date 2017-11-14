@@ -9,7 +9,7 @@
               <h4 class="panel-title">
                 <div class="row">
                   <div data-toggle="collapse" data-parent="#accordion" href="#collapseOne" (click)="onToggle(data)">
-                    <div class="col-xs-6"> Дата: {{data?.dateTime}}</div>
+                    <div class="col-xs-6"> Дата: {{data?.dateTime | date: 'H:mm  d.M.yy'}}</div>
                     <div class="col-xs-6 sum"> Сумма: {{data?.totalSum}}</div>
                     <div class="col-xs-12"> Количество товаров в чеке: {{data?.items.length}}</div>
                     <div class="col-xs-12" *ngIf="data?.place">Место покупки: {{data?.place}}</div>
