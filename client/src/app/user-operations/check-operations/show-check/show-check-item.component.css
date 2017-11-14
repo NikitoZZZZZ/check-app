@@ -37,6 +37,8 @@
   transition: .3s linear;
 }
 .square ul:hover {border-top: 2px solid #0b1638;}
+
+
 .square ul:hover:before {
   border: 2px solid #0b1638;
   background: #0b1638;
@@ -50,3 +52,5 @@
 .sum{
   text-align: right;
 }
+
+
