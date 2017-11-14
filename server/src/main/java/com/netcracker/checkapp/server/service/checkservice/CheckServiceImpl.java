@@ -36,7 +36,7 @@ public class CheckServiceImpl implements CheckService {
     private final static String ROOT = "/document/receipt";
 
     @Override
-    public Check getCheck(String fiscalDocumentNumber, String fiscalDriveNumber, String fiscalSign) {
+    public Check getCheck(String fiscalDriveNumber, String fiscalDocumentNumber, String fiscalSign) {
         Map<String, String> headers = new HashMap<>();
         NalogRuCheck nalogRuCheck = new NalogRuCheck();
         ObjectMapper objectMapper = new ObjectMapper();

@@ -13,7 +13,8 @@ public interface UserInfoRepository extends MongoRepository<UserInfo, String> {
 
     UserInfo findByLogin(String login);
 
-//    @Secured("USER")
     UserInfo deleteUserInfoByLogin(String login);
+
+    boolean existsByLogin(String login);
 
 }

@@ -18,6 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(value = "/api/receipts")
 public class CheckController {
+
     CheckService checkService;
     CheckRepository checkRepository;
 
@@ -26,37 +27,39 @@ public class CheckController {
         this.checkRepository = checkRepository;
     }
 
-    @PostMapping
-//    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @PostMapping({"/admin", "/user"})
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<?> load(@RequestParam Map<String, String> params) {
-        checkRepository.save(checkService.getCheck(params.get("fdocumentn"), params.get("fdriven"),
-                params.get("fs")));
+    public ResponseEntity<?> load(@RequestBody Map<String, String> body) {
+        checkRepository.save(checkService.getCheck(body.get("fdriven"), body.get("fdocumentn"),
+                body.get("fs")));
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @GetMapping
-////    @Secured({"ROLE_ADMIN"})
-//    @ResponseBody
-//    public ResponseEntity<List<Check>> getAll() {
-//        return new ResponseEntity<List<Check>>(checkRepository.findAll(), HttpStatus.OK);
-//    }
-
-    @GetMapping(value = "/{id}")
-//    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @GetMapping({"/admin/{id}", "/user/{id}"})
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<Check> getById(@PathVariable String id) {
         return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping/*(value = "/{login}")*/
-//    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @GetMapping("/admin/all")
+    @Secured({"ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<List<Check>> getByUserInfoLogin() {
+    public ResponseEntity<List<Check>> adminGetByUserInfoLogin(@RequestBody Map<String, String> body) {
+        return new ResponseEntity<List<Check>>(checkRepository.findByUserInfoLogin(body.get("login")),
+                HttpStatus.OK);
+    }
+
+    @GetMapping("/user/all")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @ResponseBody
+    public ResponseEntity<List<Check>> userGetByUserInfoLogin() {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return new ResponseEntity<List<Check>>(checkRepository.findByUserInfoLogin(principal.getUsername()),
                 HttpStatus.OK);
     }
+
 }
