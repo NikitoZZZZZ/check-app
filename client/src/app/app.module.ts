@@ -13,6 +13,7 @@ import {LoginComponent} from "./login/login/login.component";
 import {Page2Component} from "./user-operations/statistics/page2.component";
 import {FormsModule} from "@angular/forms";
 import {ShowCheckComponent} from "./user-operations/check-operations/show-check/show-check/show-check.component";
+import { OrderByPipe } from './user-operations/check-operations/show-check/pipes/order-by.pipe';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {ShowCheckComponent} from "./user-operations/check-operations/show-check/
     ShowCheckItemComponent,
     LoginComponent,
     Page2Component,
-    ShowCheckComponent
+    ShowCheckComponent,
+    OrderByPipe
   ],
   imports: [
     BrowserModule,

@@ -6,6 +6,7 @@
   <p *ngIf="check.nds18">НДС18: {{check.nds18}}</p>
   <ul *ngIf="check.items">
     <li *ngFor="let item of check.items">
+
       <p>Название: {{item.name}}</p>
       <p *ngIf="item.quantity">Количество: {{item.quantity}}</p>
       <p>Цена: {{item.price}}</p>
@@ -13,3 +14,4 @@
     </li>
   </ul>
 </ul>
+

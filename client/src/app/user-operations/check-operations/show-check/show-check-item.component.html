@@ -3,7 +3,7 @@
   <div class="col-xs-5 col-xs-offset-1">
     <ol class="square">
       <div class="panel-group big-panel scrollbar-cyan bordered-cyan card example-1 square" id="accordion">
-        <ul class="show-check" *ngFor="let data of getCheckData">
+        <ul class="show-check" *ngFor="let data of getCheckData | orderBy : 'dateTime'">
           <div class="panel panel-default">
             <div class="panel-heading">
               <h4 class="panel-title">
