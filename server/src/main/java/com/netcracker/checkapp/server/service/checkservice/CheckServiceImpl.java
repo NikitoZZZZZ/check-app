@@ -36,7 +36,7 @@ public class CheckServiceImpl implements CheckService {
     private final static String ROOT = "/document/receipt";
 
     @Override
-    public Check getCheck(String fiscalDocumentNumber, String fiscalDriveNumber, String fiscalSign) {
+    public Check getCheck(String fiscalDriveNumber, String fiscalDocumentNumber, String fiscalSign) {
         Map<String, String> headers = new HashMap<>();
         NalogRuCheck nalogRuCheck = new NalogRuCheck();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -51,8 +51,8 @@ public class CheckServiceImpl implements CheckService {
 
         HttpEntity<String> httpEntity = new HttpEntity<String>(addHeaders(headers));
         try {
-            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU, fiscalDocumentNumber,
-                    fiscalDriveNumber, fiscalSign), HttpMethod.GET, httpEntity, String.class).getBody());
+            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU, fiscalDriveNumber,
+                    fiscalDocumentNumber, fiscalSign), HttpMethod.GET, httpEntity, String.class).getBody());
             nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
         } catch (IOException e) {
             e.printStackTrace();

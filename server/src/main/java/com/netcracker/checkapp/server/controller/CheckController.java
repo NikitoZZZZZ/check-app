@@ -29,7 +29,7 @@ public class CheckController {
     public ResponseEntity<Check> load(@RequestParam Map<String, String> params) {
         ResponseEntity<Check> responseEntity;
 
-        responseEntity = new ResponseEntity<Check>(checkService.getCheck(params.get("fdocumentn"), params.get("fdriven"),
+        responseEntity = new ResponseEntity<Check>(checkService.getCheck(params.get("fdriven"), params.get("fdocumentn"),
                 params.get("fs")), HttpStatus.OK);
         checkRepository.save(responseEntity.getBody());
 
