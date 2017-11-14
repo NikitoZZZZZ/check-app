@@ -12,4 +12,5 @@ export interface GetCheckData {
   items: CheckItems[];
   user: User;
   selected: boolean;
+  place: string;
 }
