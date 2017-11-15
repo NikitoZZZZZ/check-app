@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-xs-10 col-xs-offset-1">
+  <div class="col-md-10 col-md-offset-1">
     <p>ФН: {{check.fiscalDriveNumber}}</p>
     <p>ФД: {{check.fiscalDocumentNumber}}</p>
     <p>ФПД: {{check.fiscalSign}}</p>
@@ -7,15 +7,15 @@
     <p *ngIf="check.nds18">НДС18: {{check.nds18}}</p>
     <label *ngIf="check.items"> Позиции:</label>
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-md-12">
         <ul *ngIf="check.items">
           <li *ngFor="let item of check.items" class="check-item">
 
             <p>Название: <br/>{{item.name}}</p>
             <div class="row">
-              <div class="col-xs-6">
+              <div class="col-md-6">
                 <p>Цена: {{item.price}}</p></div>
-              <div class="col-xs-6">
+              <div class="col-md-6">
                 <p *ngIf="item.quantity">Количество: {{item.quantity}}</p></div>
             </div>
             <p>В т.ч. НДС: {{item.ndsSum}}</p>
