@@ -9,4 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface PlaceRepository extends MongoRepository<Place, String> {
 
     Place findByCoords(Coords coords);
+
+    // method for incrementing place numOfChecks - should be implemented by ourselves
+    Place findCustomOneAndUpdate(String id);
 }
