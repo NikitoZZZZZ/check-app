@@ -8,7 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlaceRepository extends MongoRepository<Place, String> {
 
-    Place findById(String id);
-
     Place findByCoords(Coords coords);
 }
