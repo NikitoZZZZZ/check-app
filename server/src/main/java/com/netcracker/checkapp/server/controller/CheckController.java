@@ -1,6 +1,5 @@
 package com.netcracker.checkapp.server.controller;
 
-
 import com.netcracker.checkapp.server.model.Check;
 import com.netcracker.checkapp.server.persistance.CheckRepository;
 import com.netcracker.checkapp.server.persistance.UserInfoRepository;
@@ -8,6 +7,7 @@ import com.netcracker.checkapp.server.service.checkservice.CheckService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ public class CheckController {
         this.checkRepository = checkRepository;
     }
 
-    @PostMapping({"/admin", "/user"})
+    @PostMapping()
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<?> load(@RequestBody Map<String, String> body) {
@@ -37,28 +37,35 @@ public class CheckController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping({"/admin/{id}", "/user/{id}"})
+    @GetMapping("/{id}")
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<Check> getById(@PathVariable String id) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            if (checkRepository.existsByIdAndUserInfoLogin(id, principal.getUsername())) {
+                return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<Check>(HttpStatus.FORBIDDEN);
+            }
+        }
         return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/admin/all")
-    @Secured({"ROLE_ADMIN"})
-    @ResponseBody
-    public ResponseEntity<List<Check>> adminGetByUserInfoLogin(@RequestBody Map<String, String> body) {
-        return new ResponseEntity<List<Check>>(checkRepository.findByUserInfoLogin(body.get("login")),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/user/all")
+    @GetMapping("/all")
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<List<Check>> userGetByUserInfoLogin() {
+    public ResponseEntity<List<Check>> getByUserInfoLogin(@RequestBody(required = false) Map<String, String> body) {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return new ResponseEntity<List<Check>>(checkRepository.findByUserInfoLogin(principal.getUsername()),
+        if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            return new ResponseEntity<List<Check>>(checkRepository.findByUserInfoLogin(principal.getUsername()),
+                    HttpStatus.OK);
+        }
+
+        return new ResponseEntity<List<Check>>(checkRepository.findByUserInfoLogin(body.get("login")),
                 HttpStatus.OK);
     }
 

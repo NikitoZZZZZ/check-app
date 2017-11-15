@@ -17,10 +17,10 @@ public interface CheckRepository extends MongoRepository<Check, String> {
 
     // it may be more reliable to find check by custom method, using expanding interface CheckRepositoryCustom
 
-//    @Secured({"ADMIN", "USER"})
     Check findById(String id);
 
-//    @Secured({"ADMIN", "USER"})
+    boolean existsByIdAndUserInfoLogin(String id, String login);
+
     List<Check> findByUserInfoLogin(String login);
 
 }

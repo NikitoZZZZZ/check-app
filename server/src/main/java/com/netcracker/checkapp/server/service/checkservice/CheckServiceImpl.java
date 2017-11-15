@@ -51,8 +51,8 @@ public class CheckServiceImpl implements CheckService {
 
         HttpEntity<String> httpEntity = new HttpEntity<String>(addHeaders(headers));
         try {
-            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU, fiscalDocumentNumber,
-                    fiscalDriveNumber, fiscalSign), HttpMethod.GET, httpEntity, String.class).getBody());
+            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU, fiscalDriveNumber,
+                    fiscalDocumentNumber, fiscalSign), HttpMethod.GET, httpEntity, String.class).getBody());
             nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
         } catch (IOException e) {
             e.printStackTrace();

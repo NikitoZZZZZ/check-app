@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -44,41 +45,34 @@ public class UserInfoController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/admin")
+    @DeleteMapping
     @ResponseBody
-    @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<UserInfo> adminDelete(@RequestBody Map<String, String> body) {
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    public ResponseEntity<?> delete(@RequestBody(required = false) Map<String, String> body) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            return new ResponseEntity<>(userInfoRepository.deleteUserInfoByLogin(principal.getUsername()),
+                    HttpStatus.NO_CONTENT);
+        }
+
         return new ResponseEntity<>(userInfoRepository.deleteUserInfoByLogin(body.get("login")), HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/user")
+    @GetMapping
     @ResponseBody
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity<UserInfo> userDelete() {
+    public ResponseEntity<UserInfo> get(@RequestBody(required = false) Map<String, String> body) {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return new ResponseEntity<>(userInfoRepository.deleteUserInfoByLogin(principal.getUsername()),
-                HttpStatus.NO_CONTENT);
-    }
+        if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            return new ResponseEntity<>(userInfoRepository.findByLogin(principal.getUsername()), HttpStatus.OK);
+        }
 
-    @GetMapping("/admin")
-    @ResponseBody
-    @Secured({"ROLE_ADMIN"})
-    public ResponseEntity<UserInfo> adminGet(@RequestBody Map<String, String> body) {
-        System.out.println(body);
         return new ResponseEntity<>(userInfoRepository.findByLogin(body.get("login")), HttpStatus.OK);
     }
 
-    @GetMapping("/user")
-    @ResponseBody
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    public ResponseEntity<UserInfo> userGet() {
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        return new ResponseEntity<>(userInfoRepository.findByLogin(principal.getUsername()), HttpStatus.OK);
-    }
-
-    @GetMapping("/admin/all")
+    @GetMapping("/all")
     @ResponseBody
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<List<UserInfo>> getAll() {
