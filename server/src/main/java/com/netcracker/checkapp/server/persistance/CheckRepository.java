@@ -19,8 +19,8 @@ public interface CheckRepository extends MongoRepository<Check, String> {
 
     Check findById(String id);
 
-    boolean existsByIdAndUserInfoLogin(String id, String login);
+    boolean existsByIdAndUsername(String id, String username);
 
-    List<Check> findByUserInfoLogin(String login);
+    List<Check> findByUsername(String login);
 
 }

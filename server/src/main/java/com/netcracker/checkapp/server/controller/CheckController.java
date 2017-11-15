@@ -44,7 +44,7 @@ public class CheckController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            if (checkRepository.existsByIdAndUserInfoLogin(id, principal.getUsername())) {
+            if (checkRepository.existsByIdAndUsername(id, principal.getUsername())) {
                 return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
             }
             else {
@@ -61,11 +61,11 @@ public class CheckController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            return new ResponseEntity<List<Check>>(checkRepository.findByUserInfoLogin(principal.getUsername()),
+            return new ResponseEntity<List<Check>>(checkRepository.findByUsername(principal.getUsername()),
                     HttpStatus.OK);
         }
 
-        return new ResponseEntity<List<Check>>(checkRepository.findByUserInfoLogin(body.get("login")),
+        return new ResponseEntity<List<Check>>(checkRepository.findByUsername(body.get("login")),
                 HttpStatus.OK);
     }
 
