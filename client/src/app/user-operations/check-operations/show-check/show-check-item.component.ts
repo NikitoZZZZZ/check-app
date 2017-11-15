@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../../../services/httpService/http.service';
 import {GetCheckData} from '../../checkData/get-check-data';
 
-
 @Component({
   selector: 'app-form2',
   templateUrl: './show-check-item.component.html',
@@ -14,7 +13,7 @@ export class ShowCheckItemComponent implements OnInit {
   getCheckData: GetCheckData[];
   done = false;
   showCheck: boolean;
-  url = '/api/receipt';
+  url = '/api/receipts';
   constructor(private httpService: HttpService) {
 
   }
@@ -37,7 +36,6 @@ export class ShowCheckItemComponent implements OnInit {
     this.httpService.getData(this.url)
       .map(resp => resp.json() as GetCheckData[])
       .subscribe((data) => {
-        console.log(data);
         this.getCheckData = data;
       });
   }

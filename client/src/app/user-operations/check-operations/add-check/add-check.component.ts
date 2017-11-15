@@ -14,7 +14,7 @@ import {PostCheckData} from '../../checkData/post-check-data';
 export class AddCheckComponent implements OnInit {
   postCheckData: PostCheckData = new PostCheckData();
   done = false;
-  url = '/api/receipt';
+  url = '/api/receipts';
 
   constructor(private httpService: HttpService) {
   }
