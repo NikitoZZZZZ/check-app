@@ -33,7 +33,7 @@ public class Check implements Serializable {
     private LocalDateTime dateTime;
     private List<Item> items;
     private User user;
-    private Place place;
+    private ShortPlace shortPlace;
 
     public String getId() {return id;}
 
@@ -113,12 +113,12 @@ public class Check implements Serializable {
         this.user = user;
     }
 
-    public Place getPlace() {
-        return place;
+    public ShortPlace getShortPlace() {
+        return shortPlace;
     }
 
-    public void setPlace(Place place) {
-        this.place = place;
+    public void setShortPlace(ShortPlace shortPlace) {
+        this.shortPlace = shortPlace;
     }
 
     @Override
@@ -133,7 +133,7 @@ public class Check implements Serializable {
                 ", dateTime=" + dateTime +
                 ", items=" + items +
                 ", user=" + user +
-                ", place=" + place +
+                ", shortPlace=" + shortPlace +
                 '}';
     }
 
@@ -152,7 +152,7 @@ public class Check implements Serializable {
         if (!totalSum.equals(check.totalSum)) return false;
         if (!dateTime.equals(check.dateTime)) return false;
         if (!user.equals(check.user)) return false;
-        if (!place.equals(check.place)) return false;
+        if (!shortPlace.equals(check.shortPlace)) return false;
         return items.equals(check.items);
     }
 
@@ -167,7 +167,7 @@ public class Check implements Serializable {
         result = 31 * result + dateTime.hashCode();
         result = 31 * result + items.hashCode();
         result = 31 * result + user.hashCode();
-        result = 31 * result + place.hashCode();
+        result = 31 * result + shortPlace.hashCode();
         return result;
     }
 
