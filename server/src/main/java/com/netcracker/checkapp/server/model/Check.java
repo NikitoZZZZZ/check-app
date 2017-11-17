@@ -33,6 +33,7 @@ public class Check implements Serializable {
     private LocalDateTime dateTime;
     private List<Item> items;
     private String username;
+    private ShortPlace shortPlace;
 
     public String getId() {return id;}
 
@@ -112,19 +113,28 @@ public class Check implements Serializable {
         this.username = username;
     }
 
+    public ShortPlace getShortPlace() {
+        return shortPlace;
+    }
+
+    public void setShortPlace(ShortPlace shortPlace) {
+        this.shortPlace = shortPlace;
+    }
 
     @Override
     public String toString() {
-        return "Check{" + "id=" + id +
-                ", fiscalDocumentNumber=" + fiscalDocumentNumber +
-                ", fiscalDriveNumber=" + fiscalDriveNumber +
-                ", fiscalSign=" + fiscalSign +
+        return "Check{" +
+                "id='" + id + '\'' +
+                ", fiscalDocumentNumber='" + fiscalDocumentNumber + '\'' +
+                ", fiscalDriveNumber='" + fiscalDriveNumber + '\'' +
+                ", fiscalSign='" + fiscalSign + '\'' +
                 ", nds10=" + nds10 +
                 ", nds18=" + nds18 +
                 ", totalSum=" + totalSum +
                 ", dateTime=" + dateTime +
                 ", items=" + items +
-                ", username=" + username +
+                ", username='" + username + '\'' +
+                ", shortPlace=" + shortPlace +
                 '}';
     }
 
@@ -135,6 +145,7 @@ public class Check implements Serializable {
 
         Check check = (Check) o;
 
+        if (!id.equals(check.id)) return false;
         if (!fiscalDocumentNumber.equals(check.fiscalDocumentNumber)) return false;
         if (!fiscalDriveNumber.equals(check.fiscalDriveNumber)) return false;
         if (!fiscalSign.equals(check.fiscalSign)) return false;
@@ -142,13 +153,16 @@ public class Check implements Serializable {
         if (!nds18.equals(check.nds18)) return false;
         if (!totalSum.equals(check.totalSum)) return false;
         if (!dateTime.equals(check.dateTime)) return false;
+        if (!items.equals(check.items)) return false;
         if (!username.equals(check.username)) return false;
-        return items.equals(check.items);
+        return shortPlace.equals(check.shortPlace);
+
     }
 
     @Override
     public int hashCode() {
-        int result = fiscalDocumentNumber.hashCode();
+        int result = id.hashCode();
+        result = 31 * result + fiscalDocumentNumber.hashCode();
         result = 31 * result + fiscalDriveNumber.hashCode();
         result = 31 * result + fiscalSign.hashCode();
         result = 31 * result + nds10.hashCode();
@@ -157,7 +171,7 @@ public class Check implements Serializable {
         result = 31 * result + dateTime.hashCode();
         result = 31 * result + items.hashCode();
         result = 31 * result + username.hashCode();
+        result = 31 * result + shortPlace.hashCode();
         return result;
     }
-
 }
