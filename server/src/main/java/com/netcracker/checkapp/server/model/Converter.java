@@ -1,5 +1,8 @@
 package com.netcracker.checkapp.server.model;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,6 +12,7 @@ public class Converter {
     public static Check fromNalogRuCheckToCheck(NalogRuCheck nalogRuCheck) {
         Check check = new Check();
         List<Item> items = nalogRuCheck.getItems();
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         check.setFiscalDocumentNumber(nalogRuCheck.getFiscalDocumentNumber());
         check.setFiscalDriveNumber(nalogRuCheck.getFiscalDriveNumber());
@@ -21,11 +25,13 @@ public class Converter {
         items.forEach(item -> {
             item.setPrice(item.getPrice().divide(new BigDecimal(100)));
             item.setNds10(item.getNds10().divide(new BigDecimal(100)));
-            item.setNdsSum(item.getNdsSum().equals(new BigDecimal(0))
-                    ? item.getNds10() : item.getNdsSum().divide(new BigDecimal(100)));
+            item.setNds18(item.getNds18().divide(new BigDecimal(100)));
+            item.setNdsSum(item.getNds10().equals(new BigDecimal(0))
+                    ? item.getNds18() : item.getNds10());
         });
         check.setItems(items);
-        check.setUser(new User() /*temporary*/);
+        check.setUsername(principal.getUsername());
+
         return check;
     }
 }

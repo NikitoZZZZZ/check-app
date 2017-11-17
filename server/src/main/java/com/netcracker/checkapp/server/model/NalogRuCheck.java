@@ -11,10 +11,12 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NalogRuCheck {
     private static final String DEFAULT_NDS18 = "0";
+    private static final String DEFAULT_NDS10 = "0";
 
     private String fiscalDocumentNumber;
     private String fiscalDriveNumber;
     private String fiscalSign;
+    @JsonProperty(required = false)
     private String nds10;
     @JsonProperty(required = false)
     private String nds18;
@@ -23,7 +25,8 @@ public class NalogRuCheck {
     private List<Item> items;
 
     public NalogRuCheck() {
-        this.nds18 = "0";
+        this.nds18 = DEFAULT_NDS18;
+        this.nds10 = DEFAULT_NDS10;
     }
 
     public String getFiscalDocumentNumber() {
