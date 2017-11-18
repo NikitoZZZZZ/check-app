@@ -4,7 +4,6 @@ import com.netcracker.checkapp.server.model.UserInfo;
 import com.netcracker.checkapp.server.persistance.UserInfoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

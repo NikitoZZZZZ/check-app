@@ -27,7 +27,7 @@ public class CheckController {
         this.checkRepository = checkRepository;
     }
 
-    @PostMapping()
+    @PostMapping
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<?> load(@RequestBody Map<String, String> body) {
