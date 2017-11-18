@@ -8,12 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class ReceiptListMapComponent implements OnInit {
 
   constructor() { }
-  radius: string;
+  radius: number;
   ngOnInit() {
-    this.radius="0";
+    this.radius=0;
   }
 
   checkValue(){
-    if (this.radius==="") this.radius="0";
+    if (this.radius===0) this.radius=0;
   }
 }
