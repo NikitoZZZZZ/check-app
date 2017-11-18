@@ -1,4 +1,4 @@
-package com.netcracker.checkapp.server.model;
+package com.netcracker.checkapp.server.model.check;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,7 @@
 package com.netcracker.checkapp.server.service.placeservice;
 
-import com.netcracker.checkapp.server.model.Place;
-import com.sun.prism.image.Coords;
+import com.netcracker.checkapp.server.model.place.Coords;
+import com.netcracker.checkapp.server.model.place.Place;
 
 import java.util.List;
 

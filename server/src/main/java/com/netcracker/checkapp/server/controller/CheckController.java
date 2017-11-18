@@ -1,6 +1,6 @@
 package com.netcracker.checkapp.server.controller;
 
-import com.netcracker.checkapp.server.model.Check;
+import com.netcracker.checkapp.server.model.check.Check;
 import com.netcracker.checkapp.server.persistance.CheckRepository;
 import com.netcracker.checkapp.server.persistance.UserInfoRepository;
 import com.netcracker.checkapp.server.service.checkservice.CheckService;

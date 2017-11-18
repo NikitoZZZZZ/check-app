@@ -1,4 +1,4 @@
-package com.netcracker.checkapp.server.model;
+package com.netcracker.checkapp.server.model.check;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

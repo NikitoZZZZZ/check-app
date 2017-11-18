@@ -1,8 +1,8 @@
 package com.netcracker.checkapp.server.service.placeservice;
 
-import com.netcracker.checkapp.server.model.Place;
+import com.netcracker.checkapp.server.model.place.Coords;
+import com.netcracker.checkapp.server.model.place.Place;
 import com.netcracker.checkapp.server.persistance.PlaceRepository;
-import com.sun.prism.image.Coords;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
