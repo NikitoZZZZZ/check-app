@@ -1,35 +1,7 @@
-package com.netcracker.checkapp.server.model;
+package com.netcracker.checkapp.server.model.place;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-class Coords {
-
-    private double longitude;
-    private double latitude;
-}
-
-class ShortPlace {
-
-    private String id;
-    private String name;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-}
 
 @Document(collection = "places")
 public class Place {

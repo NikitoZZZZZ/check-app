@@ -1,7 +1,7 @@
 package com.netcracker.checkapp.server.persistance.customs;
 
 import com.mongodb.WriteResult;
-import com.netcracker.checkapp.server.model.Place;
+import com.netcracker.checkapp.server.model.place.Place;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;

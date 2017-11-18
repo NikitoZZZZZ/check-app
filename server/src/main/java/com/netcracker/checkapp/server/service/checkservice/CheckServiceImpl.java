@@ -2,9 +2,9 @@ package com.netcracker.checkapp.server.service.checkservice;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netcracker.checkapp.server.model.Check;
-import com.netcracker.checkapp.server.model.Converter;
-import com.netcracker.checkapp.server.model.NalogRuCheck;
+import com.netcracker.checkapp.server.model.check.Check;
+import com.netcracker.checkapp.server.model.check.Converter;
+import com.netcracker.checkapp.server.model.check.NalogRuCheck;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;

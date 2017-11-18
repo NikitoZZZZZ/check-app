@@ -1,10 +1,9 @@
-package com.netcracker.checkapp.server.model;
+package com.netcracker.checkapp.server.model.check;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @JsonSerialize
@@ -94,7 +93,7 @@ public class NalogRuCheck {
 
     @Override
     public String toString() {
-        return "Check{fiscalDocumentNumber=" + fiscalDocumentNumber +
+        return "check{fiscalDocumentNumber=" + fiscalDocumentNumber +
                 ", fiscalDriveNumber=" + fiscalDriveNumber +
                 ", fiscalSign=" + fiscalSign +
                 ", nds10=" + nds10 +

@@ -1,7 +1,5 @@
 package com.netcracker.checkapp.server.persistance.customs;
 
-import com.netcracker.checkapp.server.model.Place;
-
 public interface PlaceRepositoryCustom {
 
     /*

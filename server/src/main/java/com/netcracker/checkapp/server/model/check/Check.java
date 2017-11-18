@@ -1,4 +1,4 @@
-package com.netcracker.checkapp.server.model;
+package com.netcracker.checkapp.server.model.check;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.netcracker.checkapp.server.model.place.ShortPlace;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -123,7 +124,7 @@ public class Check implements Serializable {
 
     @Override
     public String toString() {
-        return "Check{" +
+        return "check{" +
                 "id='" + id + '\'' +
                 ", fiscalDocumentNumber='" + fiscalDocumentNumber + '\'' +
                 ", fiscalDriveNumber='" + fiscalDriveNumber + '\'' +
