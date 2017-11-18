@@ -18,7 +18,7 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping(value = "users")
+@RequestMapping(value = "/api/users")
 public class UserInfoController {
 
     private UserInfoRepository userInfoRepository;
@@ -30,8 +30,9 @@ public class UserInfoController {
     }
 
     @PostMapping
+    @Secured({"ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<?> add(@RequestBody Map<String, String> body) {
+    public ResponseEntity<?> addAdmin(@RequestBody Map<String, String> body) {
         UserInfo userInfo = new UserInfo();
 
         userInfo.setLogin(body.get("login"));
@@ -39,7 +40,7 @@ public class UserInfoController {
             return new ResponseEntity<String>("Login is taken", HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
-        userInfo.setRole("ROLE_USER");
+        userInfo.setRole("ROLE_ADMIN");
         userInfoRepository.save(userInfo);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
