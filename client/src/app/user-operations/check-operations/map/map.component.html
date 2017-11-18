@@ -1,1 +1,4 @@
-<agm-map [latitude]="lat" [longitude]="lng" [zoom]="11"></agm-map>
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="11" (mapClick)="setMarkerEvent($event.coords.lat,$event.coords.lng)" >
+  <agm-marker [latitude]="markerlat" [longitude]="markerlng"></agm-marker>
+</agm-map>
+
