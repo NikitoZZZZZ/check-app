@@ -1,4 +1,5 @@
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="11" (mapClick)="setMarkerEvent($event.coords.lat,$event.coords.lng)" >
-  <agm-marker [latitude]="markerlat" [longitude]="markerlng"></agm-marker>
+  <agm-marker *ngIf="markerlat && markerlng" [latitude]="markerlat" [longitude]="markerlng"></agm-marker>
+  <agm-circle *ngIf="markerlat && markerlng && radius" [radius]="radius" [latitude]="markerlat" [longitude]="markerlng"></agm-circle>
 </agm-map>
 

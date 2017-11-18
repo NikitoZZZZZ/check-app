@@ -3,14 +3,14 @@
   <div class="col-md-12">
     <p id="radius-header">Радиус поиска:</p>
     <div class="range range-primary ">
-      <input type="range" name="range" min="0" max="100000" [(ngModel)]="radius" onchange="range.value=value">
+      <input type="range" name="range" min="0" max="10000" [(ngModel)]="radius" onchange="range.value=value">
       <output id="range">{{radius}}</output>
     </div>
   </div>
 </div>
 <div class="row map">
   <div class="col-md-12">
-    <app-map></app-map>
+    <app-map [radius]="radius"></app-map>
   </div>
 </div>
 <ul>
