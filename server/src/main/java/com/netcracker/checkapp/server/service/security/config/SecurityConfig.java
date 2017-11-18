@@ -2,6 +2,8 @@ package com.netcracker.checkapp.server.service.security.config;
 
 import com.netcracker.checkapp.server.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,14 +32,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private LogoutSuccessHandler logoutSuccessHandler;
 
+    @Bean
+    public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/register")
-                .permitAll()
-                .anyRequest()
+                .antMatchers("/api/**")
                 .authenticated()
+                .anyRequest()
+                .hasAnyRole()
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint((httpServletRequest, httpServletResponse, e) ->
@@ -45,11 +53,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
-                .permitAll()
                 .and()
                 .logout()
                 .logoutSuccessHandler(logoutSuccessHandler)
-                .permitAll();
+                .and()
+                .sessionManagement()
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true);
     }
 
     @Autowired

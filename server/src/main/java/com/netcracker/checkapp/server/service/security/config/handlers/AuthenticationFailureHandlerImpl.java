@@ -1,6 +1,7 @@
 package com.netcracker.checkapp.server.service.security.config.handlers;
 
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,5 @@ public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHa
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//        httpServletResponse.sendRedirect("/login");
     }
 }
