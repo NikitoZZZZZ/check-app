@@ -33,7 +33,7 @@ export class ShowCheckItemComponent implements OnInit {
 */
 
   init() {
-    this.httpService.getData(this.url)
+    this.httpService.getData(this.url,null)
       .map(resp => resp.json() as GetCheckData[])
       .subscribe((data) => {
         this.getCheckData = data;
