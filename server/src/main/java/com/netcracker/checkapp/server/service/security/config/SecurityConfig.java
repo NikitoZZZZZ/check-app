@@ -41,6 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .authorizeRequests()
                 .antMatchers("/api/**")
                 .authenticated()
                 .anyRequest()
@@ -51,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
                 .formLogin()
+                .permitAll()
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailureHandler)
                 .and()
@@ -67,4 +74,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
+
 }
