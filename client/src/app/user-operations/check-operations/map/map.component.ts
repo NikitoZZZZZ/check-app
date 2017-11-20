@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HttpService} from "../../../services/httpService/http.service";
+import {Place} from "../../placeData/place";
 
 @Component({
   selector: 'app-map',
@@ -16,13 +17,18 @@ export class MapComponent implements OnInit {
   markerlat: number = 0;
   markerlng: number = 0;
 
-  url = '/api/places';
+  /*url = '/api/places';*/
+  url="/assets/data.json";
 
-  getCheckPlaces;
+
+  @Output() places: EventEmitter<Place[]>;
+
   @Input() radius: number = 0;
 
 
-  constructor(private httpService: HttpService) { }
+  constructor(private httpService: HttpService) {
+    this.places = new EventEmitter<Place[]>();
+  }
 
   ngOnInit() {
   }
@@ -39,9 +45,9 @@ export class MapComponent implements OnInit {
     params.set('latitude', this.markerlat.toString());
     params.set('radius', this.radius.toString());
     this.httpService.getData(this.url,params.toString())
-      .map(resp => resp.json())
+      .map(resp => resp.json() as Place[])
       .subscribe((data) => {
-        this.getCheckPlaces = data;
+        this.places.emit(data);
       });
 
   }

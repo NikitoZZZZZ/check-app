@@ -43,5 +43,5 @@ testem.log
 Thumbs.db
 
 # Files
-/assets/data.json
+src/assets/data.json
 *.iml
