@@ -13,9 +13,15 @@
     <app-map [radius]="radius" (places)="getPlaces($event)"></app-map>
   </div>
 </div>
-<ul>
-  <li *ngFor="let place of getCheckPlaces">
-    <p><input type="checkbox">Название: {{place?.name}}<br/>Адрес: {{place?.address}}</p>
-  </li>
-</ul>
-
+<div class="row map">
+  <div class="col-md-12">
+    <form>
+      <ol class="rectangle">
+        <li *ngFor="let place of getCheckPlaces">
+          <p (click)="checkPlace(place)"><input type="checkbox" [checked]="place?.selected"><label>Название: </label>{{place?.name}}<br/><label>Адрес:</label>
+            {{place?.address}}</p>
+        </li>
+      </ol>
+    </form>
+  </div>
+</div>

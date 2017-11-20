@@ -15,11 +15,11 @@ export class ReceiptListMapComponent implements OnInit {
     this.radius=0;
   }
 
-  checkValue(){
-    if (this.radius===0) this.radius=0;
-  }
-
   getPlaces(event){
     this.getCheckPlaces=event;
+  }
+
+  checkPlace(place: Place){
+    place.selected = ! place.selected;
   }
 }

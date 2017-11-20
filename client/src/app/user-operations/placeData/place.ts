@@ -7,4 +7,5 @@ export interface Place {
   coords: Coords;
   rating: number;
   numOfChecks: number;
+  selected: boolean;
 }
