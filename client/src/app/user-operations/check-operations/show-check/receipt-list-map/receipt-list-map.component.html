@@ -10,12 +10,12 @@
 </div>
 <div class="row map">
   <div class="col-md-12">
-    <app-map [radius]="radius"></app-map>
+    <app-map [radius]="radius" (places)="getPlaces($event)"></app-map>
   </div>
 </div>
 <ul>
-  <li></li>
-  <li></li>
-  <li></li>
+  <li *ngFor="let place of getCheckPlaces">
+    <div>Название: {{place?.name}}<br/>Адрес: {{place?.address}}</div>
+  </li>
 </ul>
 

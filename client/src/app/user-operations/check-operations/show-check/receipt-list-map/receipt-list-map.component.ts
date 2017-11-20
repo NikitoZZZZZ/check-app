@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Place} from "../../../placeData/place";
 
 @Component({
   selector: 'app-receipt-list-map',
@@ -9,11 +10,16 @@ export class ReceiptListMapComponent implements OnInit {
 
   constructor() { }
   radius: number;
+  getCheckPlaces: Place[];
   ngOnInit() {
     this.radius=0;
   }
 
   checkValue(){
     if (this.radius===0) this.radius=0;
+  }
+
+  getPlaces(event){
+    this.getCheckPlaces=event;
   }
 }

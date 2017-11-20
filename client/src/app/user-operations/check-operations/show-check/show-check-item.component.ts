@@ -11,8 +11,7 @@ import {GetCheckData} from '../../checkData/get-check-data';
 export class ShowCheckItemComponent implements OnInit {
 
   getCheckData: GetCheckData[];
-  done = false;
-  showCheck: boolean;
+
   url = '/api/receipts';
   constructor(private httpService: HttpService) {
 
