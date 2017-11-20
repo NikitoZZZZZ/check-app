@@ -1,3 +1,29 @@
-<p>
-  login works!
-</p>
+<div class="container center_div add_div table-bordered">
+  <b>Login</b>
+  <div class="form-group-login">
+    <input class="form-control-login" maxlength="20" minlength="3" pattern="^[a-zA-Z]{1}[\w]+$" name="login"
+           [(ngModel)]="fullUser.login" size="40" #login="ngModel" required>
+    <div *ngIf="login.invalid && (login.dirty || login.touched)">
+      <div *ngIf="login.errors.pattern">
+        Логин должен начинаться с латинской буквы и не содержать специальных символов
+      </div>
+      <div *ngIf="login.errors.required">
+        Данное поле обязательно
+      </div>
+    </div>
+  </div>
+  <b>Password</b>
+  <div class="form-group-login">
+    <input class="form-control-login" maxlength="20" name="pwd"
+           [(ngModel)]="fullUser.pwd" size="40" #pwd="ngModel" required>
+    <div *ngIf="pwd.invalid && (pwd.dirty || pwd.touched)">
+      <div *ngIf="pwd.errors.required">
+        Данное поле обязательно
+      </div>
+    </div>
+  </div>
+  <div class="form-group-login">
+    <input type="submit" [disabled]="login.invalid || pwd.invalid"
+           class="btn btn-default" value="Sign in" (click)="submit(fullUser)">
+  </div>
+</div>
