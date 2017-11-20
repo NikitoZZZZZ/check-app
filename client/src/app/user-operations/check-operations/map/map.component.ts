@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HttpService} from "../../../services/httpService/http.service";
 import {Place} from "../../placeData/place";
 
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -48,6 +49,7 @@ export class MapComponent implements OnInit {
       .map(resp => resp.json() as Place[])
       .subscribe((data) => {
         this.places.emit(data);
+
       });
 
   }
