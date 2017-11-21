@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
-
-import { AppComponent } from './app.component';
+import {AgmCoreModule} from '@agm/core';
 import {HttpModule} from '@angular/http';
 import {routes} from "./appRouting.routs";
+
+import { AppComponent } from './app.component';
 import {UserOperationsComponent} from "./user-operations/user-operations.component";
 import {AddCheckComponent} from "./user-operations/check-operations/add-check/add-check.component";
 import {CheckOperationsComponent} from "./user-operations/check-operations/check-operations.component";
@@ -15,6 +16,8 @@ import {FormsModule} from "@angular/forms";
 import {ShowCheckComponent} from "./user-operations/check-operations/show-check/show-check/show-check.component";
 import { OrderByPipe } from './user-operations/check-operations/show-check/pipes/order-by.pipe';
 import { ReceiptListMapComponent } from './user-operations/check-operations/show-check/receipt-list-map/receipt-list-map.component';
+import { MapComponent } from './user-operations/check-operations/map/map.component';
+
 
 
 @NgModule({
@@ -28,13 +31,17 @@ import { ReceiptListMapComponent } from './user-operations/check-operations/show
     Page2Component,
     ShowCheckComponent,
     OrderByPipe,
-    ReceiptListMapComponent
+    ReceiptListMapComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
     HttpModule,
     RouterModule.forRoot(routes),
-    FormsModule
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCTvIqwkvj1Nl6I5UKzd-m30o6TqN_70sY'
+    })
   ],
   bootstrap: [AppComponent]
 })

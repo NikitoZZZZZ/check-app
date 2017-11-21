@@ -3,14 +3,25 @@
   <div class="col-md-12">
     <p id="radius-header">Радиус поиска:</p>
     <div class="range range-primary ">
-      <input type="range" name="range" min="0" max="100000" [(ngModel)]="radius" onchange="range.value=value">
+      <input type="range" name="range" min="0" max="10000" [(ngModel)]="radius" onchange="range.value=value">
       <output id="range">{{radius}}</output>
     </div>
   </div>
 </div>
-<ul>
-  <li></li>
-  <li></li>
-  <li></li>
-</ul>
-
+<div class="row map">
+  <div class="col-md-12">
+    <app-map [radius]="radius" (places)="getPlaces($event)"></app-map>
+  </div>
+</div>
+<div class="row map">
+  <div class="col-md-12">
+    <form>
+      <ol class="rectangle">
+        <li *ngFor="let place of getCheckPlaces">
+          <p (click)="checkPlace(place)"><input type="checkbox" [checked]="place?.selected"><label>Название: </label>{{place?.name}}<br/><label>Адрес:</label>
+            {{place?.address}}</p>
+        </li>
+      </ol>
+    </form>
+  </div>
+</div>
