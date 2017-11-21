@@ -15,6 +15,5 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                         Authentication authentication) throws IOException, ServletException {
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);
-//        httpServletResponse.sendRedirect("/home");
     }
 }

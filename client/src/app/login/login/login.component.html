@@ -25,5 +25,7 @@
   <div class="form-group-login">
     <input type="submit" [disabled]="login.invalid || pwd.invalid"
            class="btn btn-default" value="Sign in" (click)="submit(fullUser)">
+    <input type="submit" [disabled]="login.invalid || pwd.invalid"
+           class="btn btn-default" value="Sign up" (click)="signup(fullUser)">
   </div>
 </div>

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, RequestOptions} from '@angular/http';
 import {Response, Headers, URLSearchParams} from '@angular/http';
 import {PostCheckData} from '../../user-operations/checkData/post-check-data';
 import {Observable} from 'rxjs/Observable';
@@ -22,6 +22,13 @@ export class HttpService {
 
   getData(url: string) {
     return this.http.get(url);
+  }
+
+  postBody(params: string, url: string) {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    return this.http.post(url, params, {headers: headers})
+      .map(res => res.json())
+      .catch((error: any) => Observable.throw(error));
   }
 
   /*
