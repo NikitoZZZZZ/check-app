@@ -1,9 +1,12 @@
 package com.netcracker.checkapp.server.controller;
 
 import com.netcracker.checkapp.server.model.check.Check;
+import com.netcracker.checkapp.server.model.place.Place;
 import com.netcracker.checkapp.server.persistance.CheckRepository;
+import com.netcracker.checkapp.server.persistance.PlaceRepository;
 import com.netcracker.checkapp.server.persistance.UserInfoRepository;
 import com.netcracker.checkapp.server.service.checkservice.CheckService;
+import com.netcracker.checkapp.server.service.placeservice.PlaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -21,13 +24,28 @@ public class CheckController {
 
     CheckService checkService;
     CheckRepository checkRepository;
+    PlaceService placeService;
+    PlaceRepository placeRepository;
 
-    CheckController(CheckService checkService, CheckRepository checkRepository, UserInfoRepository userInfoRepository) {
+    CheckController(CheckService checkService, CheckRepository checkRepository,PlaceService placeService,PlaceRepository placeRepository) {
         this.checkService = checkService;
         this.checkRepository = checkRepository;
+        this.placeService = placeService;
+        this.placeRepository = placeRepository;
     }
 
-    @PostMapping
+
+    @GetMapping(value = "/places")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @ResponseBody
+    public ResponseEntity<List<Check>> getNearPlace(@RequestParam("longitude") String longitude,@RequestParam("latitude") String latitude,@RequestParam("radius") String radius ) {
+
+        return new ResponseEntity<List<Check>>(placeService.getNearPlacesAndChecks(longitude,
+                latitude,radius),
+                HttpStatus.OK);
+    }
+
+    @PostMapping()
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<?> load(@RequestBody Map<String, String> body) {
