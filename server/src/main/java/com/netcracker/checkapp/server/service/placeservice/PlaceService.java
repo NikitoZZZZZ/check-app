@@ -1,7 +1,9 @@
 package com.netcracker.checkapp.server.service.placeservice;
 
+import com.netcracker.checkapp.server.model.check.Check;
 import com.netcracker.checkapp.server.model.place.Coords;
 import com.netcracker.checkapp.server.model.place.Place;
+import org.springframework.data.geo.Distance;
 
 import java.util.List;
 
@@ -10,5 +12,5 @@ public interface PlaceService {
 
     public Place addNewPlace(Place place);
 
-    public List<Place> getNearPlaces(Coords coords, double radius);
+    public List<Check> getNearPlacesAndChecks(String  longitude, String latitude, String radius);
 }

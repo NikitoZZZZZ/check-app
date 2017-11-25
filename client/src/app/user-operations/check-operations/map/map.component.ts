@@ -18,8 +18,8 @@ export class MapComponent implements OnInit {
   markerlat: number = 0;
   markerlng: number = 0;
 
-  /*url = '/api/places';*/
-  url="/assets/data.json";
+    url = '/api/receipts/places';
+    //url="/assets/data.json";
 
 
   @Output() places: EventEmitter<Place[]>;
