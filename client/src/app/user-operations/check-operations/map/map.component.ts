@@ -1,13 +1,13 @@
+
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {HttpService} from "../../../services/httpService/http.service";
-import {Place} from "../../placeData/place";
+import {Coords} from "../../placeData/coords";
 
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css'],
-  providers: [HttpService]
 })
 export class MapComponent implements OnInit {
 
@@ -18,40 +18,29 @@ export class MapComponent implements OnInit {
   markerlat: number = 0;
   markerlng: number = 0;
 
-    url = '/api/receipts/places';
-    //url="/assets/data.json";
-
-
-  @Output() places: EventEmitter<Place[]>;
+  @Output() coords: EventEmitter<Coords>;
 
   @Input() radius: number = 0;
 
+  marker: Coords;
 
   constructor(private httpService: HttpService) {
-    this.places = new EventEmitter<Place[]>();
+    this.coords = new EventEmitter<Coords>();
   }
 
   ngOnInit() {
   }
 
-  setMarkerEvent(lat: number,lng: number){
-    this.markerlat=lat;
-    this.markerlng=lng;
+  setMarkerEvent(coord){
+    this.markerlat=coord.lat;
+    this.markerlng=coord.lng;
+    this.marker=coord;
+    this.coords.emit(this.marker);
   }
 
 
   getPlaces(){
-    const params = new URLSearchParams();
-    params.set('longitude', this.markerlng.toString());
-    params.set('latitude', this.markerlat.toString());
-    params.set('radius', this.radius.toString());
-    this.httpService.getData(this.url,params.toString())
-      .map(resp => resp.json() as Place[])
-      .subscribe((data) => {
-        this.places.emit(data);
-
-      });
-
+    this.coords.emit(this.marker);
   }
 
 

@@ -1,4 +1,4 @@
-<agm-map [latitude]="lat" [longitude]="lng" [zoom]="11" (mapClick)="setMarkerEvent($event.coords.lat,$event.coords.lng); getPlaces()" >
+<agm-map [latitude]="lat" [longitude]="lng" [zoom]="11" (mapClick)="setMarkerEvent($event.coords)" >
   <agm-marker *ngIf="markerlat && markerlng" [latitude]="markerlat" [longitude]="markerlng"></agm-marker>
   <agm-circle (radiusChange)="getPlaces()" *ngIf="markerlat && markerlng && radius" [radius]="radius" [latitude]="markerlat" [longitude]="markerlng"></agm-circle>
   <agm-info-window *ngIf="!markerlat && !markerlng" [latitude]="lat" [longitude]="lng" [isOpen]="true">Выберите точку на карте.</agm-info-window>
