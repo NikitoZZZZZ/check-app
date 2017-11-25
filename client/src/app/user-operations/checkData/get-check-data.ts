@@ -11,7 +11,7 @@ export interface GetCheckData {
   totalSum: number;
   dateTime: string;
   items: CheckItems[];
-  user: User;
+  username: string;
   selected: boolean;
   place: ShortPlace;
 }
