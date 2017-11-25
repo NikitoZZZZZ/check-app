@@ -8,6 +8,8 @@ import com.netcracker.checkapp.server.persistance.PlaceRepository;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,8 +44,9 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public List<Check> getNearPlacesAndChecks(String longitude, String latitude, String radius) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Distance distance = new Distance(Double.parseDouble(radius), Metrics.KILOMETERS);
         Point coords = new Point(Double.parseDouble(longitude),Double.parseDouble(latitude));
-        return checkRepository.findByShortPlaceCoordsNear(coords, distance);
+        return checkRepository.findByUsernameAndShortPlaceCoordsNear(principal.getUsername(),coords, distance);
     }
 }

@@ -23,6 +23,6 @@ public interface CheckRepository extends MongoRepository<Check, String> {
 
     List<Check> findByUsername(String login);
 
-    List<Check> findByShortPlaceCoordsNear(Point coords, Distance radius);
+    List<Check> findByUsernameAndShortPlaceCoordsNear(String username,Point coords, Distance radius);
 
 }
