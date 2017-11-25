@@ -10,7 +10,7 @@
 </div>
 <div class="row map">
   <div class="col-md-12">
-    <app-map [radius]="radius" (places)="getPlaces($event)"></app-map>
+    <app-map [radius]="radius" (coords)="getCoords($event)"></app-map>
   </div>
 </div>
 <div class="row map">
@@ -18,8 +18,7 @@
     <form>
       <ol class="rectangle">
         <li *ngFor="let place of getCheckPlaces">
-          <p (click)="checkPlace(place)"><input type="checkbox" [checked]="place?.selected"><label>Название: </label>{{place?.name}}<br/><label>Адрес:</label>
-            {{place?.address}}</p>
+          <p (click)="checkPlace(place)"><input type="checkbox" [checked]="place?.selected"><label>Название: </label>{{place?.name}}</p>
         </li>
       </ol>
     </form>
