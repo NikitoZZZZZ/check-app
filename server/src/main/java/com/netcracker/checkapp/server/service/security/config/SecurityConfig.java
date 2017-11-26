@@ -64,11 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(authenticationFailureHandler)
                 .and()
                 .logout()
-                .logoutSuccessHandler(logoutSuccessHandler)
-                .and()
-                .sessionManagement()
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(true);
+                .logoutSuccessHandler(logoutSuccessHandler);
     }
 
     @Autowired
