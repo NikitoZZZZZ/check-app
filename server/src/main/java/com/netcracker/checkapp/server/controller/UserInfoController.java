@@ -2,7 +2,6 @@ package com.netcracker.checkapp.server.controller;
 
 import com.netcracker.checkapp.server.model.UserInfo;
 import com.netcracker.checkapp.server.persistance.UserInfoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -12,13 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
 
 @RestController
-@RequestMapping(value = "users")
+@RequestMapping(value = "/api/users")
 public class UserInfoController {
 
     private UserInfoRepository userInfoRepository;
@@ -30,8 +28,9 @@ public class UserInfoController {
     }
 
     @PostMapping
+    @Secured({"ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<?> add(@RequestBody Map<String, String> body) {
+    public ResponseEntity<?> addAdmin(@RequestBody Map<String, String> body) {
         UserInfo userInfo = new UserInfo();
 
         userInfo.setLogin(body.get("login"));
@@ -39,7 +38,7 @@ public class UserInfoController {
             return new ResponseEntity<String>("Login is taken", HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
-        userInfo.setRole("ROLE_USER");
+        userInfo.setRole("ROLE_ADMIN");
         userInfoRepository.save(userInfo);
 
         return new ResponseEntity<>(HttpStatus.CREATED);

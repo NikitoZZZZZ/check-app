@@ -27,7 +27,7 @@ public class CheckController {
         this.checkRepository = checkRepository;
     }
 
-    @PostMapping()
+    @PostMapping
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<?> load(@RequestBody Map<String, String> body) {
@@ -54,7 +54,7 @@ public class CheckController {
         return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+    @GetMapping
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<List<Check>> getByUserInfoLogin(@RequestBody(required = false) Map<String, String> body) {
