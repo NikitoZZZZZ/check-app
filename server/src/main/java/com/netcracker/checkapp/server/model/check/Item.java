@@ -16,7 +16,7 @@ public class Item {
     private BigDecimal nds10;
     @JsonProperty(required = false)
     private BigDecimal nds18;
-    private Integer quantity;
+    private Double quantity;
     private String name;
 
     public Item() {
@@ -57,11 +57,11 @@ public class Item {
         this.nds18 = nds18;
     }
 
-    public Integer getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
