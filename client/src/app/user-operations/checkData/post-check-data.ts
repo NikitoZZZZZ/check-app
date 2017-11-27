@@ -1,5 +1,5 @@
 export class PostCheckData {
-  fn: string;
-  fdn: string;
+  fdriven: string;
+  fdocumentn: string;
   fs: string;
 }
