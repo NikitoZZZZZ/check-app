@@ -34,7 +34,9 @@ public class CheckController {
         checkRepository.save(checkService.getCheck(body.get("fdriven"), body.get("fdocumentn"),
                 body.get("fs")));
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        //return new ResponseEntity<>(HttpStatus.OK);
+        // May be we should return String with info to make it visible on client side??
+        return new ResponseEntity<Check>(new Check(),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
