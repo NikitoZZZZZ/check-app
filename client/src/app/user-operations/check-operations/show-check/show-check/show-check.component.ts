@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GetCheckData} from '../../../checkData/get-check-data';
+import {OrderByPipe} from '../pipes/order-by.pipe';
 
 @Component({
   selector: 'app-show-check',
