@@ -16,7 +16,7 @@ export class HttpService {
   postData(params: string, url: string) {
     const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     return this.http.post(url, params, {headers: headers})
-      .map(res => res.json())
+      // .map(res => res.json())
       .catch((error: any) => Observable.throw(error));
   }
 
@@ -27,7 +27,7 @@ export class HttpService {
   postBody(params: string, url: string) {
     let headers = new Headers({'Content-Type': 'application/json'});
     return this.http.post(url, params, {headers: headers})
-      .map(res => res.json())
+      // .map(res => res.json())
       .catch((error: any) => Observable.throw(error));
   }
 

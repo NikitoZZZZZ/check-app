@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FullUser} from "../../user-operations/checkData/full-user";
 import {HttpService} from "../../services/httpService/http.service";
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'login',
@@ -16,7 +17,8 @@ export class LoginComponent implements OnInit {
   registerUrl = '/register';
 
   constructor(private httpService: HttpService,
-              private router: Router) { }
+              private router: Router,
+              private auth: AuthService) { }
 
   submit(info) {
     const params = new URLSearchParams();
@@ -25,27 +27,23 @@ export class LoginComponent implements OnInit {
     this.httpService.postData(params.toString(), this.loginUrl)
     .subscribe((data) => {
       this.done = true;
+      this.auth.change();
       this.router.navigate(['/user-operations/check-operations/show-check']);
     },
       error => {
         console.log(error);
       });
-    if(this.done) {
-      this.router.navigate(['/user-operations/check-operations/show-check']);
-    }
   }
 
   signup(fullUser) {
     this.httpService.postBody(fullUser, this.registerUrl)
       .subscribe((data) => {
           this.done = true;
+          this.router.navigate(['/user-operations/check-operations/show-check']);
         },
         error => {
           console.log(error);
         });
-    if(this.done) {
-      this.router.navigate(['/user-operations/check-operations/show-check']);
-    }
   }
 
   ngOnInit() {

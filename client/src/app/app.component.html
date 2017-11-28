@@ -10,23 +10,31 @@
       </label>
       <input type="checkbox" name="" id="open">
       <nav>
-        <li class="dropdown main-menu-item">
-          <a class="link" routerLink="user-operations" routerLinkActive="active">
-            Операции пользователя</a>
-          <ul class="dropdown-menu">
-            <li><a routerLink="user-operations/check-operations/add-check" routerLinkActive="active">Добавление чека</a>
-            </li>
-            <li><a routerLink="user-operations/check-operations/show-check" routerLinkActive="active">Просмотр чека</a>
-            </li>
-          </ul>
-        </li>
-        <a routerLink="user-operations/statistics" routerLinkActive="active">Статистика</a>
-        <a routerLink="login" routerLinkActive="active">{{title}}</a>
+        <div class="container" *ngIf="isauthenticated()">
+          <li class="dropdown main-menu-item">
+            <a class="link" routerLink="user-operations" routerLinkActive="active">
+              Операции пользователя</a>
+            <ul class="dropdown-menu">
+              <li><a routerLink="user-operations/check-operations/add-check" routerLinkActive="active">Добавление чека</a>
+              </li>
+              <li><a routerLink="user-operations/check-operations/show-check" routerLinkActive="active">Просмотр чека</a>
+              </li>
+            </ul>
+          </li>
+        </div>
+        <div class="container" *ngIf="isauthenticated()">
+          <a routerLink="user-operations/statistics" routerLinkActive="active">Статистика</a>
+        </div>
+        <div class="container" *ngIf="!isauthenticated()">
+          <a routerLink="login" routerLinkActive="active">{{title}}</a>
+        </div>
+        <div class="container" *ngIf="isauthenticated()">
+          <a (click)="logout()">Logout</a>
+        </div>
       </nav>
     </div>
   </div>
 </header>
-
 <div>
   <router-outlet id="router"></router-outlet>
 </div>
