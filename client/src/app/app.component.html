@@ -10,8 +10,7 @@
       </label>
       <input type="checkbox" name="" id="open">
       <nav>
-        <div class="container" *ngIf="isauthenticated()">
-          <li class="dropdown main-menu-item">
+          <li class="dropdown main-menu-item" *ngIf="isauthenticated()">
             <a class="link" routerLink="user-operations" routerLinkActive="active">
               Операции пользователя</a>
             <ul class="dropdown-menu">
@@ -21,16 +20,9 @@
               </li>
             </ul>
           </li>
-        </div>
-        <div class="container" *ngIf="isauthenticated()">
-          <a routerLink="user-operations/statistics" routerLinkActive="active">Статистика</a>
-        </div>
-        <div class="container" *ngIf="!isauthenticated()">
-          <a routerLink="login" routerLinkActive="active">{{title}}</a>
-        </div>
-        <div class="container" *ngIf="isauthenticated()">
-          <a (click)="logout()">Logout</a>
-        </div>
+          <a routerLink="user-operations/statistics" routerLinkActive="active" *ngIf="isauthenticated()">Статистика</a>
+          <a routerLink="login" routerLinkActive="active" *ngIf="!isauthenticated()">{{title}}</a>
+          <a (click)="logout()" *ngIf="isauthenticated()">Logout</a>
       </nav>
     </div>
   </div>

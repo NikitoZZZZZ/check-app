@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   fullUser: FullUser = new FullUser();
   done = false;
   loginUrl = '/login';
-  registerUrl = '/register';
+  registerUrl = '/register'
 
   constructor(private httpService: HttpService,
               private router: Router,
