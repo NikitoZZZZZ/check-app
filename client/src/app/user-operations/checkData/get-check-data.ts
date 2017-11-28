@@ -13,5 +13,5 @@ export interface GetCheckData {
   items: CheckItems[];
   username: string;
   selected: boolean;
-  place: ShortPlace;
+  shortPlace: ShortPlace;
 }

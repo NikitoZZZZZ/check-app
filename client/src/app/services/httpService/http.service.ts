@@ -21,7 +21,7 @@ export class HttpService {
   }
 
   getData(url: string,params: string) {
-    return this.http.get(url,params);
+    return this.http.get(url,{params});
   }
 
   postBody(params: string, url: string) {
