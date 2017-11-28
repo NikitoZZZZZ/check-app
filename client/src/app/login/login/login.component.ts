@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   fullUser: FullUser = new FullUser();
   done = false;
   loginUrl = '/login';
-  registerUrl = '/register';
+  registerUrl = '/register'
 
   constructor(private httpService: HttpService,
               private router: Router,
@@ -38,8 +38,7 @@ export class LoginComponent implements OnInit {
   signup(fullUser) {
     this.httpService.postBody(fullUser, this.registerUrl)
       .subscribe((data) => {
-          this.done = true;
-          this.router.navigate(['/user-operations/check-operations/show-check']);
+          this.submit(fullUser);
         },
         error => {
           console.log(error);

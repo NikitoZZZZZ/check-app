@@ -15,6 +15,8 @@ import {FormsModule} from "@angular/forms";
 import {ShowCheckComponent} from "./user-operations/check-operations/show-check/show-check/show-check.component";
 import { OrderByPipe } from './user-operations/check-operations/show-check/pipes/order-by.pipe';
 import { ReceiptListMapComponent } from './user-operations/check-operations/show-check/receipt-list-map/receipt-list-map.component';
+import { ModalComponent } from './modal/modal.component';
+
 
 
 @NgModule({
@@ -28,7 +30,8 @@ import { ReceiptListMapComponent } from './user-operations/check-operations/show
     Page2Component,
     ShowCheckComponent,
     OrderByPipe,
-    ReceiptListMapComponent
+    ReceiptListMapComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
