@@ -47,13 +47,13 @@ public class CheckController {
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             if (checkRepository.existsByIdAndUsername(id, principal.getUsername())) {
-                return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
+                return new ResponseEntity<Check>(checkRepository.findOne(id), HttpStatus.OK);
             }
             else {
                 return new ResponseEntity<Check>(HttpStatus.FORBIDDEN);
             }
         }
-        return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
+        return new ResponseEntity<Check>(checkRepository.findOne(id), HttpStatus.OK);
     }
 
     @GetMapping
