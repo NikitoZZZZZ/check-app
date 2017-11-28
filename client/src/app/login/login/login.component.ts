@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     params.set('password', info.pwd);
     this.httpService.postData(params.toString(), this.loginUrl)
     .subscribe((data) => {
-      this.done = true;
+      this.auth.change();
       this.router.navigate(['/user-operations/check-operations/show-check']);
     },
       error => {
