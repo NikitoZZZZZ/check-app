@@ -31,12 +31,11 @@ public class CheckController {
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<?> load(@RequestBody Map<String, String> body) {
-        checkRepository.save(checkService.getCheck(body.get("fdriven"), body.get("fdocumentn"),
+        Check check = checkRepository.save(checkService.getCheck(body.get("fdriven"), body.get("fdocumentn"),
                 body.get("fs")));
 
-        //return new ResponseEntity<>(HttpStatus.OK);
         // May be we should return String with info to make it visible on client side??
-        return new ResponseEntity<Check>(new Check(),HttpStatus.OK);
+        return new ResponseEntity<Check>(check,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

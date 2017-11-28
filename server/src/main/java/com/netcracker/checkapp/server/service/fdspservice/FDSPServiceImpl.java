@@ -12,10 +12,10 @@ public class FDSPServiceImpl implements FDSPService {
 
     @Override
     public FDSP addFDSP(FDSP fdsp) {
-        if (fdspRepository.existsByFiscalDriveNumberAndShortPlace(fdsp.getFiscalDriveNumber(),fdsp.getShortPlace())) {
+        if (!fdspRepository.existsByFiscalDriveNumberAndShortPlace(fdsp.getFiscalDriveNumber(),fdsp.getShortPlace())) {
             return fdspRepository.save(fdsp);
         } else {
-            return null;
+            return fdsp;
         }
     }
 }
