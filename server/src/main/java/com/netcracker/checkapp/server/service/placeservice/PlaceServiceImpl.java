@@ -3,6 +3,9 @@ package com.netcracker.checkapp.server.service.placeservice;
 import com.netcracker.checkapp.server.model.place.Coords;
 import com.netcracker.checkapp.server.model.place.Place;
 import com.netcracker.checkapp.server.persistance.PlaceRepository;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metrics;
+import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,6 +38,8 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public List<Place> getNearPlaces(Coords coords, double radius) {
-        return null;
+        Distance distance = new Distance(radius, Metrics.KILOMETERS);
+        Point point = new Point(coords.getLongitude(),coords.getLatitude());
+        return placeRepository.findByCoordsNear(point,distance);
     }
 }

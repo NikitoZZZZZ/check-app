@@ -18,10 +18,12 @@ public class PlaceController {
 
     PlaceService placeService;
     FDSPService fdspService;
+    Double radius;
 
     PlaceController(PlaceService placeService, FDSPService fdspService) {
         this.placeService = placeService;
         this.fdspService = fdspService;
+        radius = new Double(0.1);       // 100 meters
     }
 
     @PostMapping
@@ -34,13 +36,12 @@ public class PlaceController {
     @GetMapping
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<List<Place>> getPlaces(@RequestParam("longitude") double longitude,
-                                                 @RequestParam("latitide") double latitude,
-                                                 @RequestParam("radius") double radius) {
+    public ResponseEntity<List<Place>> getPlaces(@RequestParam("longitude") String longitude,
+                                                 @RequestParam("latitide") String latitude) {
         Coords coords = new Coords();
-        coords.setLatitude(latitude);
-        coords.setLongitude(longitude);
-        List<Place> places = placeService.getNearPlaces(coords, radius);
+        coords.setLatitude(Double.parseDouble(latitude));
+        coords.setLongitude(Double.parseDouble(longitude));
+        List<Place> places = placeService.getNearPlaces(coords, radius.doubleValue());
 
         return new ResponseEntity<List<Place>>(places,HttpStatus.OK);
     }
