@@ -12,11 +12,8 @@ public class FDSPServiceImpl implements FDSPService {
 
     @Override
     public FDSP addFDSP(FDSP fdsp) {
-        if (findFDSP(fdsp.getFiscalDriveNumber()) == null) {
-            return fdspRepository.save(fdsp);
-        } else {
-            return fdspRepository.findOne(fdsp.getId());
-        }
+        FDSP fdspl = fdspRepository.findOne(fdsp.getId());
+        return (fdspl == null) ? fdspRepository.save(fdsp) : fdspl;
     }
 
     @Override

@@ -50,13 +50,7 @@ public class CheckServiceImpl implements CheckService {
         ObjectMapper objectMapper = new ObjectMapper();
         Check check = new Check();
 
-        headers.put(AUTHORIZATION, AUTHORIZATION_VALUE);
-        headers.put(DEVICE_ID, DEVICE_ID_VALUE);
-        headers.put(DEVICE_OS, DEVICE_OS_ID);
-        headers.put(VERSION, VERSION_ID);
-        headers.put(CLIENT_VERSION, CLIENT_VERSION_ID);
-        headers.put(HOST, HOST_ID);
-        headers.put(USER_AGENT, USER_AGENT_ID);
+        headers = buildHeaders();
 
         HttpEntity<String> httpEntity = new HttpEntity<String>(addHeaders(headers));
         try {
@@ -82,6 +76,20 @@ public class CheckServiceImpl implements CheckService {
         for (Map.Entry<String, String> element : map.entrySet()) {
             headers.add(element.getKey(), element.getValue());
         }
+
+        return headers;
+    }
+
+    private Map<String,String> buildHeaders() {
+        Map<String,String> headers = new HashMap<>();
+
+        headers.put(AUTHORIZATION, AUTHORIZATION_VALUE);
+        headers.put(DEVICE_ID, DEVICE_ID_VALUE);
+        headers.put(DEVICE_OS, DEVICE_OS_ID);
+        headers.put(VERSION, VERSION_ID);
+        headers.put(CLIENT_VERSION, CLIENT_VERSION_ID);
+        headers.put(HOST, HOST_ID);
+        headers.put(USER_AGENT, USER_AGENT_ID);
 
         return headers;
     }
