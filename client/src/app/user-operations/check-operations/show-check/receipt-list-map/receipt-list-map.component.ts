@@ -14,15 +14,17 @@ import {GetCheckData} from "../../../checkData/get-check-data";
 export class ReceiptListMapComponent implements OnInit {
 
   radius: number = 0;
-  getCheckPlaces: ShortPlace[]=[];
+  getCheckPlaces: ShortPlace[] = [];
   @Output() getReceipts: EventEmitter<GetCheckData[]>;
   coords: Coords;
   url = '/api/receipts/places';
   //url = "/assets/data.json";
+  urlPlace = '/api/receipts';
+  checked: String[]=[];
 
   constructor(private httpService: HttpService) {
     this.coords = new Coords();
-    this.getReceipts=new EventEmitter<GetCheckData[]>();
+    this.getReceipts = new EventEmitter<GetCheckData[]>();
   }
 
   ngOnInit() {
@@ -37,13 +39,16 @@ export class ReceiptListMapComponent implements OnInit {
 
   checkPlace(place: ShortPlace) {
     place.selected = !place.selected;
+    if (place.selected) this.checked.push(place.id)
+    else this.checked.splice(this.checked.indexOf(place.id),1);
   }
+
 
   getPlaces() {
     const params = new URLSearchParams();
     params.set('longitude', this.coords.longitude.toString());
     params.set('latitude', this.coords.latitude.toString());
-    params.set('radius', (this.radius/1000).toString());
+    params.set('radius', (this.radius / 1000).toString());
     this.httpService.getData(this.url, params.toString())
       .map(resp => resp.json() as GetCheckData[])
       .subscribe((data) => {
@@ -52,7 +57,7 @@ export class ReceiptListMapComponent implements OnInit {
         this.getReceipts.emit(data);
 
       });
-
   }
+
 
 }
