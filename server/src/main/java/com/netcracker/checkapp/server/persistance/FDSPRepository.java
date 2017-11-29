@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FDSPRepository extends MongoRepository<FDSP,String> {
 
-    boolean existsByFiscalDriveNumberAndShortPlace(String fiscalDriveNumber,
-                                                   ShortPlace shortPlace);
+    boolean existsByFiscalDriveNumber(String fiscalDriveNumber);
 }

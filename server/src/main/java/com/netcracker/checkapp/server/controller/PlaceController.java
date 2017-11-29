@@ -27,9 +27,6 @@ public class PlaceController {
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<?> load(@RequestBody Place place) {
-
-        // optional - add FDSP here or send info to nested url ??
-
         return new ResponseEntity<Place>(placeService.addNewPlace(place), HttpStatus.OK);
     }
 
