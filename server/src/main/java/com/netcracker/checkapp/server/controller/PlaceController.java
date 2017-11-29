@@ -2,6 +2,7 @@ package com.netcracker.checkapp.server.controller;
 
 import com.netcracker.checkapp.server.model.place.Coords;
 import com.netcracker.checkapp.server.model.place.Place;
+import com.netcracker.checkapp.server.model.place.ShortPlace;
 import com.netcracker.checkapp.server.service.fdspservice.FDSPService;
 import com.netcracker.checkapp.server.service.placeservice.PlaceService;
 import org.springframework.http.HttpStatus;
@@ -42,5 +43,16 @@ public class PlaceController {
         List<Place> places = placeService.getNearPlaces(coords, radius);
 
         return new ResponseEntity<List<Place>>(places,HttpStatus.OK);
+    }
+
+    @GetMapping()
+    @Secured({"ROLE_USER","ROLE_ADMIN"})
+    @ResponseBody
+    public ResponseEntity<ShortPlace> getShortPlaceByFDriveN(@RequestParam("fdriven") String fdriven) {
+        try {
+            return new ResponseEntity<ShortPlace>(fdspService.findFDSP(fdriven).getShortPlace(),HttpStatus.OK);
+        } catch (NullPointerException e) {
+            return new ResponseEntity<ShortPlace>(new ShortPlace(),HttpStatus.NO_CONTENT);
+        }
     }
 }
