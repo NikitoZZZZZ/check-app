@@ -2,9 +2,11 @@ package com.netcracker.checkapp.server.service.checkservice;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netcracker.checkapp.server.model.FDSP;
 import com.netcracker.checkapp.server.model.check.Check;
 import com.netcracker.checkapp.server.model.check.Converter;
 import com.netcracker.checkapp.server.model.check.NalogRuCheck;
+import com.netcracker.checkapp.server.service.fdspservice.FDSPService;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -35,29 +37,37 @@ public class CheckServiceImpl implements CheckService {
     private final static String USER_AGENT_ID = "okhttp/3.0.1";
     private final static String ROOT = "/document/receipt";
 
+    private FDSPService fdspService;
+
+    public CheckServiceImpl(FDSPService fdspService) {
+        this.fdspService = fdspService;
+    }
+
     @Override
     public Check getCheck(String fiscalDriveNumber, String fiscalDocumentNumber, String fiscalSign) {
         Map<String, String> headers = new HashMap<>();
         NalogRuCheck nalogRuCheck = new NalogRuCheck();
         ObjectMapper objectMapper = new ObjectMapper();
+        Check check = new Check();
 
-        headers.put(AUTHORIZATION, AUTHORIZATION_VALUE);
-        headers.put(DEVICE_ID, DEVICE_ID_VALUE);
-        headers.put(DEVICE_OS, DEVICE_OS_ID);
-        headers.put(VERSION, VERSION_ID);
-        headers.put(CLIENT_VERSION, CLIENT_VERSION_ID);
-        headers.put(HOST, HOST_ID);
-        headers.put(USER_AGENT, USER_AGENT_ID);
+        headers = buildHeaders();
 
         HttpEntity<String> httpEntity = new HttpEntity<String>(addHeaders(headers));
         try {
             JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU, fiscalDriveNumber,
                     fiscalDocumentNumber, fiscalSign), HttpMethod.GET, httpEntity, String.class).getBody());
             nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
+
+            check = Converter.fromNalogRuCheckToCheck(nalogRuCheck);
+
+            FDSP fdsp = new FDSP();
+            fdsp.setFiscalDriveNumber(check.getFiscalDriveNumber());
+            fdsp.setShortPlace(check.getShortPlace());
+            fdspService.addFDSP(fdsp);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Converter.fromNalogRuCheckToCheck(nalogRuCheck);
+        return check;
     }
 
     @Override
@@ -66,6 +76,20 @@ public class CheckServiceImpl implements CheckService {
         for (Map.Entry<String, String> element : map.entrySet()) {
             headers.add(element.getKey(), element.getValue());
         }
+
+        return headers;
+    }
+
+    private Map<String,String> buildHeaders() {
+        Map<String,String> headers = new HashMap<>();
+
+        headers.put(AUTHORIZATION, AUTHORIZATION_VALUE);
+        headers.put(DEVICE_ID, DEVICE_ID_VALUE);
+        headers.put(DEVICE_OS, DEVICE_OS_ID);
+        headers.put(VERSION, VERSION_ID);
+        headers.put(CLIENT_VERSION, CLIENT_VERSION_ID);
+        headers.put(HOST, HOST_ID);
+        headers.put(USER_AGENT, USER_AGENT_ID);
 
         return headers;
     }
