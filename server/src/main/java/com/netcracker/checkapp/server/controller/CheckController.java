@@ -24,14 +24,10 @@ public class CheckController {
 
     CheckService checkService;
     CheckRepository checkRepository;
-    PlaceService placeService;
-    PlaceRepository placeRepository;
 
-    CheckController(CheckService checkService, CheckRepository checkRepository,PlaceService placeService,PlaceRepository placeRepository) {
+    CheckController(CheckService checkService, CheckRepository checkRepository) {
         this.checkService = checkService;
         this.checkRepository = checkRepository;
-        this.placeService = placeService;
-        this.placeRepository = placeRepository;
     }
 
 
@@ -40,7 +36,7 @@ public class CheckController {
     @ResponseBody
     public ResponseEntity<List<Check>> getNearPlace(@RequestParam("longitude") String longitude,@RequestParam("latitude") String latitude,@RequestParam("radius") String radius ) {
 
-        return new ResponseEntity<List<Check>>(placeService.getNearPlacesAndChecks(longitude,
+        return new ResponseEntity<List<Check>>(checkService.getNearPlacesAndChecks(longitude,
                 latitude,radius),
                 HttpStatus.OK);
     }
