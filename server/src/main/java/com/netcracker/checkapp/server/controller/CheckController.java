@@ -45,12 +45,10 @@ public class CheckController {
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<?> load(@RequestBody Map<String, String> body) {
-        checkRepository.save(checkService.getCheck(body.get("fdriven"), body.get("fdocumentn"),
+        Check check = checkRepository.save(checkService.getCheck(body.get("fdriven"), body.get("fdocumentn"),
                 body.get("fs")));
 
-        //return new ResponseEntity<>(HttpStatus.OK);
-        // May be we should return String with info to make it visible on client side??
-        return new ResponseEntity<Check>(new Check(),HttpStatus.OK);
+        return new ResponseEntity<Check>(check,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -61,13 +59,13 @@ public class CheckController {
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             if (checkRepository.existsByIdAndUsername(id, principal.getUsername())) {
-                return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
+                return new ResponseEntity<Check>(checkRepository.findOne(id), HttpStatus.OK);
             }
             else {
                 return new ResponseEntity<Check>(HttpStatus.FORBIDDEN);
             }
         }
-        return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
+        return new ResponseEntity<Check>(checkRepository.findOne(id), HttpStatus.OK);
     }
 
     @GetMapping
