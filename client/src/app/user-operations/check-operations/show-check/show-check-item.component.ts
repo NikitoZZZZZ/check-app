@@ -14,16 +14,14 @@ export class ShowCheckItemComponent implements OnInit {
   url = '/api/receipts';
 
   constructor(private httpService: HttpService) {
-
   }
 
   onToggle(check: GetCheckData) {
     check.selected = !check.selected;
   }
 
-  setRecipts(event) {
+  setReceipts(event) {
     this.getCheckData = event;
-
   }
 
   /*

@@ -15,8 +15,8 @@ export class MapComponent implements OnInit {
   lat: number = 59.929428;
   lng: number = 30.362017;
 
-  markerlat: number = 0;
-  markerlng: number = 0;
+  markerLat: number = 0;
+  markerLng: number = 0;
 
   @Output() coords: EventEmitter<Coords>;
 
@@ -32,8 +32,8 @@ export class MapComponent implements OnInit {
   }
 
   setMarkerEvent(coord){
-    this.markerlat=coord.lat;
-    this.markerlng=coord.lng;
+    this.markerLat=coord.lat;
+    this.markerLng=coord.lng;
     this.marker=coord;
     this.coords.emit(this.marker);
   }
