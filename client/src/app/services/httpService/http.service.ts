@@ -20,9 +20,11 @@ export class HttpService {
       .catch((error: any) => Observable.throw(error));
   }
 
-  getData(url: string) {
-    return this.http.get(url);
+  getData(url: string,params: any) {
+    return this.http.get(url, {params});
   }
+
+
 
   postBody(params: string, url: string) {
     let headers = new Headers({'Content-Type': 'application/json'});

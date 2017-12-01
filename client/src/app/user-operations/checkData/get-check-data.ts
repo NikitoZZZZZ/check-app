@@ -1,5 +1,6 @@
 import {CheckItems} from './check-items';
 import {User} from './user';
+import {ShortPlace} from "../placeData/short-place";
 
 export interface GetCheckData {
   fiscalDocumentNumber: string;
@@ -10,7 +11,7 @@ export interface GetCheckData {
   totalSum: number;
   dateTime: string;
   items: CheckItems[];
-  user: User;
+  username: string;
   selected: boolean;
-  place: string;
+  shortPlace: ShortPlace;
 }

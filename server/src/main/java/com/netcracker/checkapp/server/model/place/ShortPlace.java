@@ -7,6 +7,8 @@ public class ShortPlace {
 
     private String id;
     private String name;
+
+
     @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
     private Coords coords;
 
@@ -33,6 +35,7 @@ public class ShortPlace {
     public void setCoords(Coords coords) {
         this.coords = coords;
     }
+
 
     @Override
     public boolean equals(Object o) {

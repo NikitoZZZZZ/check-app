@@ -46,10 +46,10 @@ public class PlaceController {
         return new ResponseEntity<List<Place>>(places,HttpStatus.OK);
     }
 
-    @GetMapping()
+    @GetMapping("/{fdriven}")
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<ShortPlace> getShortPlaceByFDriveN(@RequestParam("fdriven") String fdriven) {
+    public ResponseEntity<ShortPlace> getShortPlaceByFDriveN(@PathVariable String fdriven) {
         try {
             return new ResponseEntity<ShortPlace>(fdspService.findFDSP(fdriven).getShortPlace(),HttpStatus.OK);
         } catch (NullPointerException e) {

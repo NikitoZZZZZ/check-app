@@ -11,16 +11,18 @@ import {GetCheckData} from '../../checkData/get-check-data';
 export class ShowCheckItemComponent implements OnInit {
 
   getCheckData: GetCheckData[];
-  done = false;
-  showCheck: boolean;
   url = '/api/receipts';
+
   constructor(private httpService: HttpService) {
-
   }
+
   onToggle(check: GetCheckData) {
-    check.selected = ! check.selected;
+    check.selected = !check.selected;
   }
 
+  setReceipts(event) {
+    this.getCheckData = event;
+  }
 
   /*
  getCheckById(id: string) {
@@ -33,7 +35,7 @@ export class ShowCheckItemComponent implements OnInit {
 */
 
   init() {
-    this.httpService.getData(this.url)
+    this.httpService.getData(this.url, null)
       .map(resp => resp.json() as GetCheckData[])
       .subscribe((data) => {
         this.getCheckData = data;

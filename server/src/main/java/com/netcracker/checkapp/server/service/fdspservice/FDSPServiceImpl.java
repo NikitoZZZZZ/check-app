@@ -2,7 +2,9 @@ package com.netcracker.checkapp.server.service.fdspservice;
 
 import com.netcracker.checkapp.server.model.FDSP;
 import com.netcracker.checkapp.server.persistance.FDSPRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FDSPServiceImpl implements FDSPService {
     FDSPRepository fdspRepository;
 
