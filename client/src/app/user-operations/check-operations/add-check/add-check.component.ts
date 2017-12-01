@@ -19,13 +19,10 @@ export class AddCheckComponent implements OnInit {
   constructor(private httpService: HttpService) {
   }
 
-  submit(checkData) {
-    const params = new URLSearchParams();
-    params.set('fdocumentn', checkData.fdn);
-    params.set('fdriven', checkData.fn);
-    params.set('fs', checkData.fs);
-    this.httpService.postData(params.toString(), this.url)
+  submit(postCheckData, addCF) {
+    this.httpService.postBody(postCheckData, this.url)
       .subscribe((data) => {
+          addCF.reset();
           this.done = true;
         },
         error => {

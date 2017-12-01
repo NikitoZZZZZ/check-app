@@ -1,9 +1,12 @@
 package com.netcracker.checkapp.server.controller;
 
 import com.netcracker.checkapp.server.model.check.Check;
+import com.netcracker.checkapp.server.model.place.Place;
 import com.netcracker.checkapp.server.persistance.CheckRepository;
+import com.netcracker.checkapp.server.persistance.PlaceRepository;
 import com.netcracker.checkapp.server.persistance.UserInfoRepository;
 import com.netcracker.checkapp.server.service.checkservice.CheckService;
+import com.netcracker.checkapp.server.service.placeservice.PlaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -22,19 +25,30 @@ public class CheckController {
     CheckService checkService;
     CheckRepository checkRepository;
 
-    CheckController(CheckService checkService, CheckRepository checkRepository, UserInfoRepository userInfoRepository) {
+    CheckController(CheckService checkService, CheckRepository checkRepository) {
         this.checkService = checkService;
         this.checkRepository = checkRepository;
     }
 
-    @PostMapping
+
+    @GetMapping(value = "/places")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @ResponseBody
+    public ResponseEntity<List<Check>> getNearPlace(@RequestParam("longitude") String longitude,@RequestParam("latitude") String latitude,@RequestParam("radius") String radius ) {
+
+        return new ResponseEntity<List<Check>>(checkService.getNearPlacesAndChecks(longitude,
+                latitude,radius),
+                HttpStatus.OK);
+    }
+
+    @PostMapping()
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<?> load(@RequestBody Map<String, String> body) {
-        checkRepository.save(checkService.getCheck(body.get("fdriven"), body.get("fdocumentn"),
+        Check check = checkRepository.save(checkService.getCheck(body.get("fdriven"), body.get("fdocumentn"),
                 body.get("fs")));
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<Check>(check,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -45,13 +59,13 @@ public class CheckController {
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             if (checkRepository.existsByIdAndUsername(id, principal.getUsername())) {
-                return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
+                return new ResponseEntity<Check>(checkRepository.findOne(id), HttpStatus.OK);
             }
             else {
                 return new ResponseEntity<Check>(HttpStatus.FORBIDDEN);
             }
         }
-        return new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
+        return new ResponseEntity<Check>(checkRepository.findOne(id), HttpStatus.OK);
     }
 
     @GetMapping
@@ -68,5 +82,6 @@ public class CheckController {
         return new ResponseEntity<List<Check>>(checkRepository.findByUsername(body.get("login")),
                 HttpStatus.OK);
     }
+
 
 }
