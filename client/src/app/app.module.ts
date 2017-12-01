@@ -49,3 +49,4 @@ import { MapComponent } from './user-operations/check-operations/map/map.compone
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+//
