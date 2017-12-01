@@ -13,7 +13,6 @@ import {ShowCheckItemComponent} from "./user-operations/check-operations/show-ch
 import {LoginComponent} from "./login/login/login.component";
 import {Page2Component} from "./user-operations/statistics/page2.component";
 import {FormsModule} from "@angular/forms";
-import { ModalComponent } from './modal/modal.component';
 import {ShowCheckComponent} from "./user-operations/check-operations/show-check/show-check/show-check.component";
 import { OrderByPipe } from './user-operations/check-operations/show-check/pipes/order-by.pipe';
 import { ReceiptListMapComponent } from './user-operations/check-operations/show-check/receipt-list-map/receipt-list-map.component';
@@ -32,8 +31,6 @@ import { MapComponent } from './user-operations/check-operations/map/map.compone
     Page2Component,
     ShowCheckComponent,
     OrderByPipe,
-    ModalComponent,
-    ReceiptListMapComponent,
     ReceiptListMapComponent,
     MapComponent
   ],
