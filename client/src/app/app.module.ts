@@ -4,7 +4,7 @@ import {RouterModule} from '@angular/router';
 import {AgmCoreModule} from '@agm/core';
 import {HttpModule} from '@angular/http';
 import {routes} from "./appRouting.routs";
-
+import { ModalComponent } from './modal/modal.component';
 import { AppComponent } from './app.component';
 import {UserOperationsComponent} from "./user-operations/user-operations.component";
 import {AddCheckComponent} from "./user-operations/check-operations/add-check/add-check.component";
@@ -32,7 +32,8 @@ import { MapComponent } from './user-operations/check-operations/map/map.compone
     ShowCheckComponent,
     OrderByPipe,
     ReceiptListMapComponent,
-    MapComponent
+    MapComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,
