@@ -21,5 +21,5 @@ export const routes: Routes = [
       {path: '', redirectTo: 'check-operations', pathMatch: 'full'}]
   },
   {path: 'login', component: LoginComponent},
-  {path: '', redirectTo: 'user-operations', pathMatch: 'full'}
+  {path: '', redirectTo: 'login', pathMatch: 'full'}
 ];

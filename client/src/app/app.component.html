@@ -10,18 +10,19 @@
       </label>
       <input type="checkbox" name="" id="open">
       <nav>
-        <li class="dropdown main-menu-item">
-          <a class="link" routerLink="user-operations" routerLinkActive="active">
-            Операции пользователя</a>
-          <ul class="dropdown-menu">
-            <li><a routerLink="user-operations/check-operations/add-check" routerLinkActive="active">Добавление чека</a>
-            </li>
-            <li><a routerLink="user-operations/check-operations/show-check" routerLinkActive="active">Просмотр чека</a>
-            </li>
-          </ul>
-        </li>
-        <a routerLink="user-operations/statistics" routerLinkActive="active">Статистика</a>
-        <a routerLink="login" routerLinkActive="active">{{title}}</a>
+          <li class="dropdown main-menu-item" *ngIf="isAuthenticated()">
+            <a class="link" routerLink="user-operations" routerLinkActive="active">
+              Операции пользователя</a>
+            <ul class="dropdown-menu">
+              <li><a routerLink="user-operations/check-operations/add-check" routerLinkActive="active">Добавление чека</a>
+              </li>
+              <li><a routerLink="user-operations/check-operations/show-check" routerLinkActive="active">Просмотр чека</a>
+              </li>
+            </ul>
+          </li>
+          <a routerLink="user-operations/statistics" routerLinkActive="active" *ngIf="isAuthenticated()">Статистика</a>
+          <a routerLink="login" routerLinkActive="active" *ngIf="!isAuthenticated()">{{title}}</a>
+          <a (click)="logout()" *ngIf="isAuthenticated()">Logout</a>
       </nav>
     </div>
   </div>
