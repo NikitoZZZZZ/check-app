@@ -63,6 +63,13 @@
             <artifactId>spring-boot-starter-security</artifactId>
             <version>1.5.8.RELEASE</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>RELEASE</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies><repositories>
     <repository>
         <id>spring-libs-release</id>
@@ -71,6 +78,11 @@
         <snapshots>
             <enabled>false</enabled>
         </snapshots>
+    </repository>
+
+    <repository>
+        <id>projectlombok.org</id>
+        <url>http://projectlombok.org/mavenrepo</url>
     </repository>
 </repositories>
 
