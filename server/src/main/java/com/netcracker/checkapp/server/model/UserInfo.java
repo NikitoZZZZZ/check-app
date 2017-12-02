@@ -6,8 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "userInfo")
 public class UserInfo {
 
-    private String login; // login format : +X(XXX)XXXXXXX
-    private String pwd; // password format : any (taking from client side)
+    private String login;
+    private String pwd;
     private String role;
 
     public String getLogin() {

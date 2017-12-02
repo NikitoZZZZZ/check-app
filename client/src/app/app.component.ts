@@ -13,9 +13,10 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
   title = 'Login';
-  authenticated = false;
+  authenticated;
+  loggedUser = '';
 
-  constructor(private http: Http,
+  constructor(private http: HttpService,
               private auth: AuthService,
               private router: Router) {
     auth.data.subscribe(value => {
@@ -24,7 +25,7 @@ export class AppComponent {
   }
 
   logout() {
-    this.http.post('/logout', {})
+    this.http.postEmptyBody('/logout')
       .subscribe(data => {
         this.auth.change();
         this.router.navigate(['/']);
@@ -36,5 +37,9 @@ export class AppComponent {
 
   isAuthenticated() {
     return this.authenticated;
+  }
+
+  ngOnInit() {
+    this.auth.check();
   }
 }

@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
+import {HttpService} from "./httpService/http.service";
 
 @Injectable()
 export class AuthService {
   au = new BehaviorSubject(false);
   data = this.au.asObservable();
+  providers: [HttpService];
 
-  constructor() { }
+  constructor(private http: HttpService) { }
 
   change() {
     this.au.next(!this.au.value);
+  }
+
+  check() {
+    this.http.getData('/api/users/current', null)
+      .subscribe(resp => {
+        if (resp.json().username != 'anonymousUser') {
+          this.au.next(true);
+        }
+      });
   }
 }

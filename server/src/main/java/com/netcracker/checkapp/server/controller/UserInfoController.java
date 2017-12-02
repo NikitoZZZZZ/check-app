@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -64,7 +65,7 @@ public class UserInfoController {
     public ResponseEntity<UserInfo> get(@RequestBody(required = false) Map<String, String> body) {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+        if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")) || body.isEmpty()) {
             return new ResponseEntity<>(userInfoRepository.findByLogin(principal.getUsername()), HttpStatus.OK);
         }
 
@@ -76,6 +77,15 @@ public class UserInfoController {
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<List<UserInfo>> getAll() {
         return new ResponseEntity<>(userInfoRepository.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/current")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> getCurrent() {
+        Map<String, String> map = new HashMap<>();
+
+        map.put("username", SecurityContextHolder.getContext().getAuthentication().getName());
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 }

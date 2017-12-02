@@ -22,11 +22,13 @@ export class HttpService {
       .catch((error: any) => Observable.throw(error));
   }
 
-  getData(url: string,params: any) {
-    return this.http.get(url, {params});
+  postEmptyBody(url: string) {
+    return this.http.post(url, {})
+      .map((res: Response) => {
+        return res.totalBytes > 0 ? res.json() : null;
+      })
+      .catch((error: any) => Observable.throw(error));
   }
-
-
 
   postBody(params: string, url: string) {
     let headers = new Headers({'Content-Type': 'application/json'});
@@ -35,6 +37,11 @@ export class HttpService {
         return res.totalBytes > 0 ? res.json() : null;
       })
       .catch((error: any) => Observable.throw(error));
+  }
+
+
+  getData(url: string, params: any) {
+    return this.http.get(url, {params});
   }
 
   /*
