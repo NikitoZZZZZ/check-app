@@ -26,8 +26,6 @@ export class LoginComponent implements OnInit {
     params.set('password', info.pwd);
     this.auth.login(this.loginUrl, params.toString())
     .subscribe((data) => {
-      this.auth.change();
-      localStorage.setItem('token', 'JWT');
       this.router.navigate(['/user-operations']);
     },
       error => {

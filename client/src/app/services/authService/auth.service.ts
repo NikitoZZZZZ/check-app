@@ -16,6 +16,8 @@ export class AuthService {
   logout(url: string) {
     return this.http.post(url, {})
       .map((res: Response) => {
+        this.change();
+        sessionStorage.removeItem('token');
         return res.totalBytes > 0 ? res.json() : null;
       })
       .catch((error: any) => Observable.throw(error));
@@ -25,6 +27,8 @@ export class AuthService {
     const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     return this.http.post(url, params, {headers: headers})
       .map((res: Response) => {
+        this.change();
+        sessionStorage.setItem('token', 'on');
         return res.totalBytes > 0 ? res.json() : null;
       })
       .catch((error: any) => Observable.throw(error));
@@ -44,6 +48,6 @@ export class AuthService {
   }
 
   private hasToken() : boolean {
-    return !!localStorage.getItem('token');
+    return !!sessionStorage.getItem('token');
   }
 }

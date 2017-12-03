@@ -29,8 +29,6 @@ export class AppComponent {
   logout() {
     this.auth.logout(this.logoutUrl)
       .subscribe(data => {
-        this.auth.change();
-        localStorage.removeItem('token');
         this.router.navigate(['/']);
       }),
         error => {
