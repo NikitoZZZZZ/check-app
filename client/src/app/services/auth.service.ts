@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {HttpService} from "./httpService/http.service";
+import 'rxjs/add/operator/delay';
 
 @Injectable()
 export class AuthService {
