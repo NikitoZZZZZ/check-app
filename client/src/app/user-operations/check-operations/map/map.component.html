@@ -1,7 +1,6 @@
 <agm-map [latitude]="lat" [longitude]="lng" [zoom]="11" (mapClick)="setMarkerEvent($event.coords)" >
-  <agm-marker *ngIf="markerLat && markerLng" [latitude]="markerLat" [longitude]="markerLng"></agm-marker>
-  <agm-circle (radiusChange)="getPlaces()" *ngIf="markerLat && markerLng && radius" [radius]="radius" [latitude]="markerLat" [longitude]="markerLng"></agm-circle>
-  <agm-info-window *ngIf="!markerLat && !markerLng" [latitude]="lat" [longitude]="lng" [isOpen]="true">Выберите точку на карте.</agm-info-window>
+  <agm-marker [latitude]="marker.longitude" [longitude]="marker.latitude"></agm-marker>
+  <agm-circle (radiusChange)="getPlaces()" [radius]="radius" [latitude]="marker.longitude" [longitude]="marker.latitude" ></agm-circle>
 </agm-map>
 
 

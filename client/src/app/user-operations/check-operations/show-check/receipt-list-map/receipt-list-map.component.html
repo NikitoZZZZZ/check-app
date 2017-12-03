@@ -4,7 +4,7 @@
     <p id="radius-header">Радиус поиска:</p>
     <div class="range range-primary ">
       <input type="range" name="range" min="0" max="10000" [(ngModel)]="radius" onchange="range.value=value">
-      <output id="range" (change)=getPlaces()>{{radius}}</output>
+      <output id="range" (change)="getPlaces()">{{radius}}</output>
     </div>
   </div>
 </div>
