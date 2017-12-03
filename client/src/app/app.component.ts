@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {AuthService} from "./services/authService/auth.service";
 import {HttpService} from "./services/httpService/http.service";
 import {Router} from "@angular/router";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,13 @@ export class AppComponent {
   logoutUrl = '/logout';
   title = 'Login';
   authenticated = false;
-  loggedUser = '';
+  sub: Subscription;
 
   constructor(private http: HttpService,
               private auth: AuthService,
               private router: Router) {
-    auth.data.subscribe(value => {
+
+    this.sub = auth.data.subscribe(value => {
       this.authenticated = value;
     });
   }
@@ -42,5 +44,9 @@ export class AppComponent {
 
   ngOnInit() {
     this.auth.check();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
   }
 }

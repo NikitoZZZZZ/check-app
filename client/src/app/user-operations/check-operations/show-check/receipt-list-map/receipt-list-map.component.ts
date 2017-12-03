@@ -41,8 +41,7 @@ export class ReceiptListMapComponent implements OnInit {
     place.selected = !place.selected;
     if (place.selected) {
       this.checked.push(place.id)
-    }
-    else {
+    } else {
       this.checked.splice(this.checked.indexOf(place.id),1);
     }
   }
