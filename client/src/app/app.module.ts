@@ -19,9 +19,7 @@ import {ReceiptListMapComponent} from './user-operations/check-operations/show-c
 import {MapComponent} from './user-operations/check-operations/map/map.component';
 import {LoginGuardService} from "./services/loginGuard/login.guard.service";
 import {HttpService} from "./services/httpService/http.service";
-import {AuthService} from "./services/auth.service";
-import {LoginGuardChildService} from "./services/loginGuard/child/login.guard.child.service";
-
+import {AuthService} from "./services/authService/auth.service";
 
 @NgModule({
   declarations: [
@@ -48,6 +46,6 @@ import {LoginGuardChildService} from "./services/loginGuard/child/login.guard.ch
     })
   ],
   bootstrap: [AppComponent],
-  providers: [LoginGuardService, LoginGuardChildService, HttpService, AuthService]
+  providers: [LoginGuardService, HttpService, AuthService]
 })
 export class AppModule { }

@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
-import {Response, Headers, URLSearchParams} from '@angular/http';
-import {PostCheckData} from '../../user-operations/checkData/post-check-data';
+import {Headers, Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -16,14 +14,6 @@ export class HttpService {
   postData(params: string, url: string) {
     const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     return this.http.post(url, params, {headers: headers})
-      .map((res: Response) => {
-        return res.totalBytes > 0 ? res.json() : null;
-      })
-      .catch((error: any) => Observable.throw(error));
-  }
-
-  postEmptyBody(url: string) {
-    return this.http.post(url, {})
       .map((res: Response) => {
         return res.totalBytes > 0 ? res.json() : null;
       })

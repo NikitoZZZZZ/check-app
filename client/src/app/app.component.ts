@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AuthService} from "./services/auth.service";
+import {AuthService} from "./services/authService/auth.service";
 import {HttpService} from "./services/httpService/http.service";
 import {Router} from "@angular/router";
 
@@ -10,6 +10,8 @@ import {Router} from "@angular/router";
   providers: [HttpService]
 })
 export class AppComponent {
+  loginUrl = '/login';
+  logoutUrl = '/logout';
   title = 'Login';
   authenticated = false;
   loggedUser = '';
@@ -23,7 +25,7 @@ export class AppComponent {
   }
 
   logout() {
-    this.http.postEmptyBody('/logout')
+    this.auth.logout(this.logoutUrl)
       .subscribe(data => {
         this.auth.change();
         localStorage.removeItem('token');

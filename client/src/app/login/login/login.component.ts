@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FullUser} from "../../user-operations/checkData/full-user";
 import {HttpService} from "../../services/httpService/http.service";
 import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../services/authService/auth.service";
 
 @Component({
   selector: 'login',
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     const params = new URLSearchParams();
     params.set('username', info.login);
     params.set('password', info.pwd);
-    this.httpService.postData(params.toString(), this.loginUrl)
+    this.auth.login(this.loginUrl, params.toString())
     .subscribe((data) => {
       this.auth.change();
       localStorage.setItem('token', 'JWT');
