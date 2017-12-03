@@ -1,4 +1,4 @@
-package com.netcracker.checkapp.server.service.security.config.handlers;
+package com.netcracker.checkapp.server.security.config.handlers;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;

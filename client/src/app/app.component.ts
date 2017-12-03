@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-import {Http} from "@angular/http";
+import {Component} from '@angular/core';
 import {AuthService} from "./services/auth.service";
-import {Subscribable} from "rxjs/Observable";
 import {HttpService} from "./services/httpService/http.service";
 import {Router} from "@angular/router";
 
@@ -9,11 +7,11 @@ import {Router} from "@angular/router";
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [AuthService, HttpService]
+  providers: [HttpService]
 })
 export class AppComponent {
   title = 'Login';
-  authenticated;
+  authenticated = false;
   loggedUser = '';
 
   constructor(private http: HttpService,
@@ -28,6 +26,7 @@ export class AppComponent {
     this.http.postEmptyBody('/logout')
       .subscribe(data => {
         this.auth.change();
+        localStorage.removeItem('token');
         this.router.navigate(['/']);
       }),
         error => {

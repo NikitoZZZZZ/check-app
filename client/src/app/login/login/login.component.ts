@@ -27,7 +27,8 @@ export class LoginComponent implements OnInit {
     this.httpService.postData(params.toString(), this.loginUrl)
     .subscribe((data) => {
       this.auth.change();
-      this.router.navigate(['/user-operations/check-operations/show-check']);
+      localStorage.setItem('token', 'JWT');
+      this.router.navigate(['/user-operations']);
     },
       error => {
         console.log(error);

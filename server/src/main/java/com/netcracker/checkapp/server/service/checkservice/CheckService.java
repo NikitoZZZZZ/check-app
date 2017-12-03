@@ -1,7 +1,7 @@
 package com.netcracker.checkapp.server.service.checkservice;
 
 import com.netcracker.checkapp.server.model.check.Check;
-import com.netcracker.checkapp.server.service.HttpService;
+import com.netcracker.checkapp.server.security.HttpService;
 
 import java.util.List;
 

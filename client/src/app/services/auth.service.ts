@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs/BehaviorSubject";
 import {HttpService} from "./httpService/http.service";
+import 'rxjs/add/operator/delay';
 
 @Injectable()
 export class AuthService {
-  au = new BehaviorSubject(false);
+
+  au = new BehaviorSubject<boolean>(this.hasToken());
   data = this.au.asObservable();
   providers: [HttpService];
 
@@ -21,5 +23,9 @@ export class AuthService {
           this.au.next(true);
         }
       });
+  }
+
+  private hasToken() : boolean {
+    return !!localStorage.getItem('token');
   }
 }

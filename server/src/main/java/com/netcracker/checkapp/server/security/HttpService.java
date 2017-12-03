@@ -1,4 +1,4 @@
-package com.netcracker.checkapp.server.service;
+package com.netcracker.checkapp.server.security;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

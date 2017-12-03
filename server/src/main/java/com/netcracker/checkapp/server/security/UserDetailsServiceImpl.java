@@ -1,4 +1,4 @@
-package com.netcracker.checkapp.server.service.security;
+package com.netcracker.checkapp.server.security;
 
 import com.netcracker.checkapp.server.model.UserInfo;
 import com.netcracker.checkapp.server.persistance.UserInfoRepository;
