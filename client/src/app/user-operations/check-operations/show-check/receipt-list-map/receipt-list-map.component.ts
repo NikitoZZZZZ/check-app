@@ -39,8 +39,11 @@ export class ReceiptListMapComponent implements OnInit {
 
   checkPlace(place: ShortPlace) {
     place.selected = !place.selected;
-    if (place.selected) this.checked.push(place.id)
-    else this.checked.splice(this.checked.indexOf(place.id),1);
+    if (place.selected) {
+      this.checked.push(place.id)
+    } else {
+      this.checked.splice(this.checked.indexOf(place.id),1);
+    }
   }
 
 
@@ -55,9 +58,7 @@ export class ReceiptListMapComponent implements OnInit {
         this.getCheckPlaces=[];
         data.forEach(obj=>{this.getCheckPlaces.push(obj.shortPlace)});
         this.getReceipts.emit(data);
-
       });
   }
-
 
 }

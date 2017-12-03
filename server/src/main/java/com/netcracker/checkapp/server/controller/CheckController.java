@@ -83,5 +83,4 @@ public class CheckController {
                 HttpStatus.OK);
     }
 
-
 }

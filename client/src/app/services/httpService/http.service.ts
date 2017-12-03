@@ -1,7 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
-import {Response, Headers, URLSearchParams} from '@angular/http';
-import {PostCheckData} from '../../user-operations/checkData/post-check-data';
+import {Headers, Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
@@ -22,12 +20,6 @@ export class HttpService {
       .catch((error: any) => Observable.throw(error));
   }
 
-  getData(url: string,params: any) {
-    return this.http.get(url, {params});
-  }
-
-
-
   postBody(params: string, url: string) {
     let headers = new Headers({'Content-Type': 'application/json'});
     return this.http.post(url, params, {headers: headers})
@@ -35,6 +27,11 @@ export class HttpService {
         return res.totalBytes > 0 ? res.json() : null;
       })
       .catch((error: any) => Observable.throw(error));
+  }
+
+
+  getData(url: string, params: any) {
+    return this.http.get(url, {params});
   }
 
   /*

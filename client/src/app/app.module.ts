@@ -1,11 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {AgmCoreModule} from '@agm/core';
 import {HttpModule} from '@angular/http';
 import {routes} from "./appRouting.routs";
-import { ModalComponent } from './modal/modal.component';
-import { AppComponent } from './app.component';
+import {ModalComponent} from './modal/modal.component';
+import {AppComponent} from './app.component';
 import {UserOperationsComponent} from "./user-operations/user-operations.component";
 import {AddCheckComponent} from "./user-operations/check-operations/add-check/add-check.component";
 import {CheckOperationsComponent} from "./user-operations/check-operations/check-operations.component";
@@ -14,11 +14,12 @@ import {LoginComponent} from "./login/login/login.component";
 import {Page2Component} from "./user-operations/statistics/page2.component";
 import {FormsModule} from "@angular/forms";
 import {ShowCheckComponent} from "./user-operations/check-operations/show-check/show-check/show-check.component";
-import { OrderByPipe } from './user-operations/check-operations/show-check/pipes/order-by.pipe';
-import { ReceiptListMapComponent } from './user-operations/check-operations/show-check/receipt-list-map/receipt-list-map.component';
-import { MapComponent } from './user-operations/check-operations/map/map.component';
-
-
+import {OrderByPipe} from './user-operations/check-operations/show-check/pipes/order-by.pipe';
+import {ReceiptListMapComponent} from './user-operations/check-operations/show-check/receipt-list-map/receipt-list-map.component';
+import {MapComponent} from './user-operations/check-operations/map/map.component';
+import {LoginGuardService} from "./services/loginGuard/login.guard.service";
+import {HttpService} from "./services/httpService/http.service";
+import {AuthService} from "./services/authService/auth.service";
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { MapComponent } from './user-operations/check-operations/map/map.compone
       apiKey: 'AIzaSyCTvIqwkvj1Nl6I5UKzd-m30o6TqN_70sY'
     })
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [LoginGuardService, HttpService, AuthService]
 })
 export class AppModule { }
