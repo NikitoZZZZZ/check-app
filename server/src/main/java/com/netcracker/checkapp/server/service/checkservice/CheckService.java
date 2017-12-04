@@ -6,7 +6,15 @@ import com.netcracker.checkapp.server.service.security.HttpService;
 import java.util.List;
 
 public interface CheckService extends HttpService {
-    public Check getCheck(String fiscalDriveNumber, String fiscalDocumentNumber, String fiscalSign);
+    Check getCheck(String fiscalDriveNumber, String fiscalDocumentNumber, String fiscalSign);
 
-    public List<Check> getNearPlacesAndChecks(String  longitude, String latitude, String radius);
+    List<Check> getNearPlacesAndChecks(String  longitude, String latitude, String radius);
+
+    Check save(Check check);
+
+    boolean exists(String id, String login);
+
+    Check findWithId(String id);
+
+    List<Check> findWithLogin(String login);
 }

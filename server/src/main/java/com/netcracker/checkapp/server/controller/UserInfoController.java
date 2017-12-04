@@ -1,7 +1,7 @@
 package com.netcracker.checkapp.server.controller;
 
 import com.netcracker.checkapp.server.model.UserInfo;
-import com.netcracker.checkapp.server.persistance.UserInfoRepository;
+import com.netcracker.checkapp.server.service.userinfoservice.UserInfoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -15,16 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping(value = "/api/users")
 public class UserInfoController {
 
-    private UserInfoRepository userInfoRepository;
+    private UserInfoService userInfoService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    UserInfoController(UserInfoRepository userInfoRepository) {
-        this.userInfoRepository = userInfoRepository;
+    UserInfoController(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -35,14 +34,14 @@ public class UserInfoController {
         UserInfo userInfo = new UserInfo();
 
         userInfo.setLogin(body.get("login"));
-        if (userInfoRepository.existsByLogin(userInfo.getLogin())) {
-            return new ResponseEntity<String>("Login is taken", HttpStatus.CONFLICT);
+        if (userInfoService.exists(userInfo.getLogin())) {
+            return new ResponseEntity<>("Login is taken", HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
         userInfo.setRole("ROLE_ADMIN");
-        userInfoRepository.save(userInfo);
+        userInfoService.save(userInfo);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(userInfo, HttpStatus.CREATED);
     }
 
     @DeleteMapping
@@ -52,11 +51,11 @@ public class UserInfoController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            return new ResponseEntity<>(userInfoRepository.deleteUserInfoByLogin(principal.getUsername()),
+            return new ResponseEntity<>(userInfoService.delete(principal.getUsername()),
                     HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(userInfoRepository.deleteUserInfoByLogin(body.get("login")), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(userInfoService.delete(body.get("login")), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
@@ -66,17 +65,17 @@ public class UserInfoController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")) || body.isEmpty()) {
-            return new ResponseEntity<>(userInfoRepository.findByLogin(principal.getUsername()), HttpStatus.OK);
+            return new ResponseEntity<>(userInfoService.findWithLogin(principal.getUsername()), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(userInfoRepository.findByLogin(body.get("login")), HttpStatus.OK);
+        return new ResponseEntity<>(userInfoService.findWithLogin(body.get("login")), HttpStatus.OK);
     }
 
     @GetMapping("/all")
     @ResponseBody
     @Secured({"ROLE_ADMIN"})
     public ResponseEntity<List<UserInfo>> getAll() {
-        return new ResponseEntity<>(userInfoRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(userInfoService.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/current")

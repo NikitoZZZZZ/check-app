@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/places")
 public class PlaceController {
-
     PlaceService placeService;
     FDSPService fdspService;
     Double radius;

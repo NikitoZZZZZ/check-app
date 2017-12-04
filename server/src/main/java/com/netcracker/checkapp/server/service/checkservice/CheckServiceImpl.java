@@ -44,17 +44,13 @@ public class CheckServiceImpl implements CheckService {
     private final static String USER_AGENT_ID = "okhttp/3.0.1";
     private final static String ROOT = "/document/receipt";
 
-
-
     CheckRepository checkRepository;
-
     private FDSPService fdspService;
 
     public CheckServiceImpl(FDSPService fdspService, CheckRepository checkRepository) {
         this.fdspService = fdspService;
         this.checkRepository = checkRepository;
     }
-
 
     @Override
     public Check getCheck(String fiscalDriveNumber, String fiscalDocumentNumber, String fiscalSign) {
@@ -93,13 +89,32 @@ public class CheckServiceImpl implements CheckService {
         return headers;
     }
 
-
     @Override
     public List<Check> getNearPlacesAndChecks(String longitude, String latitude, String radius) {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Distance distance = new Distance(Double.parseDouble(radius), Metrics.KILOMETERS);
         Point coords = new Point(Double.parseDouble(longitude), Double.parseDouble(latitude));
         return checkRepository.findByUsernameAndShortPlaceCoordsNear(principal.getUsername(), coords, distance);
+    }
+
+    @Override
+    public Check save(Check check) {
+        return checkRepository.save(check);
+    }
+
+    @Override
+    public boolean exists(String id, String login) {
+        return checkRepository.existsByIdAndUsername(id, login);
+    }
+
+    @Override
+    public Check findWithId(String id) {
+        return checkRepository.findOne(id);
+    }
+
+    @Override
+    public List<Check> findWithLogin(String login) {
+        return checkRepository.findByUsername(login);
     }
 
     private Map<String,String> buildHeaders(){
