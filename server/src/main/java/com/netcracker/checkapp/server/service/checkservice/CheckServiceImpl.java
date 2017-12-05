@@ -53,18 +53,18 @@ public class CheckServiceImpl implements CheckService {
     }
 
     @Override
-    public Check getCheck(String fiscalDriveNumber, String fiscalDocumentNumber, String fiscalSign) {
-        Map<String, String> headers = new HashMap<>();
-        NalogRuCheck nalogRuCheck = new NalogRuCheck();
+    public Check getCheck(Check check) {
+        Map<String, String> headers;
+        NalogRuCheck nalogRuCheck;
         ObjectMapper objectMapper = new ObjectMapper();
-        Check check = new Check();
 
         headers = buildHeaders();
 
         HttpEntity<String> httpEntity = new HttpEntity<String>(addHeaders(headers));
         try {
-            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU, fiscalDriveNumber,
-                    fiscalDocumentNumber, fiscalSign), HttpMethod.GET, httpEntity, String.class).getBody());
+            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU,
+                    check.getFiscalDriveNumber(), check.getFiscalDocumentNumber(), check.getFiscalSign()),
+                    HttpMethod.GET, httpEntity, String.class).getBody());
             nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
 
             check = Converter.fromNalogRuCheckToCheck(nalogRuCheck);

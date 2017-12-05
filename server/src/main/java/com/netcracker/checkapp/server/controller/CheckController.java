@@ -38,11 +38,10 @@ public class CheckController {
     @PostMapping()
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<?> load(@RequestBody Map<String, String> body) {
-        Check check = checkService.save(checkService.getCheck(body.get("fdriven"), body.get("fdocumentn"),
-                body.get("fs")));
+    public ResponseEntity<?> load(@RequestBody Check check) {
+        Check fullCheck = checkService.save(checkService.getCheck(check));
 
-        return new ResponseEntity<Check>(check, HttpStatus.CREATED);
+        return new ResponseEntity<>(fullCheck, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
