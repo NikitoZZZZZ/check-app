@@ -15,8 +15,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public boolean exists(String login) {
-        return userInfoRepository.existsByLogin(login);
+    public boolean existsByUsername(String username) {
+        return userInfoRepository.existsByLogin(username);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
-    public UserInfo findWithLogin(String login) {
-        return userInfoRepository.findByLogin(login);
+    public UserInfo findByUsername(String username) {
+        return userInfoRepository.findByLogin(username);
     }
 
     @Override

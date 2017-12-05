@@ -12,9 +12,9 @@ public interface CheckService extends HttpService {
 
     Check save(Check check);
 
-    boolean exists(String id, String login);
+    boolean existsByIdAndUsername(String id, String username);
 
-    Check findWithId(String id);
+    Check findById(String id);
 
-    List<Check> findWithLogin(String login);
+    List<Check> findByUsername(String username);
 }

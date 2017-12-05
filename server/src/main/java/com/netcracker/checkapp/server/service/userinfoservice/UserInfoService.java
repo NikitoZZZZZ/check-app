@@ -5,13 +5,13 @@ import com.netcracker.checkapp.server.model.UserInfo;
 import java.util.List;
 
 public interface UserInfoService {
-    boolean exists(String login);
+    boolean existsByUsername(String username);
 
     void save(UserInfo userInfo);
 
     UserInfo delete(String login);
 
-    UserInfo findWithLogin(String login);
+    UserInfo findByUsername(String username);
 
     List<UserInfo> findAll();
 }

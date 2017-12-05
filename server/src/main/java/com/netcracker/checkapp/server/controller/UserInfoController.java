@@ -34,7 +34,7 @@ public class UserInfoController {
         UserInfo userInfo = new UserInfo();
 
         userInfo.setLogin(body.get("login"));
-        if (userInfoService.exists(userInfo.getLogin())) {
+        if (userInfoService.existsByUsername(userInfo.getLogin())) {
             return new ResponseEntity<>("Login is taken", HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
@@ -65,10 +65,10 @@ public class UserInfoController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER")) || body.isEmpty()) {
-            return new ResponseEntity<>(userInfoService.findWithLogin(principal.getUsername()), HttpStatus.OK);
+            return new ResponseEntity<>(userInfoService.findByUsername(principal.getUsername()), HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(userInfoService.findWithLogin(body.get("login")), HttpStatus.OK);
+        return new ResponseEntity<>(userInfoService.findByUsername(body.get("login")), HttpStatus.OK);
     }
 
     @GetMapping("/all")

@@ -103,18 +103,18 @@ public class CheckServiceImpl implements CheckService {
     }
 
     @Override
-    public boolean exists(String id, String login) {
-        return checkRepository.existsByIdAndUsername(id, login);
+    public boolean existsByIdAndUsername(String id, String username) {
+        return checkRepository.existsByIdAndUsername(id, username);
     }
 
     @Override
-    public Check findWithId(String id) {
+    public Check findById(String id) {
         return checkRepository.findOne(id);
     }
 
     @Override
-    public List<Check> findWithLogin(String login) {
-        return checkRepository.findByUsername(login);
+    public List<Check> findByUsername(String username) {
+        return checkRepository.findByUsername(username);
     }
 
     private Map<String,String> buildHeaders(){

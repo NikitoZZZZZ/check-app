@@ -1,12 +1,7 @@
 package com.netcracker.checkapp.server.controller;
 
 import com.netcracker.checkapp.server.model.check.Check;
-import com.netcracker.checkapp.server.model.place.Place;
-import com.netcracker.checkapp.server.persistance.CheckRepository;
-import com.netcracker.checkapp.server.persistance.PlaceRepository;
-import com.netcracker.checkapp.server.persistance.UserInfoRepository;
 import com.netcracker.checkapp.server.service.checkservice.CheckService;
-import com.netcracker.checkapp.server.service.placeservice.PlaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -57,14 +52,14 @@ public class CheckController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            if (checkService.exists(id, principal.getUsername())) {
-                return new ResponseEntity<Check>(checkService.findWithId(id), HttpStatus.OK);
+            if (checkService.existsByIdAndUsername(id, principal.getUsername())) {
+                return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);
             }
             else {
                 return new ResponseEntity<Check>(HttpStatus.FORBIDDEN);
             }
         }
-        return new ResponseEntity<Check>(checkService.findWithId(id), HttpStatus.OK);
+        return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping
@@ -74,11 +69,11 @@ public class CheckController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            return new ResponseEntity<List<Check>>(checkService.findWithLogin(principal.getUsername()),
+            return new ResponseEntity<List<Check>>(checkService.findByUsername(principal.getUsername()),
                     HttpStatus.OK);
         }
 
-        return new ResponseEntity<List<Check>>(checkService.findWithLogin(body.get("login")),
+        return new ResponseEntity<List<Check>>(checkService.findByUsername(body.get("login")),
                 HttpStatus.OK);
     }
 
