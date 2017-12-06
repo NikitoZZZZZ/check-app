@@ -1,6 +1,6 @@
-<agm-map [latitude]="lat" [longitude]="lng" [zoom]="11" (mapClick)="setMarkerEvent($event.coords)" >
-  <agm-marker [latitude]="marker.longitude" [longitude]="marker.latitude"></agm-marker>
-  <agm-circle (radiusChange)="getPlaces()" [radius]="radius" [latitude]="marker.longitude" [longitude]="marker.latitude" ></agm-circle>
+<agm-map [latitude]=lat [longitude]=lng [zoom]=11 (mapClick)="setMarkerEvent($event.coords)" >
+  <agm-marker [latitude]=marker.latitude [longitude]=marker.longitude></agm-marker>
+  <agm-circle (circleClick)="setMarkerEvent($event.coords)" [radius]=radius [latitude]=marker.latitude [longitude]=marker.longitude ></agm-circle>
 </agm-map>
 
 

@@ -31,16 +31,16 @@ export class ReceiptListMapComponent implements OnInit {
     if (rad != null)
       this.radius = JSON.parse(rad);
     else this.radius = 1000;
-
+    localStorage.setItem("radius", this.radius.toString());
   }
 
-  getCoords(event) {
+  getCoords(event: Coords) {
     this.coords=event;
-    if (event != null) {
+    console.log(event.longitude);
+    if (event != null && event != {} ) {
       localStorage.setItem("coords", JSON.stringify(this.coords));
       this.getPlaces();
     }
-    localStorage.setItem("radius", this.radius.toString());
   }
 
   checkPlace(place: ShortPlace) {
@@ -55,6 +55,7 @@ export class ReceiptListMapComponent implements OnInit {
     params.set('longitude', this.coords.longitude.toString());
     params.set('latitude', this.coords.latitude.toString());
     params.set('radius', (this.radius / 1000).toString());
+    localStorage.setItem("radius", this.radius.toString());
     this.httpService.getData(this.url, params.toString())
       .map(resp => resp.json() as GetCheckData[])
       .subscribe((data) => {
