@@ -19,7 +19,6 @@ export class ReceiptListMapComponent implements OnInit {
   coords: Coords;
   url = '/api/receipts/places';
   urlPlace = '/api/receipts';
-  checked: String[] = [];
 
   constructor(private httpService: HttpService) {
     this.coords = new Coords();
@@ -44,8 +43,6 @@ export class ReceiptListMapComponent implements OnInit {
 
   checkPlace(place: ShortPlace) {
     place.selected = !place.selected;
-    if (place.selected) this.checked.push(place.id)
-    else this.checked.splice(this.checked.indexOf(place.id), 1);
   }
 
 
