@@ -36,7 +36,6 @@ export class ReceiptListMapComponent implements OnInit {
 
   getCoords(event: Coords) {
     this.coords=event;
-    console.log(event.longitude);
     if (event != null && event != {} ) {
       localStorage.setItem("coords", JSON.stringify(this.coords));
       this.getPlaces();

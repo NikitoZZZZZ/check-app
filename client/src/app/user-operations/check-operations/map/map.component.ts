@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Coords} from "../../placeData/coords";
 import {GeolocationService} from "../../../services/geolocation/geolocation.service";
+import {ShortPlace} from "../../placeData/short-place";
 
 
 @Component({
@@ -14,10 +15,11 @@ export class MapComponent implements OnInit {
 
   lat: number = 59.929428;
   lng: number = 30.362019;
-
   @Output() coords: EventEmitter<Coords>;
 
   @Input() radius: number = 0;
+
+  @Input() shortPlaces: ShortPlace[];
 
   marker: Coords;
 

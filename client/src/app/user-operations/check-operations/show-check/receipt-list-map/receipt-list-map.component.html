@@ -10,7 +10,7 @@
 </div>
 <div class="row map">
   <div class="col-md-12">
-    <app-map [radius]="radius" (coords)="getCoords($event)"></app-map>
+    <app-map [radius]="radius" (coords)="getCoords($event)" [shortPlaces]="getCheckPlaces"></app-map>
   </div>
 </div>
 <div class="row map">
