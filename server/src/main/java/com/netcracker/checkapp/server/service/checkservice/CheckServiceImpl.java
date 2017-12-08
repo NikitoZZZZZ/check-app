@@ -44,10 +44,7 @@ public class CheckServiceImpl implements CheckService {
     private final static String USER_AGENT_ID = "okhttp/3.0.1";
     private final static String ROOT = "/document/receipt";
 
-
-
     CheckRepository checkRepository;
-
     private FDSPService fdspService;
 
     public CheckServiceImpl(FDSPService fdspService, CheckRepository checkRepository) {
@@ -55,20 +52,19 @@ public class CheckServiceImpl implements CheckService {
         this.checkRepository = checkRepository;
     }
 
-
     @Override
-    public Check getCheck(String fiscalDriveNumber, String fiscalDocumentNumber, String fiscalSign) {
-        Map<String, String> headers = new HashMap<>();
-        NalogRuCheck nalogRuCheck = new NalogRuCheck();
+    public Check getCheck(Check check) {
+        Map<String, String> headers;
+        NalogRuCheck nalogRuCheck;
         ObjectMapper objectMapper = new ObjectMapper();
-        Check check = new Check();
 
         headers = buildHeaders();
 
         HttpEntity<String> httpEntity = new HttpEntity<String>(addHeaders(headers));
         try {
-            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU, fiscalDriveNumber,
-                    fiscalDocumentNumber, fiscalSign), HttpMethod.GET, httpEntity, String.class).getBody());
+            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU,
+                    check.getFiscalDriveNumber(), check.getFiscalDocumentNumber(), check.getFiscalSign()),
+                    HttpMethod.GET, httpEntity, String.class).getBody());
             nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
 
             check = Converter.fromNalogRuCheckToCheck(nalogRuCheck);
@@ -93,13 +89,32 @@ public class CheckServiceImpl implements CheckService {
         return headers;
     }
 
-
     @Override
     public List<Check> getNearPlacesAndChecks(String longitude, String latitude, String radius) {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Distance distance = new Distance(Double.parseDouble(radius), Metrics.KILOMETERS);
         Point coords = new Point(Double.parseDouble(latitude), Double.parseDouble(longitude));
         return checkRepository.findByUsernameAndShortPlaceCoordsNear(principal.getUsername(), coords, distance);
+    }
+
+    @Override
+    public Check save(Check check) {
+        return checkRepository.save(check);
+    }
+
+    @Override
+    public boolean existsByIdAndUsername(String id, String username) {
+        return checkRepository.existsByIdAndUsername(id, username);
+    }
+
+    @Override
+    public Check findById(String id) {
+        return checkRepository.findOne(id);
+    }
+
+    @Override
+    public List<Check> findByUsername(String username) {
+        return checkRepository.findByUsername(username);
     }
 
     private Map<String,String> buildHeaders(){

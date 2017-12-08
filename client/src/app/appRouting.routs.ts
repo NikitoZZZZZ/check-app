@@ -5,10 +5,11 @@ import {ShowCheckItemComponent} from './user-operations/check-operations/show-ch
 import {Page2Component} from './user-operations/statistics/page2.component';
 import {UserOperationsComponent} from "./user-operations/user-operations.component";
 import {LoginComponent} from "./login/login/login.component";
+import {LoginGuardService} from "./services/loginGuard/login.guard.service";
 
 export const routes: Routes = [
   {
-    path: 'user-operations', component: UserOperationsComponent,
+    path: 'user-operations', component: UserOperationsComponent, canActivate: [LoginGuardService],
     children: [{
       path: 'check-operations', component: CheckOperationsComponent,
       children: [

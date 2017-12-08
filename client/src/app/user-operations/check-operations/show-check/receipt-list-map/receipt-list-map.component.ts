@@ -60,9 +60,7 @@ export class ReceiptListMapComponent implements OnInit {
           this.getCheckPlaces.push(obj.shortPlace)
         });
         this.getReceipts.emit(data);
-
       });
   }
-
 
 }

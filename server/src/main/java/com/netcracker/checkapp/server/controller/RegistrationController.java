@@ -1,7 +1,7 @@
 package com.netcracker.checkapp.server.controller;
 
 import com.netcracker.checkapp.server.model.UserInfo;
-import com.netcracker.checkapp.server.persistance.UserInfoRepository;
+import com.netcracker.checkapp.server.service.userinfoservice.UserInfoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,11 +14,12 @@ import java.util.Map;
 
 @RestController
 public class RegistrationController {
-    private UserInfoRepository userInfoRepository;
+
+    private UserInfoService userInfoService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    RegistrationController(UserInfoRepository userInfoRepository) {
-        this.userInfoRepository = userInfoRepository;
+    RegistrationController(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -28,14 +29,14 @@ public class RegistrationController {
         UserInfo userInfo = new UserInfo();
 
         userInfo.setLogin(body.get("login"));
-        if (userInfoRepository.existsByLogin(userInfo.getLogin())) {
+        if (userInfoService.existsByUsername(userInfo.getLogin())) {
             return new ResponseEntity<String>("Login is taken", HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
         userInfo.setRole("ROLE_USER");
-        userInfoRepository.save(userInfo);
+        userInfoService.save(userInfo);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(userInfo, HttpStatus.CREATED);
     }
 
 }
