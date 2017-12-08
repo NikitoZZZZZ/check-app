@@ -93,7 +93,7 @@ public class CheckServiceImpl implements CheckService {
     public List<Check> getNearPlacesAndChecks(String longitude, String latitude, String radius) {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Distance distance = new Distance(Double.parseDouble(radius), Metrics.KILOMETERS);
-        Point coords = new Point(Double.parseDouble(longitude), Double.parseDouble(latitude));
+        Point coords = new Point(Double.parseDouble(latitude), Double.parseDouble(longitude));
         return checkRepository.findByUsernameAndShortPlaceCoordsNear(principal.getUsername(), coords, distance);
     }
 

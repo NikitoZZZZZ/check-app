@@ -24,16 +24,6 @@ export class ShowCheckItemComponent implements OnInit {
     this.getCheckData = event;
   }
 
-  /*
- getCheckById(id: string) {
-     this.httpService.getDataById(this.url, id)
-       .map(resp => resp.json().data as GetCheckData[])
-       .subscribe((data) => {
-         console.log(data);
-       });
-}
-*/
-
   init() {
     this.httpService.getData(this.url, null)
       .map(resp => resp.json() as GetCheckData[])

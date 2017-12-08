@@ -13,14 +13,12 @@ import {GetCheckData} from "../../../checkData/get-check-data";
 })
 export class ReceiptListMapComponent implements OnInit {
 
-  radius: number = 0;
+  radius: number;
   getCheckPlaces: ShortPlace[] = [];
   @Output() getReceipts: EventEmitter<GetCheckData[]>;
   coords: Coords;
   url = '/api/receipts/places';
-  //url = "/assets/data.json";
   urlPlace = '/api/receipts';
-  checked: String[]=[];
 
   constructor(private httpService: HttpService) {
     this.coords = new Coords();
@@ -28,22 +26,23 @@ export class ReceiptListMapComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.radius = 0;
+    let rad = localStorage.getItem("radius");
+    if (rad != null)
+      this.radius = JSON.parse(rad);
+    else this.radius = 1000;
+    localStorage.setItem("radius", this.radius.toString());
   }
 
-  getCoords(event) {
-    this.coords.longitude = event.lat;
-    this.coords.latitude = event.lng;
-    this.getPlaces();
+  getCoords(event: Coords) {
+    this.coords=event;
+    if (event != null && event != {} ) {
+      localStorage.setItem("coords", JSON.stringify(this.coords));
+      this.getPlaces();
+    }
   }
 
   checkPlace(place: ShortPlace) {
     place.selected = !place.selected;
-    if (place.selected) {
-      this.checked.push(place.id)
-    } else {
-      this.checked.splice(this.checked.indexOf(place.id),1);
-    }
   }
 
 
@@ -52,11 +51,14 @@ export class ReceiptListMapComponent implements OnInit {
     params.set('longitude', this.coords.longitude.toString());
     params.set('latitude', this.coords.latitude.toString());
     params.set('radius', (this.radius / 1000).toString());
+    localStorage.setItem("radius", this.radius.toString());
     this.httpService.getData(this.url, params.toString())
       .map(resp => resp.json() as GetCheckData[])
       .subscribe((data) => {
-        this.getCheckPlaces=[];
-        data.forEach(obj=>{this.getCheckPlaces.push(obj.shortPlace)});
+        this.getCheckPlaces = [];
+        data.forEach(obj => {
+          this.getCheckPlaces.push(obj.shortPlace)
+        });
         this.getReceipts.emit(data);
       });
   }
