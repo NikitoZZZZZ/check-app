@@ -44,7 +44,9 @@ export class AppComponent {
         this.router.navigate(['/']);
       }),
         error => {
-      this.proc.change("Error occured during logout");
+      if (error.status == 500) {
+        this.proc.change("Error occured during logout");
+      }
     }
   }
 

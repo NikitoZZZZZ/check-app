@@ -19,4 +19,13 @@ public class HttpServiceImpl implements HttpService {
 
         return headers;
     }
+
+    @Override
+    public Map<String, String> addMessage(String message) {
+        Map<String, String> map = new HashMap<>();
+
+        map.put("message", message);
+
+        return map;
+    }
 }

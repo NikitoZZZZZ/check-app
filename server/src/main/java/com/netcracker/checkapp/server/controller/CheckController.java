@@ -2,6 +2,7 @@ package com.netcracker.checkapp.server.controller;
 
 import com.netcracker.checkapp.server.model.check.Check;
 import com.netcracker.checkapp.server.service.checkservice.CheckService;
+import com.netcracker.checkapp.server.service.httpservice.HttpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -10,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,10 +19,12 @@ import java.util.Map;
 @RequestMapping(value = "/api/receipts")
 public class CheckController {
 
-    CheckService checkService;
+    private CheckService checkService;
+    private HttpService httpService;
 
-    CheckController(CheckService checkService) {
+    CheckController(CheckService checkService, HttpService httpService) {
         this.checkService = checkService;
+        this.httpService = httpService;
     }
 
     @GetMapping(value = "/places")
@@ -41,13 +45,13 @@ public class CheckController {
     public ResponseEntity<?> load(@RequestBody Check check) {
         Check fullCheck = checkService.save(checkService.getCheck(check));
 
-        return new ResponseEntity<>(fullCheck, HttpStatus.CREATED);
+        return new ResponseEntity<>(httpService.addMessage("Receipt added successfully"), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<Check> getById(@PathVariable String id) {
+    public ResponseEntity<?> getById(@PathVariable String id) {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
@@ -55,7 +59,7 @@ public class CheckController {
                 return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);
             }
             else {
-                return new ResponseEntity<Check>(HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(httpService.addMessage("Permission denied"), HttpStatus.FORBIDDEN);
             }
         }
         return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);

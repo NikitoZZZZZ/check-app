@@ -13,6 +13,6 @@ import java.io.IOException;
 public class AuthenticationFailureHandlerImpl implements AuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
-        httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        httpServletResponse.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Login or password is invalid");
     }
 }

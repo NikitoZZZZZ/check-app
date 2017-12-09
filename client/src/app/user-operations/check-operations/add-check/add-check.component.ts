@@ -24,15 +24,14 @@ export class AddCheckComponent implements OnInit {
   submit(postCheckData, addCF) {
     this.httpService.postBody(postCheckData, this.url)
       .subscribe((data) => {
+          this.proc.change(data.message);
           addCF.reset();
           this.done = true;
-          console.log('ekkekekekekeke');
-          if (data.status == 201) {
-            this.proc.change("Receipt added successfully");
-          }
         },
         error => {
-          this.proc.change("Wrong data");
+          if (error.status == 500) {
+            this.proc.change("Data is not valid");
+          }
         });
   }
 

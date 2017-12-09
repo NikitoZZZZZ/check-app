@@ -31,10 +31,10 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/user-operations']);
     },
       error => {
-      if (error.status == 401) {
-        this.proc.change("Username or password is incorrect");
-      } else {
+      if (error.status == 500) {
         this.proc.change("Error occured");
+      } else {
+        this.proc.change(error.json().message);
       }
       });
   }
@@ -45,10 +45,10 @@ export class LoginComponent implements OnInit {
           this.submit(fullUser);
         },
         error => {
-          if (error.status == 409) {
-            this.proc.change("Logn is taken");
-          } else {
+          if (error.status == 500) {
             this.proc.change("Error occured");
+          } else {
+            this.proc.change(error.json().message);
           }
         });
   }

@@ -8,4 +8,6 @@ import java.util.Map;
 
 public interface HttpService {
     HttpHeaders addHeaders(Map<String, String> map);
+
+    Map<String, String> addMessage(String message);
 }
