@@ -35,7 +35,7 @@ public class UserInfoController {
 
         userInfo.setLogin(body.get("login"));
         if (userInfoService.existsByUsername(userInfo.getLogin())) {
-            return new ResponseEntity<>("Login is taken", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
         userInfo.setRole("ROLE_ADMIN");

@@ -30,7 +30,7 @@ public class RegistrationController {
 
         userInfo.setLogin(body.get("login"));
         if (userInfoService.existsByUsername(userInfo.getLogin())) {
-            return new ResponseEntity<String>("Login is taken", HttpStatus.CONFLICT);
+            return new ResponseEntity<String>(HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
         userInfo.setRole("ROLE_USER");

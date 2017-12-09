@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {AuthService} from "./services/authService/auth.service";
 import {HttpService} from "./services/httpService/http.service";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs/Subscription";
+import {ModalComponent} from "./modal/modal.component";
+import {MessageProcessingService} from "./services/messageService/message.processing.service";
 
 @Component({
   selector: 'app-root',
@@ -15,14 +17,24 @@ export class AppComponent {
   logoutUrl = '/logout';
   title = 'Login';
   authenticated = false;
-  sub: Subscription;
+  errorOccured = true;
+  authenticationSubscription: Subscription;
+  messageProcessingSubscription: Subscription;
+  message = '';
+  @ViewChild('errormodal') errorModal: ModalComponent;
 
-  constructor(private http: HttpService,
-              private auth: AuthService,
+  constructor(private auth: AuthService,
+              private proc: MessageProcessingService,
               private router: Router) {
 
-    this.sub = auth.data.subscribe(value => {
+    this.authenticationSubscription = auth.data.subscribe(value => {
       this.authenticated = value;
+    });
+    this.messageProcessingSubscription = proc.data.delay(10).subscribe(value =>{
+      this.message = value;
+      if (value != '') {
+        this.errorModal.show();
+      }
     });
   }
 
@@ -32,12 +44,16 @@ export class AppComponent {
         this.router.navigate(['/']);
       }),
         error => {
-          console.log(error);
-        }
+      this.proc.change("Error occured during logout");
+    }
   }
 
   isAuthenticated() {
     return this.authenticated;
+  }
+
+  isErrorOccured() {
+    return this.errorOccured;
   }
 
   ngOnInit() {
@@ -45,6 +61,7 @@ export class AppComponent {
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    this.authenticationSubscription.unsubscribe();
+    this.messageProcessingSubscription.unsubscribe();
   }
 }

@@ -31,3 +31,16 @@
 <div>
   <router-outlet id="router"></router-outlet>
 </div>
+
+<app-modal class="app-modal" ng-controller="MyController as vm" name="vm.errormodal" #errormodal>
+  <div class="app-modal-body">
+    <p>
+      {{message}}
+    </p>
+  </div>
+  <div class="app-modal-footer">
+    <div class="btn-toolbar form-group reg">
+      <input type="submit" class="btn btn-default" value="Close" (click)="errormodal.hide()">
+    </div>
+  </div>
+</app-modal>
