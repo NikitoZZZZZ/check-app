@@ -11,7 +11,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,7 +44,7 @@ public class CheckController {
     public ResponseEntity<?> load(@RequestBody Check check) {
         Check fullCheck = checkService.save(checkService.getCheck(check));
 
-        return new ResponseEntity<>(httpService.addMessage("Receipt added successfully"), HttpStatus.CREATED);
+        return new ResponseEntity<>(httpService.createMessage("Receipt added successfully"), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -59,7 +58,7 @@ public class CheckController {
                 return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);
             }
             else {
-                return new ResponseEntity<>(httpService.addMessage("Permission denied"), HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(httpService.createMessage("Permission denied"), HttpStatus.FORBIDDEN);
             }
         }
         return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);

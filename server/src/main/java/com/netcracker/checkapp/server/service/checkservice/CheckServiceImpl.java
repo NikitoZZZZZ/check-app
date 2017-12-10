@@ -13,7 +13,6 @@ import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -65,7 +64,7 @@ public class CheckServiceImpl implements CheckService {
 
         headers = buildHeaders();
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(httpService.addHeaders(headers));
+        HttpEntity<String> httpEntity = new HttpEntity<String>(httpService.createHttpHeaders(headers));
         try {
             JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU,
                     check.getFiscalDriveNumber(), check.getFiscalDocumentNumber(), check.getFiscalSign()),

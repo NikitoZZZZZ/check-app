@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,13 +35,13 @@ public class RegistrationController {
 
         userInfo.setLogin(body.get("login"));
         if (userInfoService.existsByUsername(userInfo.getLogin())) {
-            return new ResponseEntity<>(httpService.addMessage("This login is taken"), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(httpService.createMessage("This login is taken"), HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
         userInfo.setRole("ROLE_USER");
         userInfoService.save(userInfo);
 
-        return new ResponseEntity<>(httpService.addMessage("Registration successful"), HttpStatus.CREATED);
+        return new ResponseEntity<>(httpService.createMessage("Registration successful"), HttpStatus.CREATED);
     }
 
 }

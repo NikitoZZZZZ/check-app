@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface HttpService {
-    HttpHeaders addHeaders(Map<String, String> map);
+    HttpHeaders createHttpHeaders(Map<String, String> map);
 
-    Map<String, String> addMessage(String message);
+    Map<String, String> createMessage(String message);
 }

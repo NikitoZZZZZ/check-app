@@ -24,13 +24,13 @@ export class AddCheckComponent implements OnInit {
   submit(postCheckData, addCF) {
     this.httpService.postBody(postCheckData, this.url)
       .subscribe((data) => {
-          this.proc.change(data.message);
+          this.proc.showMessage(data.message);
           addCF.reset();
           this.done = true;
         },
         error => {
           if (error.status == 500) {
-            this.proc.change("Data is not valid");
+            this.proc.showMessage("Data is not valid");
           }
         });
   }

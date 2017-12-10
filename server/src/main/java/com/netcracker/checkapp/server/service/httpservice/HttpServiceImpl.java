@@ -11,7 +11,7 @@ import java.util.Map;
 @Service
 public class HttpServiceImpl implements HttpService {
     @Override
-    public HttpHeaders addHeaders(Map<String, String> map) {
+    public HttpHeaders createHttpHeaders(Map<String, String> map) {
         HttpHeaders headers = new HttpHeaders();
         for (Map.Entry<String, String> element : map.entrySet()) {
             headers.add(element.getKey(), element.getValue());
@@ -21,7 +21,7 @@ public class HttpServiceImpl implements HttpService {
     }
 
     @Override
-    public Map<String, String> addMessage(String message) {
+    public Map<String, String> createMessage(String message) {
         Map<String, String> map = new HashMap<>();
 
         map.put("message", message);

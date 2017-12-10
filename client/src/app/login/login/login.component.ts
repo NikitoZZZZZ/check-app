@@ -32,9 +32,9 @@ export class LoginComponent implements OnInit {
     },
       error => {
       if (error.status == 500) {
-        this.proc.change("Error occured");
+        this.proc.showMessage("Error occured");
       } else {
-        this.proc.change(error.json().message);
+        this.proc.showMessage(error.json().message);
       }
       });
   }
@@ -46,9 +46,9 @@ export class LoginComponent implements OnInit {
         },
         error => {
           if (error.status == 500) {
-            this.proc.change("Error occured");
+            this.proc.showMessage("Error occured");
           } else {
-            this.proc.change(error.json().message);
+            this.proc.showMessage(error.json().message);
           }
         });
   }

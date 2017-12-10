@@ -8,7 +8,7 @@ export class MessageProcessingService {
 
   constructor() { }
 
-  change(message : string) {
+  showMessage(message : string) {
     this.message.next(message);
   }
 }
