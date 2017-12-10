@@ -20,6 +20,7 @@ import {MapComponent} from './user-operations/check-operations/map/map.component
 import {LoginGuardService} from "./services/loginGuard/login.guard.service";
 import {HttpService} from "./services/httpService/http.service";
 import {AuthService} from "./services/authService/auth.service";
+import {PlaceListComponent} from "./user-operations/check-operations/add-check/place-list/place-list/place-list.component";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {AuthService} from "./services/authService/auth.service";
     OrderByPipe,
     ReceiptListMapComponent,
     MapComponent,
-    ModalComponent
+    ModalComponent,
+    PlaceListComponent
   ],
   imports: [
     BrowserModule,

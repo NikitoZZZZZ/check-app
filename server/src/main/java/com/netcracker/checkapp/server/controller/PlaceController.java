@@ -36,7 +36,7 @@ public class PlaceController {
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<List<Place>> getPlaces(@RequestParam("longitude") String longitude,
-                                                 @RequestParam("latitide") String latitude) {
+                                                 @RequestParam("latitude") String latitude) {
         Coords coords = new Coords();
         coords.setLatitude(Double.parseDouble(latitude));
         coords.setLongitude(Double.parseDouble(longitude));

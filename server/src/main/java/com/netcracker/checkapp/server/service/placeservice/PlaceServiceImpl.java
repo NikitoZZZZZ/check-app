@@ -44,6 +44,10 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public List<Place> getNearPlaces(Coords coords, double radius) {
         Distance distance = new Distance(radius, Metrics.KILOMETERS);
+
+        /*Должно быть так:
+        Point point = new Point(coords.getLatitude(),coords.getLongitude());*/
+
         Point point = new Point(coords.getLongitude(),coords.getLatitude());
         return placeRepository.findByCoordsNear(point,distance);
     }

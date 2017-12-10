@@ -1,0 +1,16 @@
+<div class="row map">
+  <div class="col-md-12">
+    <app-map [radius]="radius" (coords)="getCoords($event)"></app-map>
+  </div>
+</div>
+<div class="row map">
+  <div class="col-md-12">
+    <form class="form-group" >
+      <ol class="rectangle">
+        <li *ngFor="let place of places">
+          <p><input type="radio"><label>Название: </label>{{place?.name}}<br/><label>Адрес:</label> {{place?.name}}</p>
+        </li>
+      </ol>
+    </form>
+  </div>
+</div>
