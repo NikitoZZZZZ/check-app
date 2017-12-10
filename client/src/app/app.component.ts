@@ -30,7 +30,7 @@ export class AppComponent {
     this.authenticationSubscription = auth.data.subscribe(value => {
       this.authenticated = value;
     });
-    this.messageProcessingSubscription = proc.data.delay(10).subscribe(value =>{
+    this.messageProcessingSubscription = proc.data.subscribe(value =>{
       this.message = value;
       if (value != '') {
         this.errorModal.show();
@@ -46,6 +46,8 @@ export class AppComponent {
         error => {
       if (error.status == 500) {
         this.proc.showMessage("Error occured during logout");
+      } else {
+        this.proc.showMessage(error.json().message);
       }
     }
   }

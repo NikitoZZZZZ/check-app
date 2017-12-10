@@ -31,6 +31,8 @@ export class AddCheckComponent implements OnInit {
         error => {
           if (error.status == 500) {
             this.proc.showMessage("Data is not valid");
+          } else {
+            this.proc.showMessage(error.json().message);
           }
         });
   }
