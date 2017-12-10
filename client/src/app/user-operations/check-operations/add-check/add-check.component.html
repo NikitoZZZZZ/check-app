@@ -2,7 +2,7 @@
   <div class="container center_div add_div table-bordered">
     <b class="add-check"><abbr title="Фискальные данные">ФД:</abbr></b><br>
     <div class="form-group">
-      <input class="form-control add-check" minlength="4" maxlength="7" pattern="^[ 0-9]+$" name="fdocumentn" [(ngModel)]="postCheckData.fdocumentn"
+      <input class="form-control add-check" minlength="4" maxlength="7" pattern="^[ 0-9]+$" name="fdocumentn" [(ngModel)]="postCheckData.fiscalDocumentNumber"
              size="40"
              #fdocumentn="ngModel" required>
       <div *ngIf="fdocumentn.invalid && (fdocumentn.dirty || fdocumentn.touched)"
@@ -21,7 +21,7 @@
     <b class="add-check"><abbr title="Фискальный накопитель">ФН:</abbr></b><br>
     <div class="form-group">
       <input class="form-control add-check" minlength="16" maxlength="16" pattern="^[ 0-9]+$" name="fdriven"
-             [(ngModel)]="postCheckData.fdriven" size="40" #fdriven="ngModel" required>
+             [(ngModel)]="postCheckData.fiscalDriveNumber" size="40" #fdriven="ngModel" required>
       <div *ngIf="fdriven.invalid && (fdriven.dirty || fdriven.touched)"
            class="alert alert-danger add-check">
         <div *ngIf="fdriven.errors.pattern">
@@ -37,7 +37,7 @@
     </div>
     <b class="add-check"><abbr title="Фискальный признак документа">ФП(ФПД):</abbr></b><br>
     <div class="form-group">
-      <input class="form-control add-check" minlength="8" maxlength="10" pattern="^[ 0-9]+$" name="fs" [(ngModel)]="postCheckData.fs"
+      <input class="form-control add-check" minlength="8" maxlength="10" pattern="^[ 0-9]+$" name="fs" [(ngModel)]="postCheckData.fiscalSign"
              size="40"
              #fs="ngModel" required>
       <div *ngIf="fs.invalid && (fs.dirty || fs.touched)"
@@ -53,11 +53,33 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <input type="submit" [disabled]="fdriven.invalid || fdocumentn.invalid || fs.invalid || (click)"
-             class="btn btn-default add-check" value="Добавить чек" (click)="submit(postCheckData,addCheckForm)">
-      <input type="reset" class="btn btn-default add-check"
+    <div class="btn-toolbar form-group">
+      <input type="submit" [disabled]="fdriven.invalid || fdocumentn.invalid || fs.invalid"
+             class="btn btn-primary" value="Добавить чек" (click)="submit(postCheckData,addCheckForm)">
+      <input type="reset" class="btn btn-default"
              value="Очистить форму">
+    </div>
+  </div>
+</form>
+
+<form #addPlaceForm="ngForm" autocomplete="off">
+  <div class="container center_div add_div table-bordered">
+    <b class="add-place"><abbr title="Название нового магазина">Магазин:</abbr></b><br>
+    <div class="form-group">
+      <input class="form-control add-place" minlength="4" maxlength="20" pattern="^[a-zA-Z]{1}[\w]+$"
+        name="placeName" [(ngModel)]="place.name" size="40" #placeName="ngModel" required [disabled]="placeDone">
+      <div *ngIf="placeName.invalid && (placeName.dirty || placeName.touched)">
+        <div *ngIf="placeName.errors.pattern">
+          Название магазина должно начинаться с буквы и не содержать специальных символов
+        </div>
+        <div *ngIf="placeName.errors.required">
+          Данное поле обязательно
+        </div>
+      </div>
+    </div>
+    <div class="btn-toolbar form-group">
+      <input type="submit" class="btn btn-success" value="Добавить магазин"
+        [disabled]="placeName.invalid || placeDone" (click)="addPlace(place,addPlaceForm)">
     </div>
   </div>
 </form>

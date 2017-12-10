@@ -30,6 +30,8 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Place addNewPlace(Place place) {
+        if (place.getId() == null)
+            return placeRepository.save(place);
         Place localPlace = placeRepository.findOne(place.getId());
         if (localPlace != null)
             localPlace = incrementPlaceRating(place);
