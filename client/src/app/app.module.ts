@@ -20,6 +20,7 @@ import {MapComponent} from './user-operations/check-operations/map/map.component
 import {LoginGuardService} from "./services/loginGuard/login.guard.service";
 import {HttpService} from "./services/httpService/http.service";
 import {AuthService} from "./services/authService/auth.service";
+import {MessageProcessingService} from "./services/messageService/message.processing.service";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,6 @@ import {AuthService} from "./services/authService/auth.service";
     })
   ],
   bootstrap: [AppComponent],
-  providers: [LoginGuardService, HttpService, AuthService]
+  providers: [LoginGuardService, HttpService, AuthService, MessageProcessingService]
 })
 export class AppModule { }

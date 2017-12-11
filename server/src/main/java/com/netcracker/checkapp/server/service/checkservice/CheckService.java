@@ -1,11 +1,11 @@
 package com.netcracker.checkapp.server.service.checkservice;
 
 import com.netcracker.checkapp.server.model.check.Check;
-import com.netcracker.checkapp.server.service.security.HttpService;
+import com.netcracker.checkapp.server.service.httpservice.HttpService;
 
 import java.util.List;
 
-public interface CheckService extends HttpService {
+public interface CheckService {
     Check getCheck(Check check);
 
     List<Check> getNearPlacesAndChecks(String  longitude, String latitude, String radius);

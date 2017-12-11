@@ -1,6 +1,7 @@
 package com.netcracker.checkapp.server.controller;
 
 import com.netcracker.checkapp.server.model.UserInfo;
+import com.netcracker.checkapp.server.service.httpservice.HttpService;
 import com.netcracker.checkapp.server.service.userinfoservice.UserInfoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +22,12 @@ public class UserInfoController {
 
     private UserInfoService userInfoService;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private HttpService httpService;
 
-    UserInfoController(UserInfoService userInfoService) {
+    UserInfoController(UserInfoService userInfoService, HttpService httpService) {
         this.userInfoService = userInfoService;
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        this.httpService = httpService;
     }
 
     @PostMapping
@@ -35,13 +38,13 @@ public class UserInfoController {
 
         userInfo.setLogin(body.get("login"));
         if (userInfoService.existsByUsername(userInfo.getLogin())) {
-            return new ResponseEntity<>("Login is taken", HttpStatus.CONFLICT);
+            return new ResponseEntity<>(httpService.createMessage("This login is taken"), HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
         userInfo.setRole("ROLE_ADMIN");
         userInfoService.save(userInfo);
 
-        return new ResponseEntity<>(userInfo, HttpStatus.CREATED);
+        return new ResponseEntity<>(httpService.createMessage("User created"), HttpStatus.CREATED);
     }
 
     @DeleteMapping
@@ -51,11 +54,12 @@ public class UserInfoController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
-            return new ResponseEntity<>(userInfoService.delete(principal.getUsername()),
-                    HttpStatus.NO_CONTENT);
+            userInfoService.delete(principal.getUsername());
+            return new ResponseEntity<>(httpService.createMessage("Deleted successfully"), HttpStatus.NO_CONTENT);
         }
+        userInfoService.delete(body.get("login"));
 
-        return new ResponseEntity<>(userInfoService.delete(body.get("login")), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(httpService.createMessage("Deleted successfully"), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping

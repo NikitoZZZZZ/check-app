@@ -8,11 +8,11 @@ import com.netcracker.checkapp.server.model.check.Converter;
 import com.netcracker.checkapp.server.model.check.NalogRuCheck;
 import com.netcracker.checkapp.server.persistance.CheckRepository;
 import com.netcracker.checkapp.server.service.fdspservice.FDSPService;
+import com.netcracker.checkapp.server.service.httpservice.HttpService;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -44,12 +44,16 @@ public class CheckServiceImpl implements CheckService {
     private final static String USER_AGENT_ID = "okhttp/3.0.1";
     private final static String ROOT = "/document/receipt";
 
-    CheckRepository checkRepository;
+    private CheckRepository checkRepository;
     private FDSPService fdspService;
+    private HttpService httpService;
 
-    public CheckServiceImpl(FDSPService fdspService, CheckRepository checkRepository) {
+    public CheckServiceImpl(FDSPService fdspService,
+                            CheckRepository checkRepository,
+                            HttpService httpService) {
         this.fdspService = fdspService;
         this.checkRepository = checkRepository;
+        this.httpService = httpService;
     }
 
     @Override
@@ -60,7 +64,7 @@ public class CheckServiceImpl implements CheckService {
 
         headers = buildHeaders();
 
-        HttpEntity<String> httpEntity = new HttpEntity<String>(addHeaders(headers));
+        HttpEntity<String> httpEntity = new HttpEntity<String>(httpService.createHttpHeaders(headers));
         try {
             JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU,
                     check.getFiscalDriveNumber(), check.getFiscalDocumentNumber(), check.getFiscalSign()),
@@ -77,16 +81,6 @@ public class CheckServiceImpl implements CheckService {
             e.printStackTrace();
         }
         return check;
-    }
-
-    @Override
-    public HttpHeaders addHeaders(Map<String, String> map) {
-        HttpHeaders headers = new HttpHeaders();
-        for (Map.Entry<String, String> element : map.entrySet()) {
-            headers.add(element.getKey(), element.getValue());
-        }
-
-        return headers;
     }
 
     @Override

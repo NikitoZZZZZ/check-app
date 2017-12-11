@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpService} from '../../../services/httpService/http.service';
 import {PostCheckData} from '../../checkData/post-check-data';
+import {MessageProcessingService} from "../../../services/messageService/message.processing.service";
 
 
 @Component({
@@ -16,17 +17,23 @@ export class AddCheckComponent implements OnInit {
   done = false;
   url = '/api/receipts';
 
-  constructor(private httpService: HttpService) {
+  constructor(private httpService: HttpService,
+              private proc: MessageProcessingService) {
   }
 
   submit(postCheckData, addCF) {
     this.httpService.postBody(postCheckData, this.url)
       .subscribe((data) => {
+          this.proc.showMessage(data.message);
           addCF.reset();
           this.done = true;
         },
         error => {
-          console.log(error);
+          if (error.status == 500) {
+            this.proc.showMessage("Data is not valid");
+          } else {
+            this.proc.showMessage(error.json().message);
+          }
         });
   }
 

@@ -1,5 +1,5 @@
 export class PostCheckData {
-  fdriven: string;
-  fdocumentn: string;
-  fs: string;
+  fiscalDriveNumber: string;
+  fiscalDocumentNumber: string;
+  fiscalSign: string;
 }
