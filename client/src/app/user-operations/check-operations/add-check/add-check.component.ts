@@ -25,14 +25,18 @@ export class AddCheckComponent implements OnInit {
   constructor(private httpService: HttpService) {
   }
 
-  submit(postCheckData, addCF) {
-    /*postCheckData.shortPlace = new ShortPlace();
+  submit(postCheckData, addCF, addPF) {
+    postCheckData.shortPlace = new ShortPlace();
     postCheckData.shortPlace.name = this.place.name;
     postCheckData.shortPlace.coords = new Coords(this.place.coords.latitude, this.place.coords.longitude);
-    postCheckData.shortPlace.id = this.place.id;*/
+    postCheckData.shortPlace.id = this.place.id;
     this.httpService.postBody(postCheckData, this.checkUrl)
       .subscribe((data) => {
+          this.addPlace(this.place,addPF);
+          this.clearPlace();
           addCF.reset();
+          this.placeDone = false;
+          addPF.reset();
           this.checkDone = true;
         },
         error => {
@@ -42,6 +46,8 @@ export class AddCheckComponent implements OnInit {
 
   addPlace(place, addPF) {
     place.coords = new Coords(59.929428,30.362019);
+    place.id = new String("1839");
+    place.numOfChecks = 0;
     this.httpService.postBody(place, this.placeUrl)
       .subscribe((data) => {
           this.placeDone = true;
@@ -49,6 +55,12 @@ export class AddCheckComponent implements OnInit {
         error => {
           console.log(error);
         });
+  }
+
+  clearPlace() {
+    this.place.numOfChecks = 0;
+    this.place.coords = null;
+    this.place.id = null;
   }
 
   ngOnInit() {

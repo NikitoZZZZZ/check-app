@@ -29,7 +29,7 @@ public class PlaceController {
     @Secured({"ROLE_USER","ROLE_ADMIN"})
     @ResponseBody
     public ResponseEntity<?> load(@RequestBody Place place) {
-        return new ResponseEntity<Place>(placeService.addNewPlace(place), HttpStatus.OK);
+        return new ResponseEntity<>(placeService.addNewPlace(place), HttpStatus.CREATED);
     }
 
     @GetMapping

@@ -54,8 +54,8 @@
       </div>
     </div>
     <div class="btn-toolbar form-group">
-      <input type="submit" [disabled]="fdriven.invalid || fdocumentn.invalid || fs.invalid"
-             class="btn btn-primary" value="Добавить чек" (click)="submit(postCheckData,addCheckForm)">
+      <input type="submit" [disabled]="fdriven.invalid || fdocumentn.invalid || fs.invalid || !placeDone"
+             class="btn btn-primary" value="Добавить чек" (click)="submit(postCheckData,addCheckForm,addPlaceForm)">
       <input type="reset" class="btn btn-default"
              value="Очистить форму">
     </div>
@@ -68,12 +68,16 @@
     <div class="form-group">
       <input class="form-control add-place" minlength="4" maxlength="20" pattern="^[a-zA-Z]{1}[\w]+$"
         name="placeName" [(ngModel)]="place.name" size="40" #placeName="ngModel" required [disabled]="placeDone">
-      <div *ngIf="placeName.invalid && (placeName.dirty || placeName.touched)">
+      <div *ngIf="placeName.invalid && (placeName.dirty || placeName.touched)"
+          class="alert alert-danger add-place">
         <div *ngIf="placeName.errors.pattern">
           Название магазина должно начинаться с буквы и не содержать специальных символов
         </div>
         <div *ngIf="placeName.errors.required">
           Данное поле обязательно
+        </div>
+        <div *ngIf="placeName.errors.minlength">
+          Название магазина должно быть от 4 символов
         </div>
       </div>
     </div>
