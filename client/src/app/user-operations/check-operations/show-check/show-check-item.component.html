@@ -1,6 +1,6 @@
 <div class="row component-row">
   <div class="col-md-4 col-md-offset-1">
-    <ol class="square" *ngFor="let data of getCheckData | orderBy : 'dateTime'  ">
+    <ol class="square" *ngFor="let data of getCheckData | orderBy: 'dateTime' : true ">
       <div class="panel-group big-panel scrollbar-cyan bordered-cyan card example-1 square" id="accordion">
         <ul class="show-check" [style.display]="data?.shortPlace.selected===true?'block':'none'">
             <div class=" panel panel-default " >

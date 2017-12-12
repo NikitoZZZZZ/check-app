@@ -11,7 +11,6 @@ import {GetCheckData} from '../../checkData/get-check-data';
 export class ShowCheckItemComponent implements OnInit {
 
   getCheckData: GetCheckData[];
-  url = '/api/receipts';
 
   constructor(private httpService: HttpService) {
   }
@@ -24,16 +23,8 @@ export class ShowCheckItemComponent implements OnInit {
     this.getCheckData = event;
   }
 
-  init() {
-    this.httpService.getData(this.url, null)
-      .map(resp => resp.json() as GetCheckData[])
-      .subscribe((data) => {
-        this.getCheckData = data;
-      });
-  }
 
   ngOnInit() {
-    this.init();
   }
 
 }
