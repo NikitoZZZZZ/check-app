@@ -23,9 +23,9 @@ export class HttpService {
   postBody(params: string, url: string) {
     let headers = new Headers({'Content-Type': 'application/json'});
     return this.http.post(url, params, {headers: headers})
-      .map((res: Response) => {
-        return res.totalBytes > 0 ? res.json() : null;
-      })
+      //.map((res: Response) => {
+      //  return res.totalBytes > 0 ? res.json() : null;
+      //})
       .catch((error: any) => Observable.throw(error));
   }
 

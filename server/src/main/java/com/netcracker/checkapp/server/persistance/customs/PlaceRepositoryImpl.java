@@ -2,6 +2,7 @@ package com.netcracker.checkapp.server.persistance.customs;
 
 import com.mongodb.WriteResult;
 import com.netcracker.checkapp.server.model.place.Place;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -9,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Update;
 
 public class PlaceRepositoryImpl implements PlaceRepositoryCustom {
 
+    @Autowired
     MongoTemplate mongoTemplate;
 
     @Override

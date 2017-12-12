@@ -28,11 +28,11 @@ export class AddCheckComponent implements OnInit {
   submit(postCheckData, addCF, addPF) {
     postCheckData.shortPlace = new ShortPlace();
     postCheckData.shortPlace.name = this.place.name;
-    postCheckData.shortPlace.coords = new Coords(this.place.coords.latitude, this.place.coords.longitude);
+    postCheckData.shortPlace.coords = this.place.coords;
     postCheckData.shortPlace.id = this.place.id;
     this.httpService.postBody(postCheckData, this.checkUrl)
       .subscribe((data) => {
-          this.addPlace(this.place,addPF);
+          this.addPlace(addPF);
           this.clearPlace();
           addCF.reset();
           this.placeDone = false;
@@ -44,16 +44,17 @@ export class AddCheckComponent implements OnInit {
         });
   }
 
-  addPlace(place, addPF) {
-    place.coords = new Coords(59.929428,30.362019);
-    place.id = new String("1839");
-    place.numOfChecks = 0;
-    this.httpService.postBody(place, this.placeUrl)
+  addPlace(addPF) {
+    this.place.coords = new Coords(59.929428,30.362019);
+    this.place.numOfChecks = 0;
+    this.httpService.postBody(JSON.stringify(this.place), this.placeUrl)
+      .map(resp => resp.json() as Place)
       .subscribe((data) => {
           this.placeDone = true;
+          this.place = data;
         },
         error => {
-          console.log(error);
+          console.log(JSON.stringify(error));
         });
   }
 
