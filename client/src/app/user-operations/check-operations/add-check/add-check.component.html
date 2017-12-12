@@ -1,6 +1,7 @@
 <div class="row component-row">
   <div class="col-md-4 col-md-offset-1">
     <form #addCheckForm=ngForm autocomplete="off">
+      <h3 align="center">Данные чека</h3>
       <div class="container center_div add_div table-bordered">
         <b class="add-check"><abbr title="Фискальные данные">ФД:</abbr></b><br>
         <div class="form-group">
@@ -67,8 +68,9 @@
     </form>
 
     <form #addPlaceForm="ngForm" autocomplete="off">
+      <h3 align="center">Данные магазина</h3>
       <div class="container center_div add_div table-bordered">
-        <b class="add-place"><abbr title="Название нового магазина">Магазин:</abbr></b><br>
+        <b class="add-place"><abbr title="Название нового магазина">Название:</abbr></b><br>
         <div class="form-group">
           <input class="form-control add-place" minlength="4" maxlength="20" pattern="^[a-zA-Z\u0400-\u04FF]{1}[\w\u0400-\u04FF']+$"
                  name="placeName" [(ngModel)]="place.name" size="40" #placeName="ngModel" required
@@ -83,6 +85,24 @@
             </div>
             <div *ngIf="placeName.errors.minlength">
               Название магазина должно быть от 4 символов
+            </div>
+          </div>
+        </div>
+        <b class="add-place"><abbr title="Адрес магазина (в формате 'Улица' 'дом' ['корпус'])">Адрес:</abbr></b><br>
+        <div class="form-group">
+          <input class="form-control add-place" minlength="5" maxlength="30" pattern="^[a-zA-Z\u0400-\u04FF]{1}[\w\u0400-\u04FF'\- ]+$"
+                 name="placeAddress" [(ngModel)]="place.address" size="80" #placeAddress="ngModel" required
+                 [disabled]="placeDone">
+          <div *ngIf="placeAddress.invalid && (placeAddress.dirty || placeAddress.touched)"
+               class="alert alert-danger add-place">
+            <div *ngIf="placeAddress.errors.pattern">
+              Адрес магазина должен быть в формате 'Улица' 'дом' ('корпус')
+            </div>
+            <div *ngIf="placeAddress.errors.required">
+              Данное поле обязательно
+            </div>
+            <div *ngIf="placeAddress.errors.minlength">
+              Длина адреса должна быть от 5 символов
             </div>
           </div>
         </div>
