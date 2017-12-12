@@ -16,7 +16,7 @@ import {ShortPlace} from '../../placeData/short-place';
 
 export class AddCheckComponent implements OnInit {
   postCheckData: PostCheckData = new PostCheckData();
-  place: Place = new Place();
+  newPlace: Place = new Place();
   currentPlace: Place;
   currentCoords: Coords;
   checkDone = false;
@@ -29,9 +29,9 @@ export class AddCheckComponent implements OnInit {
 
   submit(postCheckData, addCF, addPF) {
     postCheckData.shortPlace = new ShortPlace();
-    postCheckData.shortPlace.name = this.place.name;
-    postCheckData.shortPlace.coords = this.place.coords;
-    postCheckData.shortPlace.id = this.place.id;
+    postCheckData.shortPlace.name = this.newPlace.name;
+    postCheckData.shortPlace.coords = this.newPlace.coords;
+    postCheckData.shortPlace.id = this.newPlace.id;
     this.httpService.postBody(postCheckData, this.checkUrl)
       .subscribe((data) => {
           addCF.reset();
@@ -44,13 +44,13 @@ export class AddCheckComponent implements OnInit {
   }
 
   addPlace(addPF,isClear) {
-    this.place.coords = new Coords(59.929428,30.362019);
-    this.place.numOfChecks = 0;
-    this.httpService.postBody(JSON.stringify(this.place), this.placeUrl)
+    this.newPlace.coords = new Coords(59.929428,30.362019);
+    this.newPlace.numOfChecks = 0;
+    this.httpService.postBody(JSON.stringify(this.newPlace), this.placeUrl)
       .map(resp => resp.json() as Place)
       .subscribe((data) => {
           if (!isClear) {
-            this.place = data;
+            this.newPlace = data;
           } else {
             this.clearPlace();
             addPF.reset();
@@ -63,9 +63,9 @@ export class AddCheckComponent implements OnInit {
   }
 
   clearPlace() {
-    this.place.numOfChecks = 0;
-    this.place.coords = null;
-    this.place.id = null;
+    this.newPlace.numOfChecks = 0;
+    this.newPlace.coords = null;
+    this.newPlace.id = null;
   }
 
   ngOnInit() {
