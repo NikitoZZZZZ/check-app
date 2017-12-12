@@ -15,10 +15,12 @@ export class PlaceListComponent implements OnInit {
   url = '/api/places';
   coords: Coords;
   @Output() currentCords: EventEmitter<Coords>;
+  @Output() currentPlace: EventEmitter<Place>;
 
   constructor(private httpService: HttpService) {
     this.coords = new Coords();
     this.currentCords= new EventEmitter<Coords>();
+    this.currentPlace= new EventEmitter<Place>();
   }
 
   ngOnInit() {
@@ -41,5 +43,10 @@ export class PlaceListComponent implements OnInit {
         this.places = data;
       });
   }
+
+  getCurrentPlace(place){
+    this.currentPlace.emit(place);
+  }
+
 
 }

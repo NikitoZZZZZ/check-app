@@ -17,6 +17,7 @@ import {ShortPlace} from '../../placeData/short-place';
 export class AddCheckComponent implements OnInit {
   postCheckData: PostCheckData = new PostCheckData();
   place: Place = new Place();
+  currentPlace: Place;
   currentCoords: Coords;
   checkDone = false;
   placeDone = false;
@@ -70,5 +71,9 @@ export class AddCheckComponent implements OnInit {
 
   setCurrentCoords(event){
     this.currentCoords=event;
+  }
+
+  setCurrentPlace(event){
+    this.currentPlace=event;
   }
 }
