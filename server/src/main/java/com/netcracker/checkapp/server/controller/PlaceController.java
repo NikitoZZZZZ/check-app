@@ -22,7 +22,7 @@ public class PlaceController {
     PlaceController(PlaceService placeService, FDSPService fdspService) {
         this.placeService = placeService;
         this.fdspService = fdspService;
-        radius = new Double(0.1);       // 100 meters
+        radius = new Double(0.2);       // 200 meters
     }
 
     @PostMapping
