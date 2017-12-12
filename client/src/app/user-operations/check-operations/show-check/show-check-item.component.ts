@@ -11,6 +11,8 @@ import {GetCheckData} from '../../checkData/get-check-data';
 export class ShowCheckItemComponent implements OnInit {
 
   getCheckData: GetCheckData[];
+  emptyData: boolean;
+  numberOfSelectedNumbers: number;
 
   constructor(private httpService: HttpService) {
   }
@@ -18,13 +20,20 @@ export class ShowCheckItemComponent implements OnInit {
   onToggle(check: GetCheckData) {
     check.selected = !check.selected;
   }
-
   setReceipts(event) {
     this.getCheckData = event;
+    if (this.getCheckData.length == 0) {
+      this.emptyData = true;
+    } else {
+      this.emptyData = false;
+    }
   }
 
 
   ngOnInit() {
+
   }
+
+
 
 }
