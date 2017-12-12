@@ -24,7 +24,7 @@ export class PlaceListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.radius = 100;
+    this.radius = 200;
   }
 
   getCoords(event) {

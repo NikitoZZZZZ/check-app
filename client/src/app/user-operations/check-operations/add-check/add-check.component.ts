@@ -34,26 +34,28 @@ export class AddCheckComponent implements OnInit {
     postCheckData.shortPlace.id = this.place.id;
     this.httpService.postBody(postCheckData, this.checkUrl)
       .subscribe((data) => {
-          this.addPlace(addPF);
-          this.clearPlace();
           addCF.reset();
-          this.placeDone = false;
-          addPF.reset();
           this.checkDone = true;
+          this.addPlace(addPF,true);
         },
         error => {
           console.log(error);
         });
   }
 
-  addPlace(addPF) {
+  addPlace(addPF,isClear) {
     this.place.coords = new Coords(59.929428,30.362019);
     this.place.numOfChecks = 0;
     this.httpService.postBody(JSON.stringify(this.place), this.placeUrl)
       .map(resp => resp.json() as Place)
       .subscribe((data) => {
-          this.placeDone = true;
-          this.place = data;
+          if (!isClear) {
+            this.place = data;
+          } else {
+            this.clearPlace();
+            addPF.reset();
+          }
+          this.placeDone = !isClear;
         },
         error => {
           console.log(JSON.stringify(error));

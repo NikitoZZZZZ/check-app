@@ -70,7 +70,7 @@
       <div class="container center_div add_div table-bordered">
         <b class="add-place"><abbr title="Название нового магазина">Магазин:</abbr></b><br>
         <div class="form-group">
-          <input class="form-control add-place" minlength="4" maxlength="20" pattern="^[a-zA-Z]{1}[\w]+$"
+          <input class="form-control add-place" minlength="4" maxlength="20" pattern="^[a-zA-Z\u0400-\u04FF]{1}[\w\u0400-\u04FF']+$"
                  name="placeName" [(ngModel)]="place.name" size="40" #placeName="ngModel" required
                  [disabled]="placeDone">
           <div *ngIf="placeName.invalid && (placeName.dirty || placeName.touched)"
@@ -88,7 +88,7 @@
         </div>
         <div class="btn-toolbar form-group">
           <input type="submit" class="btn btn-success" value="Добавить магазин"
-                 [disabled]="placeName.invalid || placeDone" (click)="addPlace(addPlaceForm)">
+                 [disabled]="placeName.invalid || placeDone" (click)="addPlace(addPlaceForm,false)">
         </div>
       </div>
     </form>
