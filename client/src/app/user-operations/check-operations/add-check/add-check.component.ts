@@ -17,6 +17,7 @@ import {ShortPlace} from '../../placeData/short-place';
 export class AddCheckComponent implements OnInit {
   postCheckData: PostCheckData = new PostCheckData();
   place: Place = new Place();
+  currentCoords: Coords;
   checkDone = false;
   placeDone = false;
   checkUrl = '/api/receipts';
@@ -67,4 +68,7 @@ export class AddCheckComponent implements OnInit {
   ngOnInit() {
   }
 
+  setCurrentCoords(event){
+    this.currentCoords=event;
+  }
 }

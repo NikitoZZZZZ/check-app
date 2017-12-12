@@ -41,7 +41,6 @@ public class PlaceController {
         coords.setLatitude(Double.parseDouble(latitude));
         coords.setLongitude(Double.parseDouble(longitude));
         List<Place> places = placeService.getNearPlaces(coords, radius.doubleValue());
-
         return new ResponseEntity<List<Place>>(places,HttpStatus.OK);
     }
 

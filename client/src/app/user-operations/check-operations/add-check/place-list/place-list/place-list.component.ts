@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Place} from "../../../../placeData/place";
 import {Coords} from "../../../../placeData/coords";
 import {HttpService} from "../../../../../services/httpService/http.service";
@@ -14,9 +14,11 @@ export class PlaceListComponent implements OnInit {
   places: Place[];
   url = '/api/places';
   coords: Coords;
+  @Output() currentCords: EventEmitter<Coords>;
 
   constructor(private httpService: HttpService) {
     this.coords = new Coords();
+    this.currentCords= new EventEmitter<Coords>();
   }
 
   ngOnInit() {
@@ -26,13 +28,13 @@ export class PlaceListComponent implements OnInit {
   getCoords(event) {
     this.coords = event;
     this.getPlaces();
+    this.currentCords.emit(this.coords);
   }
 
   getPlaces() {
     const params = new URLSearchParams();
     params.set('longitude', this.coords.longitude.toString());
     params.set('latitude', this.coords.latitude.toString());
-    params.set('radius', (this.radius / 1000).toString());
     this.httpService.getData(this.url, params.toString())
       .map(resp => resp.json() as Place[])
       .subscribe((data) => {
