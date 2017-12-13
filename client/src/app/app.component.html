@@ -2,7 +2,7 @@
 <header class="clearfix">
   <div class="container">
     <div class="header-left">
-      <h1>Учет финансов</h1>
+      <h1>ЧекMe</h1>
     </div>
     <div class="header-right">
       <label for="open">
@@ -22,7 +22,7 @@
           </li>
           <a routerLink="user-operations/statistics" routerLinkActive="active" *ngIf="isAuthenticated()">Статистика</a>
           <a routerLink="login" routerLinkActive="active" *ngIf="!isAuthenticated()">{{title}}</a>
-          <a (click)="logout()" *ngIf="isAuthenticated()">Logout</a>
+          <a (click)="logout()" *ngIf="isAuthenticated()">Выход</a>
       </nav>
     </div>
   </div>

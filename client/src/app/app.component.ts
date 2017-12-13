@@ -13,7 +13,7 @@ import {Subscription} from "rxjs/Subscription";
 export class AppComponent {
   loginUrl = '/login';
   logoutUrl = '/logout';
-  title = 'Login';
+  title = 'Войти';
   authenticated = false;
   sub: Subscription;
 
