@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpService} from '../../../services/httpService/http.service';
+import {PlaceService} from '../../../services/placeService/place.service';
+import {CheckService} from '../../../services/checkService/check.service';
 import {PostCheckData} from '../../checkData/post-check-data';
 import {Place} from '../../placeData/place';
 import {Coords} from '../../placeData/coords';
@@ -8,7 +9,7 @@ import {ShortPlace} from '../../placeData/short-place';
 
 @Component({
   selector: 'app-add-check',
-  providers: [HttpService],
+  providers: [PlaceService,CheckService],
   templateUrl: './add-check.component.html',
   styleUrls: ['./add-check.component.css']
 })
@@ -24,7 +25,8 @@ export class AddCheckComponent implements OnInit {
   checkUrl = '/api/receipts';
   placeUrl = '/api/places';
 
-  constructor(private httpService: HttpService) {
+  constructor(private placeService: PlaceService,
+              private checkService: CheckService) {
   }
 
   submit(postCheckData, addCF, addPF) {
@@ -32,7 +34,7 @@ export class AddCheckComponent implements OnInit {
     postCheckData.shortPlace.name = this.newPlace.name;
     postCheckData.shortPlace.coords = this.newPlace.coords;
     postCheckData.shortPlace.id = this.newPlace.id;
-    this.httpService.postBody(postCheckData, this.checkUrl)
+    this.checkService.createCheck(postCheckData, this.checkUrl)
       .subscribe((data) => {
           addCF.reset();
           this.checkDone = true;
@@ -46,8 +48,8 @@ export class AddCheckComponent implements OnInit {
   addPlace(addPF,isClear) {
     this.newPlace.coords = new Coords(59.929428,30.362019);
     this.newPlace.numOfChecks = 0;
-    this.httpService.postBody(JSON.stringify(this.newPlace), this.placeUrl)
-      .map(resp => resp.json() as Place)
+    this.placeService.createPlace(JSON.stringify(this.newPlace), this.placeUrl)
+      .map(res => res.json() as Place)
       .subscribe((data) => {
           if (!isClear) {
             this.newPlace = data;
