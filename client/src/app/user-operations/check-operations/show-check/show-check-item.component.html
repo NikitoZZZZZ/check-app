@@ -1,9 +1,9 @@
 <div class="row component-row">
   <div class="col-md-4 col-md-offset-1">
     <ol class="square">
-      <label *ngIf="emptyData">Нет чеков в заданной области</label>
+      <label class="info" *ngIf="emptyData">Нет чеков в заданной области</label>
       <div *ngIf="!emptyData">
-        <label *ngIf="!numberOfSelectedNumbers">Выберите место из списка</label>
+        <label class="info" *ngIf="!numberOfSelectedNumbers">Выберите место из списка</label>
         <div *ngIf="numberOfSelectedNumbers>0">
           <div class="panel-group big-panel scrollbar-cyan bordered-cyan card example-1 square"
                *ngFor="let data of getCheckData | orderBy: 'dateTime' : true " id="accordion">
@@ -38,7 +38,7 @@
     </ol>
   </div>
   <div class="col-md-5 col-md-offset-1">
-    <app-receipt-list-map (getReceipts)="setReceipts($event)" ></app-receipt-list-map>
+    <app-receipt-list-map (getReceipts)="setReceipts($event)" (numberOfSelectedReceipts)="setNumberOfSelected($event)"></app-receipt-list-map>
   </div>
 </div>
 
