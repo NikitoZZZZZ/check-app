@@ -16,6 +16,8 @@ export class ReceiptListMapComponent implements OnInit {
   radius: number;
   getCheckPlaces: ShortPlace[] = [];
   @Output() getReceipts: EventEmitter<GetCheckData[]>;
+  @Output() numberOfSelectedReceipts: EventEmitter<number>;
+  countSelected: number;
   coords: Coords;
   url = '/api/receipts/places';
   urlPlace = '/api/receipts';
@@ -23,6 +25,8 @@ export class ReceiptListMapComponent implements OnInit {
   constructor(private httpService: HttpService) {
     this.coords = new Coords();
     this.getReceipts = new EventEmitter<GetCheckData[]>();
+    this.numberOfSelectedReceipts = new EventEmitter<number>();
+    this.countSelected = 0;
   }
 
   ngOnInit() {
@@ -34,8 +38,8 @@ export class ReceiptListMapComponent implements OnInit {
   }
 
   getCoords(event: Coords) {
-    this.coords=event;
-    if (event != null && event != {} ) {
+    this.coords = event;
+    if (event != null && event != {}) {
       localStorage.setItem("coords", JSON.stringify(this.coords));
       this.getPlaces();
     }
@@ -43,6 +47,9 @@ export class ReceiptListMapComponent implements OnInit {
 
   checkPlace(place: ShortPlace) {
     place.selected = !place.selected;
+    if (place.selected) this.countSelected++;
+    else this.countSelected--;
+    this.numberOfSelectedReceipts.emit(this.countSelected);
   }
 
 
@@ -59,8 +66,10 @@ export class ReceiptListMapComponent implements OnInit {
         data.forEach(obj => {
           this.getCheckPlaces.push(obj.shortPlace)
         });
+        this.numberOfSelectedReceipts.emit(0);
         this.getReceipts.emit(data);
       });
   }
+
 
 }
