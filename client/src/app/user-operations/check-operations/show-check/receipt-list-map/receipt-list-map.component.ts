@@ -71,4 +71,5 @@ export class ReceiptListMapComponent implements OnInit {
       });
   }
 
+
 }

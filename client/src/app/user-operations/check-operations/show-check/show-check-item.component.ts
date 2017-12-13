@@ -31,12 +31,11 @@ export class ShowCheckItemComponent implements OnInit {
 
 
   ngOnInit() {
-    this.numberOfSelectedNumbers=0;
+
   }
 
   setNumberOfSelected(event){
     this.numberOfSelectedNumbers=event;
   }
-
 
 }
