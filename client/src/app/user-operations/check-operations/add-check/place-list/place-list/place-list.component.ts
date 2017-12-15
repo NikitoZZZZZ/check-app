@@ -20,6 +20,8 @@ export class PlaceListComponent implements OnInit, OnDestroy {
   @Output() currentCords: EventEmitter<Coords>;
   @Output() currentPlace: EventEmitter<Place>;
   subscription: Subscription;
+  selectedOption: string;
+  newPlaceAdded: boolean;
 
   constructor(private placeService: PlaceService,
               private sharedService: SharedPlaceService) {
@@ -30,13 +32,18 @@ export class PlaceListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.radius = 200;
-    this.places=[];
+    this.places = [];
     let newPlace = this.sharedService.sharedPlace
       .subscribe((data) => {
-          if (data!=null)
+        if (data != null) {
           this.places.push(data);
-      })
-    this.subscription=newPlace;
+          this.newPlaceAdded = true;
+          this.selectedOption = data.id;
+        } else {
+          this.newPlaceAdded = false;
+        }
+      });
+    this.subscription = newPlace;
   }
 
   getCoords(event) {
@@ -56,11 +63,17 @@ export class PlaceListComponent implements OnInit, OnDestroy {
   }
 
   getCurrentPlace(place) {
-    this.currentPlace.emit(place);
+    if (!this.newPlaceAdded)
+      this.currentPlace.emit(place);
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  setOption(option: string) {
+    if (!this.newPlaceAdded)
+      this.selectedOption = option;
   }
 
 }

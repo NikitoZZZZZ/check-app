@@ -5,10 +5,10 @@
 </div>
 <div class="row map">
   <div class="col-md-12">
-    <form class="form-group" >
+    <form class="form-group">
       <ol class="rectangle">
         <li *ngFor="let place of places">
-          <p (click)="getCurrentPlace(place)"><input type="radio"><label>Название: </label> {{place?.name}}<br/><label>Адрес: </label> {{place?.address}}</p>
+          <p (click)="getCurrentPlace(place); setOption(place.id)" ><input type="radio"  [disabled]="newPlaceAdded" [checked]="place.id == selectedOption"><label>Название: </label> {{place?.name}}<br/><label>Адрес: </label> {{place?.address}}</p>
         </li>
       </ol>
     </form>

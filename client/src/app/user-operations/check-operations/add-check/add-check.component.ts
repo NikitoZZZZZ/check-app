@@ -41,6 +41,7 @@ export class AddCheckComponent implements OnInit {
           addCF.reset();
           this.checkDone = true;
           this.addPlace(addPF,true);
+          this.sharedService.setPlace(null);
         },
         error => {
           console.log(error);
