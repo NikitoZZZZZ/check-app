@@ -14,12 +14,12 @@ export class PlaceListComponent implements OnInit {
   places: Place[];
   url = '/api/places';
   coords: Coords;
-  @Output() currentCords: EventEmitter<Coords>;
+  @Output() currentCoords: EventEmitter<Coords>;
   @Output() currentPlace: EventEmitter<Place>;
 
   constructor(private httpService: HttpService) {
     this.coords = new Coords();
-    this.currentCords= new EventEmitter<Coords>();
+    this.currentCoords= new EventEmitter<Coords>();
     this.currentPlace= new EventEmitter<Place>();
   }
 
@@ -30,7 +30,7 @@ export class PlaceListComponent implements OnInit {
   getCoords(event) {
     this.coords = event;
     this.getPlaces();
-    this.currentCords.emit(this.coords);
+    this.currentCoords.emit(this.coords);
   }
 
   getPlaces() {
