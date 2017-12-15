@@ -5,6 +5,7 @@ import {PostCheckData} from '../../checkData/post-check-data';
 import {Place} from '../../placeData/place';
 import {Coords} from '../../placeData/coords';
 import {ShortPlace} from '../../placeData/short-place';
+import {SharedPlaceService} from "../../../services/sharedPlace/shared-place.service";
 
 
 @Component({
@@ -26,7 +27,8 @@ export class AddCheckComponent implements OnInit {
   placeUrl = '/api/places';
 
   constructor(private placeService: PlaceService,
-              private checkService: CheckService) {
+              private checkService: CheckService,
+              private sharedService: SharedPlaceService) {
   }
 
   submit(postCheckData, addCF, addPF) {
@@ -57,6 +59,7 @@ export class AddCheckComponent implements OnInit {
             this.clearPlace();
             addPF.reset();
           }
+          this.sharedService.setPlace(data);
           this.placeDone = !isClear;
         },
         error => {

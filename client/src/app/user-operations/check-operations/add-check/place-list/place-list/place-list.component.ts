@@ -1,15 +1,17 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {Place} from "../../../../placeData/place";
 import {Coords} from "../../../../placeData/coords";
 import {HttpService} from "../../../../../services/httpService/http.service";
 import {PlaceService} from "../../../../../services/placeService/place.service";
+import {Subscription} from "rxjs/Subscription";
+import {SharedPlaceService} from "../../../../../services/sharedPlace/shared-place.service";
 
 @Component({
   selector: 'app-place-list',
   templateUrl: './place-list.component.html',
   styleUrls: ['./place-list.component.css']
 })
-export class PlaceListComponent implements OnInit {
+export class PlaceListComponent implements OnInit, OnDestroy {
 
   radius: number;
   places: Place[];
@@ -17,15 +19,24 @@ export class PlaceListComponent implements OnInit {
   coords: Coords;
   @Output() currentCords: EventEmitter<Coords>;
   @Output() currentPlace: EventEmitter<Place>;
+  subscription: Subscription;
 
-  constructor(private placeService: PlaceService) {
+  constructor(private placeService: PlaceService,
+              private sharedService: SharedPlaceService) {
     this.coords = new Coords();
-    this.currentCords= new EventEmitter<Coords>();
-    this.currentPlace= new EventEmitter<Place>();
+    this.currentCords = new EventEmitter<Coords>();
+    this.currentPlace = new EventEmitter<Place>();
   }
 
   ngOnInit() {
     this.radius = 200;
+    this.places=[];
+    let newPlace = this.sharedService.sharedPlace
+      .subscribe((data) => {
+          if (data!=null)
+          this.places.push(data);
+      })
+    this.subscription=newPlace;
   }
 
   getCoords(event) {
@@ -44,9 +55,12 @@ export class PlaceListComponent implements OnInit {
       });
   }
 
-  getCurrentPlace(place){
+  getCurrentPlace(place) {
     this.currentPlace.emit(place);
   }
 
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 
 }
