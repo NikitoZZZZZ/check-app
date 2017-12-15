@@ -72,7 +72,7 @@
       <div class="container center_div add_div table-bordered">
         <b class="add-place"><abbr title="Название нового магазина">Название:</abbr></b><br>
         <div class="form-group">
-          <input class="form-control add-place" minlength="4" maxlength="20" pattern="^[a-zA-Z\u0400-\u04FF]{1}[\w\u0400-\u04FF']+$"
+          <input class="form-control add-place" minlength="4" maxlength="20" pattern="^[a-zA-Z\u0400-\u04FF]{1}[\w\u0400-\u04FF'\-. ]+$"
                  name="placeName" [(ngModel)]="newPlace.name" size="40" #placeName="ngModel" required
                  [disabled]="placeDone">
           <div *ngIf="placeName.invalid && (placeName.dirty || placeName.touched)"
@@ -90,7 +90,7 @@
         </div>
         <b class="add-place"><abbr title="Адрес магазина (в формате 'Улица' 'дом' ['корпус'])">Адрес:</abbr></b><br>
         <div class="form-group">
-          <input class="form-control add-place" minlength="5" maxlength="30" pattern="^[a-zA-Z\u0400-\u04FF]{1}[\w\u0400-\u04FF'\- ]+$"
+          <input class="form-control add-place" minlength="5" maxlength="30" pattern="^[\w\u0400-\u04FF'\-. ]+$"
                  name="placeAddress" [(ngModel)]="newPlace.address" size="80" #placeAddress="ngModel" required
                  [disabled]="placeDone">
           <div *ngIf="placeAddress.invalid && (placeAddress.dirty || placeAddress.touched)"
@@ -114,6 +114,6 @@
     </form>
   </div>
   <div class="col-md-5 col-md-offset-1">
-    <app-place-list (currentCords)="setCurrentCoords($event)" (currentPlace)="setCurrentPlace($event)"></app-place-list>
+    <app-place-list (currentCoords)="setCurrentCoords($event)" (currentPlace)="setCurrentPlace($event)"></app-place-list>
   </div>
 </div>

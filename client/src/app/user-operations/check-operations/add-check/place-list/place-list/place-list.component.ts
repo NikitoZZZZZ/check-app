@@ -17,7 +17,7 @@ export class PlaceListComponent implements OnInit, OnDestroy {
   places: Place[];
   url = '/api/places';
   coords: Coords;
-  @Output() currentCords: EventEmitter<Coords>;
+  @Output() currentCoords: EventEmitter<Coords>;
   @Output() currentPlace: EventEmitter<Place>;
   subscription: Subscription;
   selectedOption: string;
@@ -26,8 +26,8 @@ export class PlaceListComponent implements OnInit, OnDestroy {
   constructor(private placeService: PlaceService,
               private sharedService: SharedPlaceService) {
     this.coords = new Coords();
-    this.currentCords = new EventEmitter<Coords>();
-    this.currentPlace = new EventEmitter<Place>();
+    this.currentCoords= new EventEmitter<Coords>();
+    this.currentPlace= new EventEmitter<Place>();
   }
 
   ngOnInit() {
@@ -49,7 +49,7 @@ export class PlaceListComponent implements OnInit, OnDestroy {
   getCoords(event) {
     this.coords = event;
     this.getPlaces();
-    this.currentCords.emit(this.coords);
+    this.currentCoords.emit(this.coords);
   }
 
   getPlaces() {
