@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="btn-toolbar form-group">
-          <input type="submit" [disabled]="fdriven.invalid || fdocumentn.invalid || fs.invalid || !placeDone"
+          <input type="submit" [disabled]="fdriven.invalid || fdocumentn.invalid || fs.invalid || !checkDone"
                  class="btn btn-primary" value="Добавить чек" (click)="submit(postCheckData,addCheckForm,addPlaceForm)">
           <input type="reset" class="btn btn-default"
                  value="Очистить форму">

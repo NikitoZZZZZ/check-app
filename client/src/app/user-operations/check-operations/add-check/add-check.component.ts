@@ -33,13 +33,13 @@ export class AddCheckComponent implements OnInit {
 
   submit(postCheckData, addCF, addPF) {
     postCheckData.shortPlace = new ShortPlace();
-    postCheckData.shortPlace.name = this.newPlace.name;
-    postCheckData.shortPlace.coords = this.newPlace.coords;
-    postCheckData.shortPlace.id = this.newPlace.id;
+    postCheckData.shortPlace.name = this.currentPlace.name;
+    postCheckData.shortPlace.coords = this.currentPlace.coords;
+    postCheckData.shortPlace.id = this.currentPlace.id;
     this.checkService.createCheck(postCheckData, this.checkUrl)
       .subscribe((data) => {
           addCF.reset();
-          this.checkDone = true;
+          this.checkDone = false;
           this.addPlace(addPF,true);
           this.sharedService.setPlace(null);
         },
@@ -49,18 +49,24 @@ export class AddCheckComponent implements OnInit {
   }
 
   addPlace(addPF,isClear) {
-    this.newPlace.coords = new Coords(59.929428,30.362019);
-    this.newPlace.numOfChecks = 0;
+    if (!isClear) {
+      this.newPlace.coords = this.currentCoords;
+      this.newPlace.numOfChecks = 0;
+    } else {
+      this.newPlace = this.currentPlace;
+    }
     this.placeService.createPlace(JSON.stringify(this.newPlace), this.placeUrl)
       .map(res => res.json() as Place)
       .subscribe((data) => {
           if (!isClear) {
             this.newPlace = data;
+            this.checkDone = true;
+            this.sharedService.setPlace(data);
+            this.currentPlace = this.newPlace;
           } else {
             this.clearPlace();
             addPF.reset();
           }
-          this.sharedService.setPlace(data);
           this.placeDone = !isClear;
         },
         error => {
@@ -82,6 +88,7 @@ export class AddCheckComponent implements OnInit {
   }
 
   setCurrentPlace(event){
-    this.currentPlace=event;
+    this.currentPlace = event;
+    this.checkDone = true;
   }
 }
