@@ -10,6 +10,7 @@
         <li *ngFor="let place of places">
           <p (click)="getCurrentPlace(place); setOption(place.id)" ><input type="radio"  [disabled]="newPlaceAdded" [checked]="place.id == selectedOption"><label>Название: </label> {{place?.name}}<br/><label>Адрес: </label> {{place?.address}}</p>
         </li>
+        <li><p *ngIf="newPlaceAdded"><input type="radio"  [disabled]="newPlaceAdded" [checked]="true"><label>Название: </label> {{newPlace.name}}<br/><label>Адрес: </label> {{newPlace.address}}</p></li>
       </ol>
     </form>
   </div>

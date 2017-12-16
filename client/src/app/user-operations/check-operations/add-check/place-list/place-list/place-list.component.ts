@@ -22,6 +22,7 @@ export class PlaceListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   selectedOption: string;
   newPlaceAdded: boolean;
+  newPlace: Place;
 
   constructor(private placeService: PlaceService,
               private sharedService: SharedPlaceService) {
@@ -32,11 +33,10 @@ export class PlaceListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.radius = 200;
-    this.places = [];
     let newPlace = this.sharedService.sharedPlace
       .subscribe((data) => {
+        this.newPlace=data;
         if (data != null) {
-          this.places.push(data);
           this.newPlaceAdded = true;
           this.selectedOption = data.id;
         } else {
