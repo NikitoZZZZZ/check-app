@@ -23,24 +23,27 @@ export class PlaceListComponent implements OnInit, OnDestroy {
   selectedOption: string;
   newPlaceAdded: boolean;
   newPlace: Place;
+  coordsAdded: boolean;
 
   constructor(private placeService: PlaceService,
               private sharedService: SharedPlaceService) {
     this.coords = new Coords();
-    this.currentCoords= new EventEmitter<Coords>();
-    this.currentPlace= new EventEmitter<Place>();
+    this.currentCoords = new EventEmitter<Coords>();
+    this.currentPlace = new EventEmitter<Place>();
   }
 
   ngOnInit() {
     this.radius = 200;
     let newPlace = this.sharedService.sharedPlace
       .subscribe((data) => {
-        this.newPlace=data;
+        this.newPlace = data;
         if (data != null) {
           this.newPlaceAdded = true;
           this.selectedOption = data.id;
         } else {
           this.newPlaceAdded = false;
+          if (this.coordsAdded)
+            this.getPlaces();
         }
       });
     this.subscription = newPlace;
@@ -49,6 +52,7 @@ export class PlaceListComponent implements OnInit, OnDestroy {
   getCoords(event) {
     this.coords = event;
     this.getPlaces();
+    this.coordsAdded = true;
     this.currentCoords.emit(this.coords);
   }
 
