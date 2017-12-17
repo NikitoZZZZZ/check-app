@@ -11,7 +11,8 @@ import {GetCheckData} from '../../checkData/get-check-data';
 export class ShowCheckItemComponent implements OnInit {
 
   getCheckData: GetCheckData[];
-  url = '/api/receipts';
+  emptyData: boolean;
+  numberOfSelectedNumbers: number;
 
   constructor(private httpService: HttpService) {
   }
@@ -22,12 +23,22 @@ export class ShowCheckItemComponent implements OnInit {
 
   setReceipts(event) {
     this.getCheckData = event;
+    if (this.getCheckData.length == 0) {
+      this.emptyData = true;
+    } else {
+      this.emptyData = false;
+    }
   }
 
   init() {
   }
 
   ngOnInit() {
+
+  }
+
+  setNumberOfSelected(event){
+    this.numberOfSelectedNumbers=event;
   }
 
 }

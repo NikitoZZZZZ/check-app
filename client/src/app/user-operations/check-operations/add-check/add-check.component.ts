@@ -6,6 +6,7 @@ import {Place} from '../../placeData/place';
 import {Coords} from '../../placeData/coords';
 import {ShortPlace} from '../../placeData/short-place';
 import {SharedPlaceService} from "../../../services/sharedPlace/shared-place.service";
+import {MessageProcessingService} from "../../../services/messageService/message.processing.service";
 
 
 @Component({
@@ -23,12 +24,14 @@ export class AddCheckComponent implements OnInit {
   currentCoords: Coords;
   checkDone = false;
   placeDone = false;
+  sending = false;
   checkUrl = '/api/receipts';
   placeUrl = '/api/places';
 
   constructor(private placeService: PlaceService,
               private checkService: CheckService,
-              private sharedService: SharedPlaceService) {
+              private sharedService: SharedPlaceService,
+              private proc: MessageProcessingService) {
   }
 
   submit(postCheckData, addCF, addPF) {
@@ -36,15 +39,23 @@ export class AddCheckComponent implements OnInit {
     postCheckData.shortPlace.name = this.currentPlace.name;
     postCheckData.shortPlace.coords = this.currentPlace.coords;
     postCheckData.shortPlace.id = this.currentPlace.id;
+    this.sending = true;
     this.checkService.createCheck(postCheckData, this.checkUrl)
       .subscribe((data) => {
+          this.proc.showMessage("Чек успешно добавлен");
           addCF.reset();
           this.checkDone = false;
           this.addPlace(addPF,true);
           this.sharedService.setPlace(null);
+          this.sending = false;
         },
         error => {
-          console.log(error);
+          if (error.status == 500) {
+            this.proc.showMessage("Ошибка при добавлении чека. Проверьте правильность введенных данных и повторите попытку.");
+          } else {
+            this.proc.showMessage(error.json().message);
+          }
+          this.sending = false;
         });
   }
 
@@ -63,6 +74,7 @@ export class AddCheckComponent implements OnInit {
             this.checkDone = true;
             this.sharedService.setPlace(data);
             this.currentPlace = this.newPlace;
+            this.proc.showMessage("Магазин успешно добавлен");
           } else {
             this.clearPlace();
             addPF.reset();
@@ -70,7 +82,7 @@ export class AddCheckComponent implements OnInit {
           this.placeDone = !isClear;
         },
         error => {
-          console.log(JSON.stringify(error));
+          this.proc.showMessage("Ошибка при добавлении места. Повторите попытку");
         });
   }
 

@@ -22,6 +22,7 @@ import {HttpService} from "./services/httpService/http.service";
 import {AuthService} from "./services/authService/auth.service";
 import {PlaceListComponent} from "./user-operations/check-operations/add-check/place-list/place-list/place-list.component";
 import {SharedPlaceService} from "./services/sharedPlace/shared-place.service";
+import {MessageProcessingService} from "./services/messageService/message.processing.service";
 
 @NgModule({
   declarations: [
@@ -49,6 +50,6 @@ import {SharedPlaceService} from "./services/sharedPlace/shared-place.service";
     })
   ],
   bootstrap: [AppComponent],
-  providers: [LoginGuardService, HttpService, AuthService,SharedPlaceService]
+  providers: [LoginGuardService, HttpService, AuthService, SharedPlaceService, MessageProcessingService]
 })
 export class AppModule { }

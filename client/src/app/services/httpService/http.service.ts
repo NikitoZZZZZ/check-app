@@ -15,7 +15,7 @@ export class HttpService {
     const headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     return this.http.post(url, params, {headers: headers})
       .map((res: Response) => {
-        return res.totalBytes > 0 ? res.json() : null;
+        return res['_body'] ? res.json() : null;
       })
       .catch((error: any) => Observable.throw(error));
   }
@@ -24,7 +24,7 @@ export class HttpService {
     let headers = new Headers({'Content-Type': 'application/json'});
     return this.http.post(url, params, {headers: headers})
       .map((res: Response) => {
-        return res.totalBytes > 0 ? res.json() : null;
+        return res['_body'] ? res.json() : null;
       })
       .catch((error: any) => Observable.throw(error));
   }

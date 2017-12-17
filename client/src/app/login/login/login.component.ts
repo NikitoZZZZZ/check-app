@@ -3,6 +3,7 @@ import {FullUser} from "../../user-operations/checkData/full-user";
 import {HttpService} from "../../services/httpService/http.service";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/authService/auth.service";
+import {MessageProcessingService} from "../../services/messageService/message.processing.service";
 
 @Component({
   selector: 'login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private httpService: HttpService,
               private router: Router,
-              private auth: AuthService) { }
+              private auth: AuthService,
+              private proc: MessageProcessingService) { }
 
   submit(info) {
     const params = new URLSearchParams();
@@ -29,7 +31,11 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/user-operations']);
     },
       error => {
-        console.log(error);
+      if (error.status == 500) {
+        this.proc.showMessage("Error occured");
+      } else {
+        this.proc.showMessage(error.json().message);
+      }
       });
   }
 
@@ -39,7 +45,11 @@ export class LoginComponent implements OnInit {
           this.submit(fullUser);
         },
         error => {
-          console.log(error);
+          if (error.status == 500) {
+            this.proc.showMessage("Error occured");
+          } else {
+            this.proc.showMessage(error.json().message);
+          }
         });
   }
 

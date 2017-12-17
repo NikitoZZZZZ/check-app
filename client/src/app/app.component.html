@@ -20,7 +20,7 @@
               </li>
             </ul>
           </li>
-          <a routerLink="user-operations/statistics" routerLinkActive="active" *ngIf="isAuthenticated()">Статистика</a>
+         <!-- <a routerLink="user-operations/statistics" routerLinkActive="" *ngIf="isAuthenticated()">Статистика</a> -->
           <a routerLink="login" routerLinkActive="active" *ngIf="!isAuthenticated()">{{title}}</a>
           <a (click)="logout()" *ngIf="isAuthenticated()">Выход</a>
       </nav>
@@ -31,3 +31,16 @@
 <div>
   <router-outlet id="router"></router-outlet>
 </div>
+
+<app-modal class="app-modal" #errormodal>
+  <div class="app-modal-body">
+    <p>
+      {{message}}
+    </p>
+  </div>
+  <div class="app-modal-footer">
+    <div class="btn-toolbar form-group reg">
+      <input type="submit" class="btn btn-default" value="Закрыть" (click)="errormodal.hide()">
+    </div>
+  </div>
+</app-modal>

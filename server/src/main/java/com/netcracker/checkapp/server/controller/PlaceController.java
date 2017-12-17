@@ -41,7 +41,8 @@ public class PlaceController {
         coords.setLatitude(Double.parseDouble(latitude));
         coords.setLongitude(Double.parseDouble(longitude));
         List<Place> places = placeService.getNearPlaces(coords, radius.doubleValue());
-        return new ResponseEntity<List<Place>>(places,HttpStatus.OK);
+
+        return new ResponseEntity<List<Place>>(places, HttpStatus.OK);
     }
 
     @GetMapping("/{fdriven}")
@@ -51,7 +52,7 @@ public class PlaceController {
         try {
             return new ResponseEntity<ShortPlace>(fdspService.findFDSP(fdriven).getShortPlace(),HttpStatus.OK);
         } catch (NullPointerException e) {
-            return new ResponseEntity<ShortPlace>(new ShortPlace(),HttpStatus.NO_CONTENT);
+            return new ResponseEntity<ShortPlace>(new ShortPlace(), HttpStatus.NO_CONTENT);
         }
     }
 }
