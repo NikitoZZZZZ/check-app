@@ -42,7 +42,7 @@ export class AddCheckComponent implements OnInit {
     this.sending = true;
     this.checkService.createCheck(postCheckData, this.checkUrl)
       .subscribe((data) => {
-          this.proc.showMessage("Чек успешно добавлен");
+          this.proc.showMessage(data.json().message);
           addCF.reset();
           this.checkDone = false;
           this.addPlace(addPF,true);
