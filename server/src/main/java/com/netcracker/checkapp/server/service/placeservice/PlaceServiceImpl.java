@@ -30,6 +30,8 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Place addNewPlace(Place place) {
+        if (place.getId() == null)
+            return placeRepository.save(place);
         Place localPlace = placeRepository.findOne(place.getId());
         if (localPlace != null)
             localPlace = incrementPlaceRating(place);
@@ -42,7 +44,7 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public List<Place> getNearPlaces(Coords coords, double radius) {
         Distance distance = new Distance(radius, Metrics.KILOMETERS);
-        Point point = new Point(coords.getLongitude(),coords.getLatitude());
+        Point point = new Point(coords.getLatitude(),coords.getLongitude());
         return placeRepository.findByCoordsNear(point,distance);
     }
 

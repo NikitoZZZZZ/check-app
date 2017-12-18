@@ -2,14 +2,14 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 import {ShortPlace} from "../../../placeData/short-place";
 import {Coords} from "../../../placeData/coords";
-import {HttpService} from "../../../../services/httpService/http.service";
 import {GetCheckData} from "../../../checkData/get-check-data";
+import {CheckService} from "../../../../services/checkService/check.service";
 
 @Component({
   selector: 'app-receipt-list-map',
   templateUrl: './receipt-list-map.component.html',
   styleUrls: ['./receipt-list-map.component.css'],
-  providers: [HttpService]
+  providers: [CheckService]
 })
 export class ReceiptListMapComponent implements OnInit {
 
@@ -22,7 +22,7 @@ export class ReceiptListMapComponent implements OnInit {
   url = '/api/receipts/places';
   urlPlace = '/api/receipts';
 
-  constructor(private httpService: HttpService) {
+  constructor(private сheckService: CheckService) {
     this.coords = new Coords();
     this.getReceipts = new EventEmitter<GetCheckData[]>();
     this.numberOfSelectedReceipts = new EventEmitter<number>();
@@ -59,8 +59,7 @@ export class ReceiptListMapComponent implements OnInit {
     params.set('latitude', this.coords.latitude.toString());
     params.set('radius', (this.radius / 1000).toString());
     localStorage.setItem("radius", this.radius.toString());
-    this.httpService.getData(this.url, params.toString())
-      .map(resp => resp.json() as GetCheckData[])
+    this.сheckService.getChecks(this.url, params.toString())
       .subscribe((data) => {
         this.getCheckPlaces = [];
         data.forEach(obj => {

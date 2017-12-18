@@ -1,6 +1,6 @@
 import {Coords} from "./coords";
 
-export interface ShortPlace {
+export class ShortPlace {
   id: String;
   name: String;
   coords: Coords;

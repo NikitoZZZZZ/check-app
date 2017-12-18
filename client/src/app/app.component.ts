@@ -15,7 +15,7 @@ import {MessageProcessingService} from "./services/messageService/message.proces
 export class AppComponent {
   loginUrl = '/login';
   logoutUrl = '/logout';
-  title = 'Login';
+  title = 'Войти';
   authenticated = false;
   errorOccured = true;
   authenticationSubscription: Subscription;

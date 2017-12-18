@@ -61,6 +61,7 @@ public class CheckServiceImpl implements CheckService {
         Map<String, String> headers;
         NalogRuCheck nalogRuCheck;
         ObjectMapper objectMapper = new ObjectMapper();
+        Check localCheck = null;
 
         headers = buildHeaders();
 
@@ -71,16 +72,17 @@ public class CheckServiceImpl implements CheckService {
                     HttpMethod.GET, httpEntity, String.class).getBody());
             nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
 
-            check = Converter.fromNalogRuCheckToCheck(nalogRuCheck);
+            localCheck = Converter.fromNalogRuCheckToCheck(nalogRuCheck);
+            localCheck.setShortPlace(check.getShortPlace());
 
             FDSP fdsp = new FDSP();
-            fdsp.setFiscalDriveNumber(check.getFiscalDriveNumber());
-            fdsp.setShortPlace(check.getShortPlace());
+            fdsp.setFiscalDriveNumber(localCheck.getFiscalDriveNumber());
+            fdsp.setShortPlace(localCheck.getShortPlace());
             fdspService.addFDSP(fdsp);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return check;
+        return localCheck;
     }
 
     @Override

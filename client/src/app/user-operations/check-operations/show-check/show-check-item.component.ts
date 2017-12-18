@@ -20,6 +20,7 @@ export class ShowCheckItemComponent implements OnInit {
   onToggle(check: GetCheckData) {
     check.selected = !check.selected;
   }
+
   setReceipts(event) {
     this.getCheckData = event;
     if (this.getCheckData.length == 0) {
@@ -29,6 +30,8 @@ export class ShowCheckItemComponent implements OnInit {
     }
   }
 
+  init() {
+  }
 
   ngOnInit() {
 

@@ -20,6 +20,8 @@ import {MapComponent} from './user-operations/check-operations/map/map.component
 import {LoginGuardService} from "./services/loginGuard/login.guard.service";
 import {HttpService} from "./services/httpService/http.service";
 import {AuthService} from "./services/authService/auth.service";
+import {PlaceListComponent} from "./user-operations/check-operations/add-check/place-list/place-list/place-list.component";
+import {SharedPlaceService} from "./services/sharedPlace/shared-place.service";
 import {MessageProcessingService} from "./services/messageService/message.processing.service";
 
 @NgModule({
@@ -35,7 +37,8 @@ import {MessageProcessingService} from "./services/messageService/message.proces
     OrderByPipe,
     ReceiptListMapComponent,
     MapComponent,
-    ModalComponent
+    ModalComponent,
+    PlaceListComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,6 @@ import {MessageProcessingService} from "./services/messageService/message.proces
     })
   ],
   bootstrap: [AppComponent],
-  providers: [LoginGuardService, HttpService, AuthService, MessageProcessingService]
+  providers: [LoginGuardService, HttpService, AuthService, SharedPlaceService, MessageProcessingService]
 })
 export class AppModule { }

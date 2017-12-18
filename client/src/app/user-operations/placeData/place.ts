@@ -1,6 +1,6 @@
 import {Coords} from "./coords";
 
-export interface Place {
+export class Place {
   id: string;
   name: string;
   address: string;
