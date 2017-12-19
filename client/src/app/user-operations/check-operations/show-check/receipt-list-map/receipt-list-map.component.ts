@@ -14,7 +14,8 @@ import {CheckService} from "../../../../services/checkService/check.service";
 export class ReceiptListMapComponent implements OnInit {
 
   radius: number;
-  getCheckPlaces: ShortPlace[] = [];
+  getCheckPlaces: ShortPlace[];
+  receipts: GetCheckData[];
   @Output() getReceipts: EventEmitter<GetCheckData[]>;
   @Output() numberOfSelectedReceipts: EventEmitter<number>;
   countSelected: number;
@@ -46,8 +47,15 @@ export class ReceiptListMapComponent implements OnInit {
   }
 
   checkPlace(place: ShortPlace) {
-    place.selected = !place.selected;
-    if (place.selected) this.countSelected++;
+    let count=0;
+    this.receipts.forEach(data => {
+        if (data.shortPlace.id == place.id) {
+          data.shortPlace.selected = !data.shortPlace.selected;
+          if (data.shortPlace.selected) count++;
+        }
+      }
+    );
+    if (count) this.countSelected++;
     else this.countSelected--;
     this.numberOfSelectedReceipts.emit(this.countSelected);
   }
@@ -62,9 +70,12 @@ export class ReceiptListMapComponent implements OnInit {
     this.сheckService.getChecks(this.url, params.toString())
       .subscribe((data) => {
         this.getCheckPlaces = [];
+        this.receipts = data;
+        let places: Map<String, ShortPlace> = new Map();
         data.forEach(obj => {
-          this.getCheckPlaces.push(obj.shortPlace)
+          places.set(obj.shortPlace.id, obj.shortPlace);
         });
+        this.getCheckPlaces = Array.from(places.values());
         this.numberOfSelectedReceipts.emit(0);
         this.getReceipts.emit(data);
       });

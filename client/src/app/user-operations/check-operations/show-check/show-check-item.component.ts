@@ -13,6 +13,9 @@ export class ShowCheckItemComponent implements OnInit {
   getCheckData: GetCheckData[];
   emptyData: boolean;
   numberOfSelectedNumbers: number;
+  order: string;
+  sortingReverse: boolean;
+  icon: string;
 
   constructor(private httpService: HttpService) {
   }
@@ -30,15 +33,24 @@ export class ShowCheckItemComponent implements OnInit {
     }
   }
 
-  init() {
-  }
-
   ngOnInit() {
-
+    this.order = 'dateTime';
+    this.sortingReverse = true;
+    this.icon ='glyphicon glyphicon-arrow-up';
   }
 
-  setNumberOfSelected(event){
-    this.numberOfSelectedNumbers=event;
+  setNumberOfSelected(event) {
+    this.numberOfSelectedNumbers = event;
+  }
+
+  setReverse() {
+    this.sortingReverse = !this.sortingReverse;
+    if(this.sortingReverse) this.icon='glyphicon glyphicon-arrow-up';
+      else this.icon='glyphicon glyphicon-arrow-down';
+  }
+
+  setOrderBy(order: string) {
+    this.order = order;
   }
 
 }
