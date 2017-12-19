@@ -44,7 +44,7 @@ public class CheckController {
     public ResponseEntity<?> load(@RequestBody Check check) {
         Check fullCheck = checkService.save(checkService.getCheck(check));
 
-        return new ResponseEntity<>(httpService.createMessage("Receipt added successfully"), HttpStatus.CREATED);
+        return new ResponseEntity<>(httpService.createMessage("Чек успешно добавлен"), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -58,7 +58,7 @@ public class CheckController {
                 return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);
             }
             else {
-                return new ResponseEntity<>(httpService.createMessage("Permission denied"), HttpStatus.FORBIDDEN);
+                return new ResponseEntity<>(httpService.createMessage("Отказано в доступе"), HttpStatus.FORBIDDEN);
             }
         }
         return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);

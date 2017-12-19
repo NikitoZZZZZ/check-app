@@ -35,13 +35,13 @@ public class RegistrationController {
 
         userInfo.setLogin(body.get("login"));
         if (userInfoService.existsByUsername(userInfo.getLogin())) {
-            return new ResponseEntity<>(httpService.createMessage("This login is taken"), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(httpService.createMessage("Этот логин уже занят"), HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
         userInfo.setRole("ROLE_USER");
         userInfoService.save(userInfo);
 
-        return new ResponseEntity<>(httpService.createMessage("Registration successful"), HttpStatus.CREATED);
+        return new ResponseEntity<>(httpService.createMessage("Регистрация прошла успешно"), HttpStatus.CREATED);
     }
 
 }

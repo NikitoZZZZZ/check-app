@@ -45,7 +45,7 @@ export class AppComponent {
       }),
         error => {
       if (error.status == 500) {
-        this.proc.showMessage("Error occured during logout");
+        this.proc.showMessage("Произошла ошибка при выходе из аккаунта");
       } else {
         this.proc.showMessage(error.json().message);
       }
