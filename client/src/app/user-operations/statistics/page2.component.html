@@ -1,3 +1,33 @@
-<p>
-  page2 works!
-</p>
+<div class="row component-row">
+  <div class="center_div">
+    <div class="col-md-5 col-md-offset-1">
+      <form #statsForm="ngForm" class="stats_form">
+        <div class="row">
+          <input type="button" class="btn btn-primary stat-button" value="Получить статистику"
+            (click)="getChecksInfo()">
+          <div class="col-md-7"><label class="stats field">Всего чеков в базе: </label>
+            {{totalChecks}}
+          </div>
+          <div class="col-md-7"><label class="stats field">Всего различных магазинов: </label>
+            {{totalPlaces}}
+          </div>
+          <div class="col-md-7"><label class="stats field">Минимальная сумма чека: </label>
+            {{minTotalSum}}
+          </div>
+          <div class="col-md-7"><label class="stats field">Максимальная сумма чека: </label>
+            {{maxTotalSum}}
+          </div>
+          <div class="col-md-7"><label class="stats field">Средняя сумма чека: </label>
+            {{avgTotalSum}}
+          </div>
+          <div class="col-md-7"><label class="stats field">Средняя сумма чека (медиана): </label>
+            {{medTotalSum}}
+          </div>
+          <div class="col-md-7"><label class="stats field">Максимальное количество товаров в чеке: </label>
+            {{mostItems}}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

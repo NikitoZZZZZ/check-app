@@ -20,7 +20,7 @@
               </li>
             </ul>
           </li>
-         <!-- <a routerLink="user-operations/statistics" routerLinkActive="" *ngIf="isAuthenticated()">Статистика</a> -->
+         <a routerLink="user-operations/statistics" routerLinkActive="" *ngIf="isAuthenticated()">Статистика</a>
           <a routerLink="login" routerLinkActive="active" *ngIf="!isAuthenticated()">{{title}}</a>
           <a (click)="logout()" *ngIf="isAuthenticated()">Выход</a>
       </nav>
