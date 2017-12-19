@@ -57,5 +57,17 @@
   margin:auto;
 }
 
+.option{
+  margin-bottom: 4px;
+  min-width: 85px;
+}
 
+.reverse{
+  float: right;
+}
+
+.info{
+  width: 100%;
+  text-align: center;
+}
 

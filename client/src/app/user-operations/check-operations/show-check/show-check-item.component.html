@@ -1,5 +1,8 @@
 <div class="row component-row">
   <div class="col-md-4 col-md-offset-1">
+    <button class="btn btn-default option" (click)="setOrderBy('dateTime')">По дате</button>
+    <button class="btn btn-default option" (click)="setOrderBy('totalSum')">По сумме</button>
+    <button class="btn btn-default option reverse" (click)=setReverse()><span class="{{icon}}"></span></button>
     <ol class="square">
       <label class="info" *ngIf="emptyData">Нет чеков в заданной области</label>
       <div *ngIf="!emptyData">
@@ -7,7 +10,7 @@
         <div *ngIf="numberOfSelectedNumbers>0">
           <div class="panel-group big-panel scrollbar-cyan bordered-cyan card example-1 square"
                id="accordion">
-            <ul class="show-check" *ngFor="let data of getCheckData | orderBy: 'dateTime' : true " [style.display]="data?.shortPlace.selected===true?'block':'none'">
+            <ul class="show-check" *ngFor="let data of getCheckData | orderBy: order : sortingReverse" [style.display]="data?.shortPlace.selected===true?'block':'none'">
               <div class=" panel panel-default ">
                 <div class="panel-heading">
                   <h4 class="panel-title">
