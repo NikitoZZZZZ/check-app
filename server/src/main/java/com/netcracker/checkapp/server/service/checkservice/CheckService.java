@@ -17,6 +17,4 @@ public interface CheckService {
     Check findById(String id);
 
     List<Check> findByUsername(String username);
-
-    List<Check> findAll();
 }

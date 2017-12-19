@@ -14,7 +14,7 @@ export class StatsService {
 
   getChecks(url: string, params: any) {
     return this.http.get(url, {params})
-      .map(resp => resp.json() as GetCheckData[]);
+      .map(resp => resp.json());
   }
 
 }

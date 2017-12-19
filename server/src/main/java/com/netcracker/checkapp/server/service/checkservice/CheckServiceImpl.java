@@ -113,11 +113,6 @@ public class CheckServiceImpl implements CheckService {
         return checkRepository.findByUsername(username);
     }
 
-    @Override
-    public List<Check> findAll() {
-        return checkRepository.findAll();
-    }
-
     private Map<String,String> buildHeaders(){
         Map<String,String> headers = new HashMap<>();
 

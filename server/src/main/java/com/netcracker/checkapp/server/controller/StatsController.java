@@ -1,9 +1,6 @@
 package com.netcracker.checkapp.server.controller;
 
-import com.netcracker.checkapp.server.service.checkservice.CheckService;
-import com.netcracker.checkapp.server.service.fdspservice.FDSPService;
-import com.netcracker.checkapp.server.service.httpservice.HttpService;
-import com.netcracker.checkapp.server.service.placeservice.PlaceService;
+import com.netcracker.checkapp.server.service.statservice.StatService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
@@ -18,13 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/stats")
 public class StatsController {
 
-    private CheckService checkService;
-    private HttpService  httpService;
+    private StatService statService;
 
-    StatsController(CheckService checkService,
-                    HttpService httpService) {
-        this.checkService = checkService;
-        this.httpService = httpService;
+    StatsController(StatService statService) {
+        this.statService = statService;
     }
 
     @GetMapping
@@ -33,14 +27,6 @@ public class StatsController {
     public ResponseEntity<?> getStats() {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        return new ResponseEntity<>(checkService.findByUsername(principal.getUsername()), HttpStatus.OK);
+        return new ResponseEntity<>(statService.getStats(), HttpStatus.OK);
     }
-
-    @GetMapping("/all")
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    @ResponseBody
-    public ResponseEntity<?> getStatsAll() {
-       return new ResponseEntity<>(checkService.findAll(), HttpStatus.OK);
-    }
-
 }
