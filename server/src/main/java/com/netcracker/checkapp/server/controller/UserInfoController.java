@@ -38,7 +38,7 @@ public class UserInfoController {
 
         userInfo.setLogin(body.get("login"));
         if (userInfoService.existsByUsername(userInfo.getLogin())) {
-            return new ResponseEntity<>(httpService.createMessage("This login is taken"), HttpStatus.CONFLICT);
+            return new ResponseEntity<>(httpService.createMessage("Этот логин уже занят"), HttpStatus.CONFLICT);
         }
         userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
         userInfo.setRole("ROLE_ADMIN");
@@ -55,11 +55,11 @@ public class UserInfoController {
 
         if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
             userInfoService.delete(principal.getUsername());
-            return new ResponseEntity<>(httpService.createMessage("Deleted successfully"), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(httpService.createMessage("Удаление прошло успешно"), HttpStatus.NO_CONTENT);
         }
         userInfoService.delete(body.get("login"));
 
-        return new ResponseEntity<>(httpService.createMessage("Deleted successfully"), HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(httpService.createMessage("Удаление прошло успешно"), HttpStatus.NO_CONTENT);
     }
 
     @GetMapping
