@@ -12,19 +12,21 @@ import {ShortPlace} from "../placeData/short-place";
 })
 export class Page2Component implements OnInit {
   url = '/api/stats';
+  urlAll = '/api/stats/all';
   totalChecks = '';
   minTotalSum = '';
   maxTotalSum = '';
-  avgTotalSum = '';
   medTotalSum = '';
-  totalPlaces = '';
-  mostItems = '';
+  totalChecksAll = '';
+  totalSumAll = '';
   checkData: GetCheckData[];
+  checkDataAll: GetCheckData[];
 
   constructor(private statsService: StatsService,
               private proc: MessageProcessingService) { }
 
   ngOnInit() {
+    this.getChecksInfo();
   }
 
   getChecksInfo() {
@@ -34,14 +36,20 @@ export class Page2Component implements OnInit {
         this.countChecks();
         this.sortChecks();
         this.findMinAndMax();
-        this.findAverage();
         this.findMedian();
-        this.findPlaces();
-        this.findMostItems();
       },
       error => {
         this.proc.showMessage(error);
       });
+    this.statsService.getChecks(this.urlAll,null)
+      .subscribe((data) => {
+        this.checkDataAll = data;
+        this.countAllChecks();
+        this.countSumAll();
+      },
+        error => {
+          this.proc.showMessage(error);
+      })
   }
 
   sortChecks() {
@@ -60,11 +68,6 @@ export class Page2Component implements OnInit {
     this.maxTotalSum = <string>this.checkData[this.checkData.length-1].totalSum.toString();
   }
 
-  findAverage() {
-    var sum = this.checkData.reduce((a,b) => a + b.totalSum, 0);
-    this.avgTotalSum = <string>(sum / +this.totalChecks).toString(10);
-  }
-
   findMedian() {
     if (+this.totalChecks % 2 == 1) {
       this.medTotalSum = <string>this.checkData[Math.floor(+this.totalChecks / 2)].totalSum.toString();
@@ -74,27 +77,13 @@ export class Page2Component implements OnInit {
     }
   }
 
-  findPlaces() {
-    var sp = new Set<ShortPlace>();
-    this.checkData.forEach(obj => {
-      let found = false;
-      sp.forEach(item => {
-        if (item.id === obj.shortPlace.id)
-          found = true;
-      })
-      if (!found)
-        sp.add(obj.shortPlace)
-    });
-    this.totalPlaces = <string>sp.size.toString();
+  countAllChecks() {
+    this.totalChecksAll = <string>this.checkDataAll.length.toString();
   }
 
-  findMostItems() {
-    let max = 0;
-    this.checkData.forEach(obj => {
-      if (obj.items.length > max)
-        max = obj.items.length;
-    });
-    this.mostItems = <string>max.toString();
+  countSumAll() {
+    var sum = this.checkDataAll.reduce((a,b) => a + b.totalSum, 0);
+    this.totalSumAll = sum.toString();
   }
 
 }

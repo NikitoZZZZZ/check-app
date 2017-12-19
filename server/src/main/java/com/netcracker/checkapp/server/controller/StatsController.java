@@ -19,17 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class StatsController {
 
     private CheckService checkService;
-    private FDSPService fdspService;
-    private PlaceService placeService;
     private HttpService  httpService;
 
     StatsController(CheckService checkService,
-                    PlaceService placeService,
-                    FDSPService fdspService,
                     HttpService httpService) {
         this.checkService = checkService;
-        this.placeService = placeService;
-        this.fdspService = fdspService;
         this.httpService = httpService;
     }
 
@@ -40,6 +34,13 @@ public class StatsController {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return new ResponseEntity<>(checkService.findByUsername(principal.getUsername()), HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @ResponseBody
+    public ResponseEntity<?> getStatsAll() {
+       return new ResponseEntity<>(checkService.findAll(), HttpStatus.OK);
     }
 
 }
