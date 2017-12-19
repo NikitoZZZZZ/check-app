@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { StatsService } from "../../services/statsService/stats.service";
 import {MessageProcessingService} from "../../services/messageService/message.processing.service";
+import {Stats} from "../statsData/stats";
 
 @Component({
   selector: 'app-page2',
@@ -9,13 +10,7 @@ import {MessageProcessingService} from "../../services/messageService/message.pr
   styleUrls: ['./page2.component.css']
 })
 export class Page2Component implements OnInit {
-  url = '/api/stats';
-  totalChecks = '';
-  minTotalSum = '';
-  maxTotalSum = '';
-  medTotalSum = '';
-  totalChecksAll = '';
-  totalSumAll = '';
+  stats : Stats;
 
   constructor(private statsService: StatsService,
               private proc: MessageProcessingService) { }
@@ -25,14 +20,9 @@ export class Page2Component implements OnInit {
   }
 
   getChecksInfo() {
-    this.statsService.getChecks(this.url,null)
+    this.statsService.getChecks(null)
       .subscribe((data) => {
-        this.totalChecks = data.totalChecks;
-        this.minTotalSum = data.minTotalSum;
-        this.maxTotalSum = data.maxTotalSum;
-        this.medTotalSum = data.medTotalSum;
-        this.totalChecksAll = data.totalChecksAll;
-        this.totalSumAll = data.totalSumAll;
+        this.stats = data;
       },
       error => {
         this.proc.showMessage(error);

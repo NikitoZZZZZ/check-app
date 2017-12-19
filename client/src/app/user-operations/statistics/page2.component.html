@@ -4,22 +4,22 @@
       <form #statsForm="ngForm" class="stats_form">
         <div class="row">
           <div class="col-md-7"><label class="stats field">Всего чеков пользователя: </label>
-            {{totalChecks}}
+            {{stats.totalChecks}}
           </div>
           <div class="col-md-7"><label class="stats field">Минимальная сумма чека: </label>
-            {{minTotalSum}}
+            {{stats.minTotalSum}}
           </div>
           <div class="col-md-7"><label class="stats field">Максимальная сумма чека: </label>
-            {{maxTotalSum}}
+            {{stats.maxTotalSum}}
           </div>
           <div class="col-md-7"><label class="stats field">Средняя сумма чека (медиана): </label>
-            {{medTotalSum}}
+            {{stats.medTotalSum}}
           </div>
           <div class="col-md-7"><label class="stats field">Всего чеков в системе: </label>
-            {{totalChecksAll}}
+            {{stats.totalChecksAll}}
           </div>
           <div class="col-md-7 col-md-offset-1"><label class="stats field">На сумму: </label>
-            {{totalSumAll}}
+            {{stats.totalSumAll}}
           </div>
         </div>
       </form>

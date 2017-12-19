@@ -4,17 +4,20 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
-import {GetCheckData} from "../../user-operations/checkData/get-check-data";
+import {Stats} from "../../user-operations/statsData/stats";
 
 
 @Injectable()
 export class StatsService {
 
+  url = '/api/stats';
+
   constructor(private http: Http) { }
 
-  getChecks(url: string, params: any) {
-    return this.http.get(url, {params})
-      .map(resp => resp.json());
+  getChecks(params: any) {
+    return this.http.get(this.url, {params})
+      .map(resp => resp.json() as Stats)
+      .catch((error: any) => Observable.throw(error));
   }
 
 }
