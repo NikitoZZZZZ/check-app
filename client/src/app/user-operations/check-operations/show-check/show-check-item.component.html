@@ -6,8 +6,8 @@
         <label class="info" *ngIf="!numberOfSelectedNumbers">Выберите место из списка</label>
         <div *ngIf="numberOfSelectedNumbers>0">
           <div class="panel-group big-panel scrollbar-cyan bordered-cyan card example-1 square"
-               *ngFor="let data of getCheckData | orderBy: 'dateTime' : true " id="accordion">
-            <ul class="show-check" [style.display]="data?.shortPlace.selected===true?'block':'none'">
+               id="accordion">
+            <ul class="show-check" *ngFor="let data of getCheckData | orderBy: 'dateTime' : true " [style.display]="data?.shortPlace.selected===true?'block':'none'">
               <div class=" panel panel-default ">
                 <div class="panel-heading">
                   <h4 class="panel-title">
