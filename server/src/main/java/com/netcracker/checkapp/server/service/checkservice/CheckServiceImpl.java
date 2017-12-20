@@ -2,17 +2,26 @@ package com.netcracker.checkapp.server.service.checkservice;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netcracker.checkapp.server.model.Check;
-import com.netcracker.checkapp.server.model.Converter;
-import com.netcracker.checkapp.server.model.NalogRuCheck;
+import com.netcracker.checkapp.server.model.FDSP;
+import com.netcracker.checkapp.server.model.check.Check;
+import com.netcracker.checkapp.server.model.check.Converter;
+import com.netcracker.checkapp.server.model.check.NalogRuCheck;
+import com.netcracker.checkapp.server.persistance.CheckRepository;
+import com.netcracker.checkapp.server.service.fdspservice.FDSPService;
+import com.netcracker.checkapp.server.service.httpservice.HttpService;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metrics;
+import org.springframework.data.geo.Point;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -35,11 +44,77 @@ public class CheckServiceImpl implements CheckService {
     private final static String USER_AGENT_ID = "okhttp/3.0.1";
     private final static String ROOT = "/document/receipt";
 
+    private CheckRepository checkRepository;
+    private FDSPService fdspService;
+    private HttpService httpService;
+
+    public CheckServiceImpl(FDSPService fdspService,
+                            CheckRepository checkRepository,
+                            HttpService httpService) {
+        this.fdspService = fdspService;
+        this.checkRepository = checkRepository;
+        this.httpService = httpService;
+    }
+
     @Override
-    public Check getCheck(String fiscalDocumentNumber, String fiscalDriveNumber, String fiscalSign) {
-        Map<String, String> headers = new HashMap<>();
-        NalogRuCheck nalogRuCheck = new NalogRuCheck();
+    public Check getCheck(Check check) {
+        Map<String, String> headers;
+        NalogRuCheck nalogRuCheck;
         ObjectMapper objectMapper = new ObjectMapper();
+        Check localCheck = null;
+
+        headers = buildHeaders();
+
+        HttpEntity<String> httpEntity = new HttpEntity<String>(httpService.createHttpHeaders(headers));
+        try {
+            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU,
+                    check.getFiscalDriveNumber(), check.getFiscalDocumentNumber(), check.getFiscalSign()),
+                    HttpMethod.GET, httpEntity, String.class).getBody());
+            nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
+
+            localCheck = Converter.fromNalogRuCheckToCheck(nalogRuCheck);
+            localCheck.setShortPlace(check.getShortPlace());
+
+            FDSP fdsp = new FDSP();
+            fdsp.setFiscalDriveNumber(localCheck.getFiscalDriveNumber());
+            fdsp.setShortPlace(localCheck.getShortPlace());
+            fdspService.addFDSP(fdsp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return localCheck;
+    }
+
+    @Override
+    public List<Check> getNearPlacesAndChecks(String longitude, String latitude, String radius) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Distance distance = new Distance(Double.parseDouble(radius), Metrics.KILOMETERS);
+        Point coords = new Point(Double.parseDouble(latitude), Double.parseDouble(longitude));
+        return checkRepository.findByUsernameAndShortPlaceCoordsNear(principal.getUsername(), coords, distance);
+    }
+
+    @Override
+    public Check save(Check check) {
+        return checkRepository.save(check);
+    }
+
+    @Override
+    public boolean existsByIdAndUsername(String id, String username) {
+        return checkRepository.existsByIdAndUsername(id, username);
+    }
+
+    @Override
+    public Check findById(String id) {
+        return checkRepository.findOne(id);
+    }
+
+    @Override
+    public List<Check> findByUsername(String username) {
+        return checkRepository.findByUsername(username);
+    }
+
+    private Map<String,String> buildHeaders(){
+        Map<String,String> headers = new HashMap<>();
 
         headers.put(AUTHORIZATION, AUTHORIZATION_VALUE);
         headers.put(DEVICE_ID, DEVICE_ID_VALUE);
@@ -48,24 +123,6 @@ public class CheckServiceImpl implements CheckService {
         headers.put(CLIENT_VERSION, CLIENT_VERSION_ID);
         headers.put(HOST, HOST_ID);
         headers.put(USER_AGENT, USER_AGENT_ID);
-
-        HttpEntity<String> httpEntity = new HttpEntity<String>(addHeaders(headers));
-        try {
-            JsonNode node = objectMapper.readTree(new RestTemplate().exchange(String.format(NALOG_RU, fiscalDocumentNumber,
-                    fiscalDriveNumber, fiscalSign), HttpMethod.GET, httpEntity, String.class).getBody());
-            nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return Converter.fromNalogRuCheckToCheck(nalogRuCheck);
-    }
-
-    @Override
-    public HttpHeaders addHeaders(Map<String, String> map) {
-        HttpHeaders headers = new HttpHeaders();
-        for (Map.Entry<String, String> element : map.entrySet()) {
-            headers.add(element.getKey(), element.getValue());
-        }
 
         return headers;
     }

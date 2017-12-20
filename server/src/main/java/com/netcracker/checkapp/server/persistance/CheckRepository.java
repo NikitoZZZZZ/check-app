@@ -1,27 +1,20 @@
 package com.netcracker.checkapp.server.persistance;
 
-import com.netcracker.checkapp.server.model.Check;
-import com.netcracker.checkapp.server.model.User;
+import com.netcracker.checkapp.server.model.check.Check;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Repository
 public interface CheckRepository extends MongoRepository<Check, String> {
 
-    // method name should contain correct parameters names!!
-    // see the bad example below
-    //Check findByCredentials(Integer fiscalDocumentNumber, Integer fiscalSign, Integer fiscalDriveNumber);
+    boolean existsByIdAndUsername(String id, String username);
 
-    // it may be more reliable to find check by custom method, using expanding interface CheckRepositoryCustom
+    List<Check> findByUsername(String username);
 
-    Check save(Check check);
-
-    Check findById(String id);
-
-    Check findByUser(User user);
+    List<Check> findByUsernameAndShortPlaceCoordsNear(String username,Point coords, Distance radius);
 
 }

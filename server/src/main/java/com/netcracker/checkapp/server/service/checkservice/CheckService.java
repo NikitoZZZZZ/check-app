@@ -1,8 +1,20 @@
 package com.netcracker.checkapp.server.service.checkservice;
 
-import com.netcracker.checkapp.server.model.Check;
-import com.netcracker.checkapp.server.service.Service;
+import com.netcracker.checkapp.server.model.check.Check;
+import com.netcracker.checkapp.server.service.httpservice.HttpService;
 
-public interface CheckService extends Service {
-    public Check getCheck(String fiscalDocumentNumber, String fiscalDriveNumber, String fiscalSign);
+import java.util.List;
+
+public interface CheckService {
+    Check getCheck(Check check);
+
+    List<Check> getNearPlacesAndChecks(String  longitude, String latitude, String radius);
+
+    Check save(Check check);
+
+    boolean existsByIdAndUsername(String id, String username);
+
+    Check findById(String id);
+
+    List<Check> findByUsername(String username);
 }

@@ -1,5 +1,8 @@
+import {ShortPlace} from '../placeData/short-place';
+
 export class PostCheckData {
-  fn: string;
-  fdn: string;
-  fs: string;
+  fiscalDriveNumber: string;
+  fiscalDocumentNumber: string;
+  fiscalSign: string;
+  shortPlace: ShortPlace;
 }

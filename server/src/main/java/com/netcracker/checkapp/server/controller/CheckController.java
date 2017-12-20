@@ -1,58 +1,82 @@
 package com.netcracker.checkapp.server.controller;
 
-
-import com.netcracker.checkapp.server.model.Check;
-import com.netcracker.checkapp.server.persistance.CheckRepository;
+import com.netcracker.checkapp.server.model.check.Check;
 import com.netcracker.checkapp.server.service.checkservice.CheckService;
-import com.netcracker.checkapp.server.service.checkservice.CheckServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
+import com.netcracker.checkapp.server.service.httpservice.HttpService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping(value = "/api/receipts")
 public class CheckController {
-    CheckService checkService;
-    CheckRepository checkRepository;
 
-    CheckController(CheckService checkService, CheckRepository checkRepository) {
+    private CheckService checkService;
+    private HttpService httpService;
+
+    CheckController(CheckService checkService, HttpService httpService) {
         this.checkService = checkService;
-        this.checkRepository = checkRepository;
+        this.httpService = httpService;
     }
 
-    @RequestMapping(value = "/api/receipt", method = RequestMethod.POST)
+    @GetMapping(value = "/places")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<Check> load(@RequestParam Map<String, String> params) {
-        ResponseEntity<Check> responseEntity;
+    public ResponseEntity<List<Check>> getNearPlace(@RequestParam("longitude") String longitude,
+                                                    @RequestParam("latitude") String latitude,
+                                                    @RequestParam("radius") String radius ) {
 
-        responseEntity = new ResponseEntity<Check>(checkService.getCheck(params.get("fdocumentn"), params.get("fdriven"),
-                params.get("fs")), HttpStatus.OK);
-        checkRepository.save(responseEntity.getBody());
-
-        return responseEntity;
+        return new ResponseEntity<List<Check>>(checkService.getNearPlacesAndChecks(longitude,
+                latitude,radius),
+                HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/receipt", method = RequestMethod.GET)
+    @PostMapping()
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<List<Check>> getAll() {
-        ResponseEntity<List<Check>> responseEntity;
+    public ResponseEntity<?> load(@RequestBody Check check) {
+        Check fullCheck = checkService.save(checkService.getCheck(check));
 
-        responseEntity = new ResponseEntity<List<Check>>(checkRepository.findAll(), HttpStatus.OK);
-
-        return responseEntity;
+        return new ResponseEntity<>(httpService.createMessage("Чек успешно добавлен"), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/api/receipt/{id}", method = RequestMethod.GET)
+    @GetMapping("/{id}")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @ResponseBody
-    public ResponseEntity<Check> getById(@PathVariable String id) {
-        ResponseEntity<Check> responseEntity;
+    public ResponseEntity<?> getById(@PathVariable String id) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        responseEntity = new ResponseEntity<Check>(checkRepository.findById(id), HttpStatus.OK);
-
-        return responseEntity;
+        if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            if (checkService.existsByIdAndUsername(id, principal.getUsername())) {
+                return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>(httpService.createMessage("Отказано в доступе"), HttpStatus.FORBIDDEN);
+            }
+        }
+        return new ResponseEntity<Check>(checkService.findById(id), HttpStatus.OK);
     }
+
+    @GetMapping
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @ResponseBody
+    public ResponseEntity<List<Check>> getByUserInfoLogin(@RequestBody(required = false) Map<String, String> body) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            return new ResponseEntity<List<Check>>(checkService.findByUsername(principal.getUsername()),
+                    HttpStatus.OK);
+        }
+
+        return new ResponseEntity<List<Check>>(checkService.findByUsername(body.get("login")),
+                HttpStatus.OK);
+    }
+
 }
