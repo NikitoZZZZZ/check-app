@@ -28,22 +28,36 @@ public class StatServiceImpl implements StatService {
         List<Check> userChecks = checkRepository.findByUsername(principal.getUsername());
         List<Check> allChecks = checkRepository.findAll();
 
-        userChecks.sort(Comparator.comparing(Check::getTotalSum));
+        if (userChecks.size() == 0) {
+            map.put("totalChecks","0");
+            map.put("minTotalSum","0.00");
+            map.put("maxTotalSum","0.00");
+            map.put("medTotalSum","0.00");
 
-        map.put("totalChecks",String.valueOf(userChecks.size()));
-        map.put("minTotalSum",String.valueOf(userChecks.get(0).getTotalSum()));
-        map.put("maxTotalSum",String.valueOf(userChecks.get(userChecks.size() - 1).getTotalSum()));
+            if (allChecks.size() == 0) {
+                map.put("totalChecksAll","0");
+                map.put("totalSumAll","0.00");
+                return map;
+            }
+        } else {
 
-        // use that stream.reduce methods if necessary in future
+            userChecks.sort(Comparator.comparing(Check::getTotalSum));
+
+            map.put("totalChecks", String.valueOf(userChecks.size()));
+            map.put("minTotalSum", String.valueOf(userChecks.get(0).getTotalSum()));
+            map.put("maxTotalSum", String.valueOf(userChecks.get(userChecks.size() - 1).getTotalSum()));
+
+            // use that stream.reduce methods if necessary in future
 //        Check maxCheck = userChecks.stream().reduce((c1,c2) -> c1.getTotalSum().compareTo(c2.getTotalSum()) == 1 ? c1 : c2).orElse(null);
 //        map.put("maxTotalSum",String.valueOf(maxCheck.getTotalSum()));
 //        Check minCheck = userChecks.stream().reduce((c1,c2) -> c1.getTotalSum().compareTo(c2.getTotalSum()) == -1 ? c1 : c2).orElse(null);
 //        map.put("minTotalSum",String.valueOf(minCheck.getTotalSum()));
-        
-        double median = (userChecks.size() % 2 == 1)
-                ? userChecks.get(userChecks.size() / 2).getTotalSum().doubleValue()
-                : (userChecks.get(userChecks.size() - 1).getTotalSum().add(userChecks.get(userChecks.size()).getTotalSum()).doubleValue()) / 2;
-        map.put("medTotalSum",String.valueOf(median));
+
+            double median = (userChecks.size() % 2 == 1)
+                    ? userChecks.get(userChecks.size() / 2).getTotalSum().doubleValue()
+                    : (userChecks.get(userChecks.size() / 2 - 1).getTotalSum().add(userChecks.get(userChecks.size() / 2).getTotalSum()).doubleValue()) / 2;
+            map.put("medTotalSum", String.valueOf(median));
+        }
 
         map.put("totalChecksAll",String.valueOf(allChecks.size()));
 

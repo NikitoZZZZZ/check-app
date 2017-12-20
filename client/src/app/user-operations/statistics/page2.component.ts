@@ -25,7 +25,7 @@ export class Page2Component implements OnInit {
         this.stats = data;
       },
       error => {
-        this.proc.showMessage(error);
+        this.proc.showMessage("Ошибка при получении статистики");
       });
   }
 
