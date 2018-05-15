@@ -20,6 +20,8 @@ public class Item {
     private BigDecimal nds18;
     private Double quantity;
     private String name;
+    @JsonProperty(required = false)
+    private String category;
 
     public Item() {
         this.ndsSum = new BigDecimal(0);

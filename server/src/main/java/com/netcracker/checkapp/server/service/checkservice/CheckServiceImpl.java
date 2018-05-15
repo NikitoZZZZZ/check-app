@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.netcracker.checkapp.server.model.FDSP;
 import com.netcracker.checkapp.server.model.check.Check;
 import com.netcracker.checkapp.server.model.check.Converter;
+import com.netcracker.checkapp.server.model.check.Item;
 import com.netcracker.checkapp.server.model.check.NalogRuCheck;
 import com.netcracker.checkapp.server.persistance.CheckRepository;
 import com.netcracker.checkapp.server.service.fdspservice.FDSPService;
@@ -19,7 +20,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +32,7 @@ public class CheckServiceImpl implements CheckService {
     private String NALOG_RU = "http://proverkacheka.nalog.ru:8888/v1/inns/*/kkts/*/" +
             "fss/%s/tickets/%s?fiscalSign=%s&sendToEmail=no";
     private final static String AUTHORIZATION = "Authorization";
-    private final static String AUTHORIZATION_VALUE = "Basic Kzc5MTE3OTcyMDY0OjExMDM1MQ==";
+    private final static String AUTHORIZATION_VALUE = "Basic Kzc5MTE3OTcyMDY0OjIzMTA2MQ==";
     private final static String DEVICE_ID = "Device-Id";
     private final static String DEVICE_ID_VALUE = "546112";
     private final static String DEVICE_OS = "Device-OS";
@@ -58,6 +61,13 @@ public class CheckServiceImpl implements CheckService {
 
     @Override
     public Check getCheck(Check check) {
+        Process process;
+        String[] cmd = {
+                "python3",
+                "./writer.py",
+                ""
+        };
+        BufferedReader bufferedReader;
         Map<String, String> headers;
         NalogRuCheck nalogRuCheck;
         ObjectMapper objectMapper = new ObjectMapper();
@@ -73,6 +83,15 @@ public class CheckServiceImpl implements CheckService {
             nalogRuCheck = objectMapper.treeToValue(node.at(ROOT), NalogRuCheck.class);
 
             localCheck = Converter.fromNalogRuCheckToCheck(nalogRuCheck);
+            for (Item item: localCheck.getItems()) {
+                cmd[2] = item.getName(); //setting arguments to be passed to python script
+                System.out.println(cmd[2]);
+                process = Runtime.getRuntime().exec(cmd);
+                bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                String line = bufferedReader.readLine();
+                System.out.println(line);
+                item.setCategory(line);
+            }
             localCheck.setShortPlace(check.getShortPlace());
 
             FDSP fdsp = new FDSP();

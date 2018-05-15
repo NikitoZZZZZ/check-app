@@ -14,4 +14,6 @@ public interface UserInfoService {
     UserInfo findByUsername(String username);
 
     List<UserInfo> findAll();
+
+    UserInfo register(UserInfo userInfo) throws Exception;
 }

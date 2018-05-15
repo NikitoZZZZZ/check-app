@@ -18,28 +18,26 @@ import java.util.Map;
 public class RegistrationController {
 
     private UserInfoService userInfoService;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private HttpService httpService;
 
     RegistrationController(UserInfoService userInfoService, HttpService httpService) {
         this.userInfoService = userInfoService;
-        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
         this.httpService = httpService;
     }
 
     @PostMapping("/register")
     @ResponseBody
     public ResponseEntity<?> registration(@RequestBody Map<String, String> body) {
-        Map<String, String> responseBody = new HashMap<>();
         UserInfo userInfo = new UserInfo();
 
         userInfo.setLogin(body.get("login"));
-        if (userInfoService.existsByUsername(userInfo.getLogin())) {
+        userInfo.setPwd(body.get("pwd"));
+        try {
+            userInfoService.register(userInfo);
+        }
+        catch (Exception e) {
             return new ResponseEntity<>(httpService.createMessage("Этот логин уже занят"), HttpStatus.CONFLICT);
         }
-        userInfo.setPwd(bCryptPasswordEncoder.encode(body.get("pwd")));
-        userInfo.setRole("ROLE_USER");
-        userInfoService.save(userInfo);
 
         return new ResponseEntity<>(httpService.createMessage("Регистрация прошла успешно"), HttpStatus.CREATED);
     }
