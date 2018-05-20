@@ -23,6 +23,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,8 @@ public class CheckServiceImpl implements CheckService {
     private final static String USER_AGENT = "User-Agent";
     private final static String USER_AGENT_ID = "okhttp/3.0.1";
     private final static String ROOT = "/document/receipt";
+
+    private final static List<String> categories = Arrays.asList("Продукты питания", "Гигиена", "Лекарства", "Прочее");
 
     private CheckRepository checkRepository;
     private FDSPService fdspService;
@@ -130,6 +133,24 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public List<Check> findByUsername(String username) {
         return checkRepository.findByUsername(username);
+    }
+
+    @Override
+    public Map<String, String> findCategoriesByUserName(String username) {
+        List<Check> checks = checkRepository.findByUsername(username);
+        Map<String, String> categoryExpenses = new HashMap<>();
+
+        categories.forEach(category -> categoryExpenses.put(category, String.valueOf(0)));
+
+        checks.forEach(check -> {
+            check.getItems().forEach(item -> {
+                Double value = Double.valueOf(categoryExpenses.get(item.getCategory())) +
+                        item.getPrice().doubleValue();
+                categoryExpenses.put(item.getCategory(), value.toString());
+            });
+        });
+
+        return categoryExpenses;
     }
 
     private Map<String,String> buildHeaders(){

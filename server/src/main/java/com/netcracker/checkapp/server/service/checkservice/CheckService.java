@@ -4,6 +4,7 @@ import com.netcracker.checkapp.server.model.check.Check;
 import com.netcracker.checkapp.server.service.httpservice.HttpService;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CheckService {
     Check getCheck(Check check);
@@ -17,4 +18,6 @@ public interface CheckService {
     Check findById(String id);
 
     List<Check> findByUsername(String username);
+
+    Map<String, String> findCategoriesByUserName(String username);
 }

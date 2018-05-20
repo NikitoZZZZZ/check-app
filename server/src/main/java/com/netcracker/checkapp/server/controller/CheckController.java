@@ -79,4 +79,19 @@ public class CheckController {
                 HttpStatus.OK);
     }
 
+    @GetMapping("/categories")
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> getCategories(@RequestBody(required = false) Map<String, String> body) {
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        if (principal.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_USER"))) {
+            return new ResponseEntity<>(checkService.findCategoriesByUserName(principal.getUsername()),
+                    HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(checkService.findCategoriesByUserName(body.get("login")),
+                HttpStatus.OK);
+    }
+
 }
